@@ -1,7 +1,26 @@
 {
+  "name": "corvee-app",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/Aletho-ICT-Dagbesteding/Corvee-app#readme",
+  "bugs": {
+    "url": "https://github.com/Aletho-ICT-Dagbesteding/Corvee-app/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Aletho-ICT-Dagbesteding/Corvee-app.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "module",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "dependencies": {
     "@vscode/sqlite3": "^5.1.12-vscode",
     "express": "^5.2.1",
     "sequelize": "^6.37.7"
-  }
+  },
+  "devDependencies": {}
 }
