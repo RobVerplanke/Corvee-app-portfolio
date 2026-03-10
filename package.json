@@ -18,9 +18,10 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "@vscode/sqlite3": "^5.1.12-vscode",
     "express": "^5.2.1",
-    "sequelize": "^6.37.7"
+    "mongoose": "^9.2.3"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "mocha": "^11.7.5"
+  }
 }
