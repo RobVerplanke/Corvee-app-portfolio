@@ -42,15 +42,6 @@ describe('DatabaseHandler', () => {
     await databaseHandler.models.Volunteer.deleteMany({});
   });
 
-  describe(':addScheduleEntry', () => {
-    it('should add a new schedule entry', async () => {
-      await databaseHandler.addScheduleEntry(new Date('2026-03-10'), 'Afternoon', 'Henk');
-      const result = await databaseHandler.models.Schedule.find({ date: new Date('2026-03-10') });
-
-      assert.equal(result[0].date.valueOf(), new Date('2026-03-10').valueOf());
-    });
-  });
-
   describe(':getScheduleForDateRange', () => {
     beforeEach(async () => {
       // Insert schedule data.
@@ -63,6 +54,15 @@ describe('DatabaseHandler', () => {
 
       assert.equal(result[0].date.valueOf(), expectedResult[0].date.valueOf());
       assert.equal(result[1].date.valueOf(), expectedResult[1].date.valueOf());
+    });
+  });
+    
+  describe(':addScheduleEntry', () => {
+    it('should add a new schedule entry', async () => {
+      await databaseHandler.addScheduleEntry(new Date('2026-03-10'), 'Afternoon', 'Henk');
+      const result = await databaseHandler.models.Schedule.find({ date: new Date('2026-03-10') });
+
+      assert.equal(result[0].date.valueOf(), new Date('2026-03-10').valueOf());
     });
   });
   
@@ -88,6 +88,29 @@ describe('DatabaseHandler', () => {
       const result = await databaseHandler.models.Volunteer.find({ name: 'Henk' });
       
       assert.equal(result[0].name, 'Henk');
+    });
+  });
+
+  describe(':removeVolunteer', () => {
+    it('should remove a given volunteer', async () => {
+      await databaseHandler.removeVolunteer('Frank');
+      const result = await databaseHandler.models.Volunteer.find({ name: 'Frank' });
+
+      assert.equal(result.length, 0);
+    });
+  });
+
+  describe(':updateVolunteer', () => {
+    beforeEach(async () => {
+      // Insert volunteer data.
+      await databaseHandler.models.Volunteer.insertMany(testVolunteers);
+    });
+
+    it('should update a given volunteer name to the new name', async () => {
+      await databaseHandler.updateVolunteer('Kees', 'Koos');
+      const result = await databaseHandler.models.Volunteer.find({ name: 'Koos' });
+
+      assert.equal(result.length, 1);
     })
   })
 });

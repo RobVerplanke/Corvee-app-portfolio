@@ -38,6 +38,14 @@ export default class DatabaseHandler {
   async addVolunteer(name) {
     return this.models.Volunteer.insertOne({ name: name });
   }
+
+  async removeVolunteer(name) {
+    return this.models.Volunteer.deleteOne({ name: name });
+  }
+
+  async updateVolunteer(old_name, new_name) {
+    return this.models.Volunteer.findOneAndUpdate({ name: old_name }, { name: new_name });
+  }
 }
   // Unsure if even needed. StartDate + EndDate could be enough and doing the calculation in the class requesting the data.
   //getStartOfWeek(date) {
