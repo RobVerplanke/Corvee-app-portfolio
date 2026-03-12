@@ -64,75 +64,79 @@ describe('DatabaseHandler', () => {
     
     await databaseHandler.models.Schedule.bulkCreate(testSchedule);
   });
-
-  describe(':getScheduleForDateRange', () => {
-    it('should return the date entries for the given date range.', async () => {
-      const expectedResult = [testSchedule[0], testSchedule[1]];
-      const result = await databaseHandler.getScheduleForDateRange(new Date('2026-03-03'), new Date('2026-03-05'));
+  
+  describe(':Schedule', () => {
+    describe(':getScheduleForDateRange', () => {
+      it('should return the date entries for the given date range.', async () => {
+        const expectedResult = [testSchedule[0], testSchedule[1]];
+        const result = await databaseHandler.getScheduleForDateRange(new Date('2026-03-03'), new Date('2026-03-05'));
+        
+        assert.equal(result[0].date.valueOf(), expectedResult[0].date.valueOf());
+        assert.equal(result[1].date.valueOf(), expectedResult[1].date.valueOf());
+      });
+    });
       
-      assert.equal(result[0].date.valueOf(), expectedResult[0].date.valueOf());
-      assert.equal(result[1].date.valueOf(), expectedResult[1].date.valueOf());
+    describe(':addScheduleEntry', () => {
+      it('should add a new schedule entry', async () => {
+        const insertedDate = new Date('2026-03-10');
+        await databaseHandler.addScheduleEntry(insertedDate, testPartOfDay, testId);
+        const result = await databaseHandler.models.Schedule.findAll({ where: { date: insertedDate }});
+
+        assert.equal(result[0].date.valueOf(), insertedDate.valueOf());
+        assert.equal(result[0].VolunteerId, testId);
+      });
+    });
+
+    describe(':updateScheduleEntry', () => {
+      it('should update the volunteer on an existing schedule entry', async () => {
+        const updatedVolunteer = await databaseHandler.models.Volunteer.findOne({ where: { name: testVolunteers[1].name }});
+        await databaseHandler.updateScheduleEntry(testDate, testPartOfDay, updatedVolunteer.id);
+        const result = await databaseHandler.models.Schedule.findAll({ where: { date: testDate, partOfDay: testPartOfDay }});
+
+        assert.equal(result[0].VolunteerId, updatedVolunteer.id);
+      });
     });
   });
+  
+  describe(':Volunteer', () => {
+    describe(':getVolunteers', () => {
+      it('should return all the volunteers.', async () => {
+        const expectedResult = testVolunteers;
+        const result = await databaseHandler.getVolunteers();
+
+        for (let i = 0; i < result.length; i++) {
+          assert.equal(result[i].name, expectedResult[i].name);
+        }
+      });
+    });
     
-  describe(':addScheduleEntry', () => {
-    it('should add a new schedule entry', async () => {
-      const insertedDate = new Date('2026-03-10');
-      await databaseHandler.addScheduleEntry(insertedDate, testPartOfDay, testId);
-      const result = await databaseHandler.models.Schedule.findAll({ where: { date: insertedDate }});
-
-      assert.equal(result[0].date.valueOf(), insertedDate.valueOf());
-      assert.equal(result[0].VolunteerId, testId);
+    describe(':addVolunteer', () => {
+      it('should add a given volunteer.', async () => {
+        let insertedVolunteer = await databaseHandler.addVolunteer('Henk');
+        const result = await databaseHandler.models.Volunteer.findAll({ where: { id: insertedVolunteer.id }});
+        
+        assert.equal(result[0].id, insertedVolunteer.id);
+        assert.equal(result[0].name, insertedVolunteer.name);
+      });
     });
-  });
 
-  describe(':updateScheduleEntry', () => {
-    it('should update the volunteer on an existing schedule entry', async () => {
-      const updatedVolunteer = await databaseHandler.models.Volunteer.findOne({ where: { name: testVolunteers[1].name }});
-      await databaseHandler.updateScheduleEntry(testDate, testPartOfDay, updatedVolunteer.id);
-      const result = await databaseHandler.models.Schedule.findAll({ where: { date: testDate, partOfDay: testPartOfDay }});
+    describe(':removeVolunteer', () => {
+      it('should remove a given volunteer', async () => {
+        await databaseHandler.removeVolunteer(testId);
+        const result = await databaseHandler.models.Volunteer.findAll({ where: { id: testId }});
 
-      assert.equal(result[0].VolunteerId, updatedVolunteer.id);
+        assert.equal(result.length, 0);
+      });
     });
-  });
-  
-  describe(':getVolunteers', () => {
-    it('should return all the volunteers.', async () => {
-      const expectedResult = testVolunteers;
-      const result = await databaseHandler.getVolunteers();
 
-      for (let i = 0; i < result.length; i++) {
-        assert.equal(result[i].name, expectedResult[i].name);
-      }
-    });
-  });
-  
-  describe(':addVolunteer', () => {
-    it('should add a given volunteer.', async () => {
-      let insertedVolunteer = await databaseHandler.addVolunteer('Henk');
-      const result = await databaseHandler.models.Volunteer.findAll({ where: { id: insertedVolunteer.id }});
-      
-      assert.equal(result[0].id, insertedVolunteer.id);
-      assert.equal(result[0].name, insertedVolunteer.name);
-    });
-  });
+    describe(':updateVolunteer', () => {
+      it('should update a given volunteer name to the new name', async () => {
+        await databaseHandler.updateVolunteer(testId, testNewName);
+        const result = await databaseHandler.models.Volunteer.findAll({ where: { id: testId }});
 
-  describe(':removeVolunteer', () => {
-    it('should remove a given volunteer', async () => {
-      await databaseHandler.removeVolunteer(testId);
-      const result = await databaseHandler.models.Volunteer.findAll({ where: { id: testId }});
-
-      assert.equal(result.length, 0);
-    });
-  });
-
-  describe(':updateVolunteer', () => {
-    it('should update a given volunteer name to the new name', async () => {
-      await databaseHandler.updateVolunteer(testId, testNewName);
-      const result = await databaseHandler.models.Volunteer.findAll({ where: { id: testId }});
-
-      assert.equal(result[0].id, testId);
-      assert.equal(result[0].name, testNewName);
+        assert.equal(result[0].id, testId);
+        assert.equal(result[0].name, testNewName);
+      });
     });
   });
 
