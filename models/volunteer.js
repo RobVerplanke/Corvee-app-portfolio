@@ -1,6 +1,12 @@
-export default (mongoose) => {
-  const VolunteerSchema = mongoose.Schema({
-    name: String,
+import { DataTypes } from 'sequelize';
+
+export default (sequelize) => {
+  const Volunteer = sequelize.define('Volunteer',
+  {
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    }
   });
-  return VolunteerSchema;
+  return Volunteer;
 };

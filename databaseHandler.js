@@ -1,55 +1,55 @@
-import userSchema from './models/user.js';
-import volunteerSchema from './models/volunteer.js';
-import scheduleSchema from './models/schedule.js';
+import { Op } from 'sequelize';
+import userModel from './models/user.js';
+import volunteerModel from './models/volunteer.js';
+import scheduleModel from './models/schedule.js';
 
 export default class DatabaseHandler {
-  constructor(mongoose) {
+  constructor(sequelize) {
+    this.sequelize = sequelize;
+
     // Initialize and add all models to an object for easy access.
     this.models = {
-      User: mongoose.model('User', userSchema(mongoose)),
-      Volunteer: mongoose.model('Volunteer', volunteerSchema(mongoose)),
-      Schedule: mongoose.model('Schedule', scheduleSchema(mongoose)),
+      User: userModel(this.sequelize),
+      Volunteer: volunteerModel(this.sequelize),
+      Schedule: scheduleModel(this.sequelize),
     };
+
+    // Set up relations.
+    this.models.Schedule.hasOne(this.models.Volunteer);
   }
 
-  // TODO write function that collects all schedule entries in the week of the given date.
+  closeConnection() {
+    this.sequelize.close();
+  }
+
   async getScheduleForDateRange(startDate, endDate) {
-    return this.models.Schedule.find({ 
-      date: {
-        $gte: startDate,
-        $lte: endDate
+    return this.models.Schedule.findAll({ 
+      where: {
+        date: {
+          [Op.gte]: startDate,
+          [Op.lte]: endDate,
+        }
       } 
     });
   }
 
   async addScheduleEntry(date, partOfDay, volunteerName) {
-    return this.models.Schedule.insertOne({ date: date, part_of_day: partOfDay, volunteer_name: volunteerName });
+    return this.models.Schedule.create({ date: date, partOfDay: partOfDay, volunteerName: volunteerName });
   }
   
-  // Retrieve a list of all volunteers.
   async getVolunteerNames() {
-    const volunteers = await this.models.Volunteer.find({});
-    const volunteerNames = [];
-    
-    volunteers.forEach((volunteer) => volunteerNames.push(volunteer.name));
-    return volunteerNames;
+    return this.models.Volunteer.findAll({ attributes: ['name'] });
   }
 
   async addVolunteer(name) {
-    return this.models.Volunteer.insertOne({ name: name });
+    return this.models.Volunteer.create({ name: name });
   }
 
   async removeVolunteer(name) {
-    return this.models.Volunteer.deleteOne({ name: name });
+    return this.models.Volunteer.destroy({ where: { name: name } });
   }
 
   async updateVolunteer(old_name, new_name) {
-    return this.models.Volunteer.findOneAndUpdate({ name: old_name }, { name: new_name });
+    return this.models.Volunteer.update({ name: new_name }, { where: { name: old_name }});
   }
 }
-  // Unsure if even needed. StartDate + EndDate could be enough and doing the calculation in the class requesting the data.
-  //getStartOfWeek(date) {
-  //  const MILLISECONDS_PER_DAY = 24 * 60 * 60 * 1000
-  //  return new Date(date - (date.getDay() * MILLISECONDS_PER_DAY));
-  //}
-

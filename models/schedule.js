@@ -1,8 +1,19 @@
-export default (mongoose) => {
-  const ScheduleSchema = mongoose.Schema({
-    date: Date,
-    part_of_day: String,
-    volunteer_name: String,
+import { DataTypes } from 'sequelize';
+
+export default (sequelize) => {
+  const Schedule = sequelize.define('Schedule',
+  {
+    date: {
+      type: DataTypes.DATE,
+      allowNull: false,
+    },
+    partOfDay: {
+      type: DataTypes.ENUM('Morning', 'Afternoon'),
+      allowNull: false,
+    },
+  },
+  {
+    freezeTableName: true,
   });
-  return ScheduleSchema;
+  return Schedule;
 };
