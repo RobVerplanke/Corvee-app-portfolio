@@ -15,7 +15,7 @@ export default class DatabaseHandler {
     };
 
     // Set up relations.
-    this.models.Schedule.hasOne(this.models.Volunteer);
+    this.models.Volunteer.hasOne(this.models.Schedule);
   }
 
   closeConnection() {
@@ -33,23 +33,27 @@ export default class DatabaseHandler {
     });
   }
 
-  async addScheduleEntry(date, partOfDay, volunteerName) {
-    return this.models.Schedule.create({ date: date, partOfDay: partOfDay, volunteerName: volunteerName });
+  async addScheduleEntry(date, partOfDay, volunteerId) {
+    return this.models.Schedule.create({ date: date, partOfDay: partOfDay, VolunteerId: volunteerId });
+  }
+
+  async updateScheduleEntry(date, partOfDay, volunteerId) {
+    return this.models.Schedule.update({ VolunteerId: volunteerId }, { where: { date: date, partOfDay: partOfDay }});
   }
   
-  async getVolunteerNames() {
-    return this.models.Volunteer.findAll({ attributes: ['name'] });
+  async getVolunteers() {
+    return this.models.Volunteer.findAll();
   }
 
   async addVolunteer(name) {
     return this.models.Volunteer.create({ name: name });
   }
 
-  async removeVolunteer(name) {
-    return this.models.Volunteer.destroy({ where: { name: name } });
+  async removeVolunteer(id) {
+    return this.models.Volunteer.destroy({ where: { id: id } });
   }
 
-  async updateVolunteer(old_name, new_name) {
-    return this.models.Volunteer.update({ name: new_name }, { where: { name: old_name }});
+  async updateVolunteer(id, new_name) {
+    return this.models.Volunteer.update({ name: new_name }, { where: { id: id }});
   }
 }
