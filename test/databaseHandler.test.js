@@ -11,8 +11,6 @@ const sequelize = new Sequelize({
   storage: ':memory:',
 });
 const databaseHandler = new DatabaseHandler(sequelize);
-// TODO: Sync is async, could cause problems in the constructor but not sure where to use. It creates tables if they don't exist.
-await sequelize.sync();
 
 // Set up test details for a specific Schedule entry.
 const testId = 1;
@@ -61,6 +59,10 @@ let testUsers = [
 ]
 
 describe('DatabaseHandler', () => {
+  before(async() => {
+    await databaseHandler.sync();
+  });
+
   beforeEach(async () => {
     // Clean the used models before each test.
 //    await databaseHandler.models.Schedule.destroy({ truncate: true, restartIdentity: true });
@@ -169,9 +171,5 @@ describe('DatabaseHandler', () => {
         assert.equal(success, false);
       });
     });
-  });
-
-  after(() => {
-    databaseHandler.closeConnection();
   });
 });

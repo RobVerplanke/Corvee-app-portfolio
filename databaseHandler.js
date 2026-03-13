@@ -19,8 +19,9 @@ export default class DatabaseHandler {
     this.models.Volunteer.hasOne(this.models.Schedule);
   }
 
-  closeConnection() {
-    this.sequelize.close();
+  // Run this to make sure the models and database are syncronized.
+  async sync() {
+    return this.sequelize.sync();
   }
 
   async getScheduleForDateRange(startDate, endDate) {

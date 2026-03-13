@@ -1,11 +1,24 @@
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import sequelize from 'sequelize';
+import Sqlite3 from '@vscode/sqlite3';
+import databaseHandler from 'databaseHandler';
 
 const app = express();
 const port = 3000;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+const sequelize = new Sequelize({
+  dialect: 'sqlite',
+  dialectModule: Sqlite3,
+  // TODO: change this to a proper file location in future.
+  storage: ':memory:',
+  logging: false,
+});
+const databaseHandler = new databaseHandler(sequelize);
+// TODO: Find out if synchronization can be done in a better way.
+await databaseHandler.sync();
 
 // Use static files for CSS-styling
 app.use(express.static(path.join(__dirname, 'public')));
