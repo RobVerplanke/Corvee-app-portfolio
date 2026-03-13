@@ -171,5 +171,21 @@ describe('DatabaseHandler', () => {
         assert.equal(success, false);
       });
     });
+
+    describe.skip(':addUser', () => {
+      it('should add a user with the given details', async () => {
+        const success = await databaseHandler.addUser(testName, testPassword);
+
+        assert.equal(success, true);
+      });
+    });
+
+    describe.skip(':removeUser', () => {
+      it('should remove a user with the given details', async () => {
+        const success = await databaseHandler.removeUser(testName);
+
+        assert.equal(success, true);
+      });
+    });
   });
 });
