@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/pages/agenda.css">
+    <link rel="stylesheet" href="../css/navbar.css">
+    <title>Rooster corvee diensten</title>
+
+    <!-- Dynamicly creates time tables and populates them with the corresponding data -->
+    <script src="../script/agenda/populateAgendaPage.js" defer></script>
+  </head>
+
+  <body>
+
+    <!-- Navigation partial -->
+    <%- include ('../partials/navbar.ejs'); %>
+
+    <!-- Page header -->
+    <header class="page-content">
+      <div class="page-header">
+        <p class="page-label">Corvee dienst</p>
+
+        <!-- Container in which the name of the month is displayed -->
+        <h1 class="page-title"></h1>
+      </div>
+    </header>
+
+    <!-- Container in which the time tables are displayed -->
+    <main class="weeks-grid"></main>
+
+  </body>
+</html>

@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/reset.css">
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/navbar.css">
+  <link rel="stylesheet" href="../css/pages/dashboard.css">
+  
+  <script src="../script/dashboard/dashboard.js" defer></script>
+  
+  <title>Documenten</title>
+</head>
+  
+  <body>
+
+  <!-- Navigation partial -->
+  <%- include ('../partials/navbar.ejs'); %>
+  
+  <div class="page-content">
+    <div class="page-header">
+      <p class="page-label">Corvee dienst</p>
+      <h1 class="page-title">Beheer</h1>
+    </div>
+
+    <div class="sections-grid">
+
+      <!-- === ADD VOLUNTEER === -->
+      <div class="card" id="card-toevoegen">
+        <div class="card-header" onclick="toggleCard('card-toevoegen')">
+          <div class="card-header-left">
+            <div class="card-icon">
+              <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+            </div>
+            <span class="card-title">Vrijwilliger toevoegen</span>
+          </div>
+          <div class="card-toggle">
+            <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="add-naam">Naam</label>
+              <input type="text" id="add-naam" placeholder="Jan Janssen">
+            </div>
+            <div class="form-group">
+              <label for="add-gebruikersnaam">Gebruikersnaam</label>
+              <input type="text" id="add-gebruikersnaam" placeholder="janjanssen">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="add-email">E-mailadres</label>
+              <input type="email" id="add-email" placeholder="jan@example.com">
+            </div>
+            <div class="form-group">
+              <label for="add-rol">Rol</label>
+              <select id="add-rol">
+                <option value="">Selecteer rol</option>
+                <option value="deelnemer">Deelnemer</option>
+                <option value="begeleider">Begeleider</option>
+                <option value="admin">Beheerder</option>
+              </select>
+            </div>
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-primary">Toevoegen</button>
+            <button class="btn btn-secondary">Annuleren</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- === SEARCH OR EDIT VOLUNTEER === -->
+      <div class="card" id="card-zoeken">
+        <div class="card-header" onclick="toggleCard('card-zoeken')">
+          <div class="card-header-left">
+            <div class="card-icon">
+              <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </div>
+            <span class="card-title">Vrijwilliger zoeken &amp; wijzigen</span>
+          </div>
+          <div class="card-toggle">
+            <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="form-group">
+            <label for="zoek-input">Zoek op naam of gebruikersnaam</label>
+            <input type="text" id="zoek-input" placeholder="Typ een naam…">
+          </div>
+
+          <!-- SEARCH RESULTS -->
+          <div class="search-result">
+            <div class="search-result-row">
+              <div>
+                <div class="result-name">Harrie de Vries</div>
+                <div class="result-role">Deelnemer</div>
+              </div>
+              <div class="result-actions">
+                <button class="btn btn-edit">Wijzigen</button>
+                <button class="btn btn-danger">Verwijderen</button>
+              </div>
+            </div>
+            <div class="search-result-row">
+              <div>
+                <div class="result-name">Corrie Bakker</div>
+                <div class="result-role">Begeleider</div>
+              </div>
+              <div class="result-actions">
+                <button class="btn btn-edit">Wijzigen</button>
+                <button class="btn btn-danger">Verwijderen</button>
+              </div>
+            </div>
+            <div class="search-result-row">
+              <div>
+                <div class="result-name">Jan Smit</div>
+                <div class="result-role">Deelnemer</div>
+              </div>
+              <div class="result-actions">
+                <button class="btn btn-edit">Wijzigen</button>
+                <button class="btn btn-danger">Verwijderen</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="divider"></div>
+
+          <!-- SEARCH & EDIT VOLUNTEER -->
+          <p class="subsection-title">Gegevens wijzigen</p>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="edit-naam">Naam</label>
+              <input type="text" id="edit-naam" placeholder="Harrie de Vries" value="Harrie de Vries">
+            </div>
+            <div class="form-group">
+              <label for="edit-gebruikersnaam">Gebruikersnaam</label>
+              <input type="text" id="edit-gebruikersnaam" placeholder="harriedevries" value="harriedevries">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="edit-rol">Rol</label>
+              <select id="edit-rol">
+                <option value="deelnemer" selected>Deelnemer</option>
+                <option value="begeleider">Begeleider</option>
+                <option value="admin">Beheerder</option>
+              </select>
+            </div>
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-primary">Opslaan</button>
+            <button class="btn btn-secondary">Annuleren</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- === CREATE TIMETABLE === -->
+      <div class="card" id="card-aanmaken">
+        <div class="card-header" onclick="toggleCard('card-aanmaken')">
+          <div class="card-header-left">
+            <div class="card-icon">
+              <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            </div>
+            <span class="card-title">Rooster aanmaken</span>
+          </div>
+          <div class="card-toggle">
+            <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="rooster-naam">Naam rooster</label>
+              <input type="text" id="rooster-naam" placeholder="Rooster April">
+            </div>
+            <div class="form-group">
+              <label for="rooster-maand">Maand</label>
+              <select id="rooster-maand">
+                <option>April 2025</option>
+                <option>Mei 2025</option>
+                <option>Juni 2025</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="divider"></div>
+          <p class="subsection-title">Diensten toevoegen</p>
+
+          <div class="rooster-rijen" id="rooster-rijen">
+            <div class="rooster-rij">
+              <input type="date" value="2025-04-01">
+              <select>
+                <option>Ochtend</option>
+                <option>Middag</option>
+              </select>
+              <select>
+                <option>Harrie de Vries</option>
+                <option>Corrie Bakker</option>
+                <option>Jan Smit</option>
+                <option>Truus Visser</option>
+              </select>
+              <button class="btn-remove-row" title="Verwijder rij">
+                <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              </button>
+            </div>
+            <div class="rooster-rij">
+              <input type="date" value="2025-04-01">
+              <select>
+                <option>Ochtend</option>
+                <option selected>Middag</option>
+              </select>
+              <select>
+                <option>Harrie de Vries</option>
+                <option selected>Corrie Bakker</option>
+                <option>Jan Smit</option>
+                <option>Truus Visser</option>
+              </select>
+              <button class="btn-remove-row" title="Verwijder rij">
+                <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <button class="btn-add-row" onclick="addRow()">
+            <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+            Rij toevoegen
+          </button>
+
+          <div class="btn-row">
+            <button class="btn btn-primary">Rooster opslaan</button>
+            <button class="btn btn-secondary">Annuleren</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- === EDIT EXISTING TIMETABLE === -->
+      <div class="card" id="card-wijzigen">
+        <div class="card-header" onclick="toggleCard('card-wijzigen')">
+          <div class="card-header-left">
+            <div class="card-icon">
+              <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            </div>
+            <span class="card-title">Bestaand rooster wijzigen</span>
+          </div>
+          <div class="card-toggle">
+            <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="form-group">
+            <label for="select-rooster">Selecteer rooster</label>
+            <select id="select-rooster">
+              <option>Rooster Maart 2025</option>
+              <option>Rooster Februari 2025</option>
+              <option>Rooster Januari 2025</option>
+            </select>
+          </div>
+
+          <div class="rooster-lijst">
+            <div class="rooster-item">
+              <div>
+                <div class="rooster-item-name">03-03 — Ochtend</div>
+                <div class="rooster-item-meta">Harrie de Vries</div>
+              </div>
+              <div class="result-actions">
+                <button class="btn btn-edit">Wijzigen</button>
+                <button class="btn btn-danger">Verwijderen</button>
+              </div>
+            </div>
+            <div class="rooster-item">
+              <div>
+                <div class="rooster-item-name">03-03 — Middag</div>
+                <div class="rooster-item-meta">Corrie Bakker</div>
+              </div>
+              <div class="result-actions">
+                <button class="btn btn-edit">Wijzigen</button>
+                <button class="btn btn-danger">Verwijderen</button>
+              </div>
+            </div>
+            <div class="rooster-item">
+              <div>
+                <div class="rooster-item-name">04-03 — Ochtend</div>
+                <div class="rooster-item-meta">Jan Smit</div>
+              </div>
+              <div class="result-actions">
+                <button class="btn btn-edit">Wijzigen</button>
+                <button class="btn btn-danger">Verwijderen</button>
+              </div>
+            </div>
+            <div class="rooster-item">
+              <div>
+                <div class="rooster-item-name">04-03 — Middag</div>
+                <div class="rooster-item-meta">Truus Visser</div>
+              </div>
+              <div class="result-actions">
+                <button class="btn btn-edit">Wijzigen</button>
+                <button class="btn btn-danger">Verwijderen</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="btn-row">
+            <button class="btn btn-primary">Wijzigingen opslaan</button>
+            <button class="btn btn-secondary">Annuleren</button>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- .sections-grid -->
+  </div><!-- .page-content -->
+
+</body>
+</html>

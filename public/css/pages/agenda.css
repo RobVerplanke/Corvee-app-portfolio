@@ -1,0 +1,145 @@
+.page-label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+
+.page-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 36px;
+  font-weight: 500;
+  color: var(--text);
+}
+
+/* === WEKEN GRID === */
+.weeks-grid {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 28px;
+  max-width: 980px;
+  margin: 0 auto 48px auto;
+  padding: 0 24px;
+}
+
+.week-block {
+  flex: 1;
+}
+
+.week-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 24px;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 12px;
+  margin-left: 8px;
+  animation: fadeUp 0.4s ease both;
+  
+}
+
+.week-title h2 {
+  padding-left: 10px;
+}
+
+/* === TABEL WRAPPER === */
+.table-wrapper {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  animation: fadeUp 0.4s ease both;
+}
+
+
+/* === TABEL === */
+.table-agenda {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* === THEAD === */
+.table-agenda thead tr {
+  background: var(--accent);
+}
+
+.table-agenda thead th {
+  padding: 12px 20px;
+  text-align: left;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.85);
+}
+
+/* === TBODY === */
+.table-agenda tbody tr {
+  border-bottom: 1px solid var(--border);
+  transition: background 0.15s;
+}
+
+.table-agenda tbody tr:last-child {
+  border-bottom: none;
+}
+
+.table-agenda td {
+  padding: 12px 20px;
+  font-size: 14px;
+  vertical-align: middle;
+}
+
+/* === DATUM CEL === */
+.td-dag {
+  font-weight: 500;
+  white-space: nowrap;
+  color: var(--text);
+  border-right: 1px solid var(--border);
+}
+
+.td-dag .datum {
+  display: block;
+  font-size: 13px;
+  color: var(--text-muted);
+  font-weight: 500;
+  margin-top: 2px;
+}
+
+/* === DAGDEEL BADGE === */
+.badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.badge-ochtend {
+  background: rgba(255, 193, 90, 0.15);
+  color: #a06c00;
+}
+
+.badge-middag {
+  background: rgba(44, 95, 74, 0.1);
+  color: var(--accent);
+}
+
+/* === NAAM CEL === */
+.td-naam {
+  color: var(--text);
+  font-weight: 500;
+}
+
+/* === SCHEIDINGSLIJN TUSSEN DAGEN === */
+.row-first td {
+  border-top: 2px solid var(--border);
+}
+
+/* === KEYFRAMES === */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}

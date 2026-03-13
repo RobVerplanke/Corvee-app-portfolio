@@ -1,0 +1,18 @@
+  :root {
+    --bg: #f4f1ec;
+    --card: #ffffff;
+    --text: #1a1a1a;
+    --nav-bg: #424242;
+    --text-muted: #888;
+    --accent: #2c5f4a;
+    --accent-hover: #214838;
+    --accent-light: rgba(44, 95, 74, 0.08);
+    --border: #e0dbd3;
+    --input-bg: #faf9f7;
+    --shadow: 0 4px 40px rgba(0,0,0,0.08);
+    --radius: 8px;
+    --nav-height: 64px;
+    --danger: #c0392b;
+    --danger-light: rgba(192, 57, 43, 0.08);
+    
+  }

@@ -1,0 +1,86 @@
+.navbar {
+  display: flex;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: var(--nav-height);
+  width: 100%;
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 2px 16px rgba(0,0,0,0.05);
+  padding: 0 32px;
+}
+
+/* === LOGO === */
+.navbar-brand {
+  font-family: 'DM Serif Display', serif;
+  font-size: 20px;
+  color: var(--accent);
+  letter-spacing: 0.01em;
+}
+
+.navbar-spacer {
+  flex: 1;
+}
+
+/* === NAV LINKS === */
+.navbar-nav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.15s;
+  color: var(--text-muted);
+  text-decoration: none;
+}
+
+.nav-item:hover {
+  background: var(--accent-light);
+  color: var(--accent);
+}
+
+.nav-item.active {
+  background: var(--accent-light);
+  color: var(--accent);
+}
+
+.nav-item svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+  transition: fill 0.15s;
+}
+
+.nav-label {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* === LOGOUT (rechts uitgelijnd) === */
+.navbar-logout {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.nav-item.logout:hover {
+  background: rgba(180, 50, 50, 0.08);
+  color: #b43232;
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    padding: 0 6px;
+  }
+}

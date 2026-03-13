@@ -1,0 +1,55 @@
+html, body {
+  min-height: 100%;
+  overflow-x: hidden;
+}
+
+html {
+  overflow-x: hidden;
+}
+
+body {
+  font-family: 'DM Serif', sans-serif;
+  background-color: var(--bg);
+}
+
+.body-centered {
+  height: 100vh;
+}
+
+.page-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+  max-width: 1000px;
+  padding: 48px 24px 48px;
+}
+
+/* === DECORATIEVE ACHTERGROND === */
+
+body::before,
+body::after {
+  content: '';
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+body::before {
+  top: -200px;
+  right: -200px;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(44,95,74,0.08) 0%, transparent 70%);
+}
+
+body::after {
+  bottom: -200px;
+  left: -200px;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(44,95,74,0.06) 0%, transparent 70%);
+}
