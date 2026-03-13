@@ -59,16 +59,19 @@ export default class DatabaseHandler {
     return this.models.Volunteer.update({ name: new_name }, { where: { id: id }});
   }
 
-  async verifyLogin(username, password, salt) {
-    // Hash the password with the salt, request the stored data and compare them to see if it's correct.
-    const hash = crypto.createHash('sha256');
-    const passwordHash = hash.update(password + salt).digest('base64');
+  async verifyLogin(username, password) {
+    // Find the details of the requested user.
     const user = await this.models.User.findOne({ where: { username: username }});
 
+    // If user doesn't exist, login is invalid.
     if (user === null) {
       return false;
     }
 
-    return user.passwordHash == passwordHash && user.passwordSalt == salt;
+    // Hash the given password with the found salt and compare it against the stored hash.
+    const hash = crypto.createHash('sha256');
+    const passwordHash = hash.update(password + user.passwordSalt).digest('base64');
+
+    return user.passwordHash == passwordHash;
   }
 }

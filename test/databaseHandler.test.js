@@ -160,13 +160,13 @@ describe('DatabaseHandler', () => {
   describe(':User', () => {
     describe(':verifyLogin', () => {
       it('should accept a login attempt with correct details', async () => {
-        const success = await databaseHandler.verifyLogin(testUsers[0].username, testPassword, testSalt);
+        const success = await databaseHandler.verifyLogin(testUsers[0].username, testPassword);
         
         assert.equal(success, true);
       });
 
       it('should reject an invalid login attempt', async () => {
-        const success = await databaseHandler.verifyLogin(testName, 'FAKE PASSWORD', 'some salt');
+        const success = await databaseHandler.verifyLogin(testName, 'FAKE PASSWORD');
         
         assert.equal(success, false);
       });
