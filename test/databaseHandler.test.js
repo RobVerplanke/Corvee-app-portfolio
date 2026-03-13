@@ -1,4 +1,5 @@
 import assert from 'node:assert';
+import crypto from 'crypto';
 import Sequelize from 'sequelize';
 import DatabaseHandler from '../databaseHandler.js';
 import Sqlite3 from '@vscode/sqlite3';
@@ -13,10 +14,19 @@ const databaseHandler = new DatabaseHandler(sequelize);
 // TODO: Sync is async, could cause problems in the constructor but not sure where to use. It creates tables if they don't exist.
 await sequelize.sync();
 
+// Set up test details for a specific Schedule entry.
+const testId = 1;
+const testName = 'Julia';
+const testDate = new Date('2026-03-03');
+const testPartOfDay = 'Afternoon';
+const testNewName = 'Koos';
+const testPassword = 'Password';
+const testSalt = 'salty';
+
 let testSchedule = [
   {
-    date: new Date('2026-03-03'),
-    partOfDay: 'Afternoon',
+    date: testDate,
+    partOfDay: testPartOfDay,
   },
   {
     date: new Date('2026-03-04'),
@@ -30,7 +40,7 @@ let testSchedule = [
 
 let testVolunteers = [
   {
-    name: 'Julia',
+    name: testName,
   },
   {
     name: 'Kees',
@@ -40,29 +50,34 @@ let testVolunteers = [
   },
 ];
 
-// Set up test details for a specific Schedule entry.
-let testId = 0;
-let testName = '';
-let testDate = testSchedule[0].date;
-let testPartOfDay = testSchedule[0].partOfDay;
-const testNewName = 'Koos';
+const hash = crypto.createHash('sha256');
+
+let testUsers = [
+  {
+    username: 'Kees',
+    passwordHash: hash.update(testPassword + testSalt).digest('base64'),
+    passwordSalt: testSalt
+  },
+]
 
 describe('DatabaseHandler', () => {
   beforeEach(async () => {
     // Clean the used models before each test.
-    await databaseHandler.models.Schedule.destroy({ truncate: true });
-    await databaseHandler.models.Volunteer.destroy({ truncate: true });
-    
+//    await databaseHandler.models.Schedule.destroy({ truncate: true, restartIdentity: true });
+//    await databaseHandler.models.Volunteer.destroy({ truncate: true, restartIdentity:true });
+//    await databaseHandler.models.User.destroy({ truncate: true, restartIdentity: true });
+    await sequelize.truncate();
+    await sequelize.query('DELETE FROM sqlite_sequence');
+
     // Insert test data and use first volunteer id for tests.
-    const result = await databaseHandler.models.Volunteer.bulkCreate(testVolunteers);
-    testId = result[0].id;
-    testName = result[0].name;
+    await databaseHandler.models.Volunteer.bulkCreate(testVolunteers);
 
     testSchedule.forEach(entry => {
       entry.VolunteerId = testId;
     });
     
     await databaseHandler.models.Schedule.bulkCreate(testSchedule);
+    await databaseHandler.models.User.bulkCreate(testUsers);
   });
   
   describe(':Schedule', () => {
@@ -136,6 +151,22 @@ describe('DatabaseHandler', () => {
 
         assert.equal(result[0].id, testId);
         assert.equal(result[0].name, testNewName);
+      });
+    });
+  });
+
+  describe(':User', () => {
+    describe(':verifyLogin', () => {
+      it('should accept a login attempt with correct details', async () => {
+        const success = await databaseHandler.verifyLogin(testUsers[0].username, testPassword, testSalt);
+        
+        assert.equal(success, true);
+      });
+
+      it('should reject an invalid login attempt', async () => {
+        const success = await databaseHandler.verifyLogin(testName, 'FAKE PASSWORD', 'some salt');
+        
+        assert.equal(success, false);
       });
     });
   });

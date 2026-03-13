@@ -1,4 +1,5 @@
 import { Op } from 'sequelize';
+import crypto from 'crypto';
 import userModel from './models/user.js';
 import volunteerModel from './models/volunteer.js';
 import scheduleModel from './models/schedule.js';
@@ -55,5 +56,18 @@ export default class DatabaseHandler {
 
   async updateVolunteer(id, new_name) {
     return this.models.Volunteer.update({ name: new_name }, { where: { id: id }});
+  }
+
+  async verifyLogin(username, password, salt) {
+    // Hash the password with the salt, request the stored data and compare them to see if it's correct.
+    const hash = crypto.createHash('sha256');
+    const passwordHash = hash.update(password + salt).digest('base64');
+    const user = await this.models.User.findOne({ where: { username: username }});
+
+    if (user === null) {
+      return false;
+    }
+
+    return user.passwordHash == passwordHash && user.passwordSalt == salt;
   }
 }
