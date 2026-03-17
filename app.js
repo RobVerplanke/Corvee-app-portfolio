@@ -1,9 +1,9 @@
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import sequelize from 'sequelize';
+import Sequelize from 'sequelize';
 import Sqlite3 from '@vscode/sqlite3';
-import databaseHandler from 'databaseHandler';
+import DatabaseHandler from './databaseHandler.js';
 
 const app = express();
 const port = 3000;
@@ -16,7 +16,7 @@ const sequelize = new Sequelize({
   storage: ':memory:',
   logging: false,
 });
-const databaseHandler = new databaseHandler(sequelize);
+const databaseHandler = new DatabaseHandler(sequelize);
 // TODO: Find out if synchronization can be done in a better way.
 await databaseHandler.sync();
 
