@@ -1,18 +1,30 @@
   :root {
-    --bg: #f4f1ec;
+    /* Colors */
+    --bg: #D2EBF4;
     --card: #ffffff;
-    --text: #1a1a1a;
-    --nav-bg: #424242;
+    --text: #1C3269;
     --text-muted: #888;
-    --accent: #2c5f4a;
-    --accent-hover: #214838;
-    --accent-light: rgba(44, 95, 74, 0.08);
-    --border: #e0dbd3;
+    --badge-bg: #d38e0d;
+    --nav-bg: #424242;
+    --accent: #1C3269;
+    --accent-hover: #1C3269;
+    --accent-light: #E8F5F9;
+    --border: #b4b3ae;
     --input-bg: #faf9f7;
-    --shadow: 0 4px 40px rgba(0,0,0,0.08);
-    --radius: 8px;
-    --nav-height: 64px;
     --danger: #c0392b;
     --danger-light: rgba(192, 57, 43, 0.08);
-    
+
+    /* Effects */
+    --shadow: 0 4px 40px rgba(0,0,0,0.08);
+    --radius: 8px;
+
+    /* Navigation */
+    --nav-height: 64px;
+
+    /* Fonts */
+    --font-alphapipe-reg: 'AlphaPipe', serif;
+    --font-quicksand-reg: 'QuickSandRegular', serif;
+    --font-quicksand-bold: 'QuicksandBold', serif;
+    --font-form-input: 'DM Sans', sans-serif;
+
   }

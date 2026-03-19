@@ -10,7 +10,7 @@
 }
 
 .page-label {
-  font-size: 11px;
+  font-size: 14px;
   font-weight: 500;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -19,14 +19,13 @@
 }
 
 .page-title {
-  font-family: 'DM Serif Display', serif;
+  font-family: var(--font-quicksand-bold);
   font-size: 32px;
   font-weight: 400;
   color: var(--text);
 }
 
-/* === SECTIES === */
-
+/* === SECTIONS === */
 .sections-grid {
   display: flex;
   flex-direction: column;
@@ -34,7 +33,6 @@
 }
 
 /* === CARD === */
-
 .card {
   background: var(--card);
   border: 1px solid var(--border);
@@ -59,7 +57,6 @@
   justify-content: space-between;
   gap: 16px;
   padding: 20px 24px;
-  border-bottom: 1px solid var(--border);
   background: var(--accent-light);
   cursor: pointer;
   user-select: none;
@@ -93,9 +90,8 @@
 }
 
 .card-title {
-  font-family: 'DM Serif Display', serif;
+  font-family: var(--font-quicksand-bold);
   font-size: 18px;
-  font-weight: 400;
   color: var(--text);
 }
 
@@ -124,8 +120,16 @@
 }
 
 /* === FORM === */
-
 .form-group {
+  font-family: var(--font-quicksand-bold);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 18px;
+}
+
+.form-group input{
+  font-family: var(--font-quicksand-reg);
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -177,8 +181,7 @@ input:focus, select:focus {
   box-shadow: 0 0 0 3px rgba(44,95,74,0.1);
 }
 
-/* === ZOEKRESULTAAT === */
-
+/* === SEARCHRESULTS === */
 .search-result {
   margin-top: 16px;
   border: 1px solid var(--border);
@@ -187,6 +190,7 @@ input:focus, select:focus {
 }
 
 .search-result-row {
+  font-family: var(--font-quicksand-bold);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -221,8 +225,8 @@ input:focus, select:focus {
 }
 
 /* === BUTTONS === */
-
 .btn {
+  font-family: var(--font-quicksand-bold);
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -235,22 +239,7 @@ input:focus, select:focus {
   letter-spacing: 0.02em;
 }
 
-.btn:active { transform: scale(0.98); }
 
-.btn-primary {
-  background: var(--accent);
-  color: white;
-}
-
-.btn-primary:hover { background: var(--accent-hover); }
-
-.btn-secondary {
-  background: transparent;
-  color: var(--accent);
-  border: 1px solid var(--accent);
-}
-
-.btn-secondary:hover { background: var(--accent-light); }
 
 .btn-danger {
   background: transparent;
@@ -286,7 +275,6 @@ input:focus, select:focus {
 }
 
 /* === DIVIDER === */
-
 .divider {
   height: 1px;
   background: var(--border);
@@ -302,9 +290,9 @@ input:focus, select:focus {
   margin-bottom: 16px;
 }
 
-/* === ROOSTER RIJEN === */
-
+/* === AGENDA ROWS === */
 .rooster-rijen {
+  font-family: var(--font-quicksand-bold);
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -315,7 +303,6 @@ input:focus, select:focus {
   display: flex;
   align-items: center;
   gap: 8px;
-  /* flex-wrap: wrap; */
   margin-bottom: 8px;
 }
 
@@ -378,8 +365,7 @@ input:focus, select:focus {
   stroke-linecap: round;
 }
 
-/* === BESTAAND ROOSTER LIJST === */
-
+/* === EXISTING AGENDA === */
 .rooster-lijst {
   display: flex;
   flex-direction: column;
@@ -388,6 +374,7 @@ input:focus, select:focus {
 }
 
 .rooster-item {
+  font-family: var(--font-quicksand-bold);
   display: flex;
   align-items: center;
   justify-content: space-between;

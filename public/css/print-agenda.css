@@ -1,0 +1,163 @@
+
+/* Hide 'part of day' labels that are meant for the print version, badges are used for the front-end */
+.dagdeel-print {
+  display: none !important;
+}
+
+/* === PRINT BUTTON === */
+.btn-print {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  gap: 5px;
+  width: 80px;
+  height: 32px;
+  margin: 0 auto 48px auto;
+
+  background: var(--accent);
+  color: white;
+  border-radius: 4px;
+  animation: fadeUp 0.4s ease both;
+}
+
+.btn-print:hover { 
+  cursor: pointer;
+  background: var(--accent-hover); 
+}
+
+.btn-print svg {
+  width: 16px;
+  height: 16px;
+  fill: white;
+}
+
+/* === KEYFRAMES === */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+
+/* === PAGINA INSTELLINGEN === */
+@page {
+  size: A4 landscape;
+  margin: 1cm;
+}
+
+/* Styling for the printed version of the schedules */
+@media print {
+  .navbar,
+  .btn-print,
+  .page-label {
+    display: none !important;
+  }
+
+  .badge {
+    display: none;
+  }
+
+  .dagdeel-print {
+    display: inline !important;
+    font-size: 14px;
+  }
+
+  .td-naam-middag, 
+  .td-dag,
+  .datum {
+    display: table-cell !important;
+    font-size: 14px;
+  }
+
+  * {
+    animation: none !important;
+    box-shadow: none !important;
+  }
+
+  body {
+    background: white;
+    font-size: 14px;
+  }
+
+  /* === HEADER === */
+  header.page-content {
+    padding: 0;
+    margin-bottom: 6px;
+  }
+
+  .page-title {
+    font-size: 16px;
+    margin-bottom: 6px;
+  }
+
+  /* === 2x2 GRID === */
+  .weeks-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    max-width: 100%;
+    padding: 0;
+    margin: 0;
+  }
+
+  .week-block {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  .week-title {
+    font-size: 12px;
+    margin-bottom: 3px;
+    margin-left: 0;
+  }
+
+  /* === TABEL WRAPPER === */
+  .table-wrapper {
+    border: 1px solid #ccc;
+    border-radius: 2px;
+  }
+
+  /* === TABEL === */
+  .table-agenda thead tr {
+    background: var(--accent) !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .table-agenda thead th {
+    padding: 4px 8px;
+    font-size: 9px;
+    color: white !important;
+  }
+
+  .table-agenda td {
+    padding: 4px 8px;
+    font-size: 14px;
+  }
+
+  /* === VERBERG BADGES === */
+  .badge {
+    display: none;
+  }
+
+  /* === RIJKLEUREN PER DAG === */
+  .table-agenda tbody tr:nth-child(4n+1),
+  .table-agenda tbody tr:nth-child(4n+2) {
+    background: #dff0f7 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .table-agenda tbody tr:nth-child(4n+3),
+  .table-agenda tbody tr:nth-child(4n+4) {
+    background: #ffffff !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* === VERBERG DAGDEEL KOLOM === */
+  /* .table-agenda thead th:nth-child(2),
+  .table-agenda tbody td:nth-child(2) {
+    display: none;
+  } */
+}

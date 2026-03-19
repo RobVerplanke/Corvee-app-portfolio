@@ -1,24 +1,29 @@
+
+.header-content {
+  display: flex;
+  align-items: center;
+}
+
 .page-label {
-  font-size: 11px;
+  font-size: 14px;
   font-weight: 500;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--accent);
-  margin-bottom: 8px;
 }
 
 .page-title {
-  font-family: 'DM Serif Display', serif;
+  font-family: var(--font-quicksand-bold);
   font-size: 36px;
-  font-weight: 500;
   color: var(--text);
 }
 
-/* === WEKEN GRID === */
+/* === WEEKS GRID === */
 .weeks-grid {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+  font-family: var(--font-quicksand-bold);
   gap: 28px;
   max-width: 980px;
   margin: 0 auto 48px auto;
@@ -30,14 +35,12 @@
 }
 
 .week-title {
-  font-family: 'DM Serif Display', serif;
+  font-family: var(--font-quicksand-reg);
   font-size: 24px;
-  font-weight: 500;
   color: var(--text);
   margin-bottom: 12px;
   margin-left: 8px;
   animation: fadeUp 0.4s ease both;
-  
 }
 
 .week-title h2 {
@@ -69,7 +72,7 @@
 .table-agenda thead th {
   padding: 12px 20px;
   text-align: left;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 500;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -87,12 +90,13 @@
 }
 
 .table-agenda td {
+  font-family: var(--font-quicksand-reg);
   padding: 12px 20px;
-  font-size: 14px;
+  font-size: 16px;
   vertical-align: middle;
 }
 
-/* === DATUM CEL === */
+/* === DATE CEL === */
 .td-dag {
   font-weight: 500;
   white-space: nowrap;
@@ -108,7 +112,7 @@
   margin-top: 2px;
 }
 
-/* === DAGDEEL BADGE === */
+/* === PART OF DAY BADGE === */
 .badge {
   display: inline-block;
   padding: 3px 10px;
@@ -119,7 +123,7 @@
 
 .badge-ochtend {
   background: rgba(255, 193, 90, 0.15);
-  color: #a06c00;
+  color: var(--badge-bg);
 }
 
 .badge-middag {
@@ -127,13 +131,13 @@
   color: var(--accent);
 }
 
-/* === NAAM CEL === */
+/* === NAME CEL === */
 .td-naam {
   color: var(--text);
   font-weight: 500;
 }
 
-/* === SCHEIDINGSLIJN TUSSEN DAGEN === */
+/* === DIVIDER BETWEEN DAYS === */
 .row-first td {
   border-top: 2px solid var(--border);
 }
@@ -143,3 +147,6 @@
   from { opacity: 0; transform: translateY(16px); }
   to   { opacity: 1; transform: translateY(0); }
 }
+
+
+

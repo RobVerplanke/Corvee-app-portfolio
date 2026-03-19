@@ -13,15 +13,18 @@
 }
 
 /* === LOGO === */
-.navbar-brand {
-  font-family: 'DM Serif Display', serif;
-  font-size: 20px;
-  color: var(--accent);
-  letter-spacing: 0.01em;
+.navbar-spacer {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  min-width: 100px;
 }
 
-.navbar-spacer {
-  flex: 1;
+.navbar-spacer img {
+  max-height: 30px;
+  min-width: 60px;
+  width: auto;
+  margin-right: 10px;
 }
 
 /* === NAV LINKS === */
@@ -30,6 +33,7 @@
   align-items: center;
   gap: 4px;
 }
+
 .nav-item {
   display: flex;
   flex-direction: column;
@@ -61,17 +65,20 @@
 }
 
 .nav-label {
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 500;
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
 
-/* === LOGOUT (rechts uitgelijnd) === */
+/* === LOGOUT === */
 .navbar-logout {
   flex: 1;
   display: flex;
   justify-content: flex-end;
+  align-items: center;
+  min-width: 80px;
+  margin-left: 30px;
 }
 
 .nav-item.logout:hover {
@@ -79,8 +86,24 @@
   color: #b43232;
 }
 
-@media (max-width: 480px) {
+@media (max-width: 500px) {
   .navbar {
     padding: 0 6px;
   }
+}
+
+/* Hide logo when screen gets to small */
+@media (max-width: 500px) {
+  .navbar-spacer {
+    display: none;
+  }
+  .navbar-spacer img {
+    display: none;
+  }
+  .navbar {
+    padding-left: 20px;
+  }
+  .navbar-logout {
+    margin-left: 30px;
+}
 }

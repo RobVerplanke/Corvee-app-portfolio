@@ -1,3 +1,33 @@
+/* === FONTS === */
+@font-face {
+  font-family: 'AlphaPipe';
+  src: url('/fonts/BCAlphapipeTEST-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'AlphaPipeSemiBold';
+  src: url('/fonts/BCAlphapipeTEST-SemiBold.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'QuicksandBold';
+  src: url('/fonts/Quicksand-Bold.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'QuicksandRegular';
+  src: url('/fonts/Quicksand-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* === LAYOUT === */
 html, body {
   min-height: 100%;
   overflow-x: hidden;
@@ -8,7 +38,7 @@ html {
 }
 
 body {
-  font-family: 'DM Serif', sans-serif;
+  font-family: var(--font-alphapipe-reg);
   background-color: var(--bg);
 }
 
@@ -27,15 +57,14 @@ body {
   padding: 48px 24px 48px;
 }
 
-/* === DECORATIEVE ACHTERGROND === */
-
+/* === DECORATIVE BACKGROUND === */
 body::before,
 body::after {
   content: '';
   position: fixed;
   border-radius: 50%;
   pointer-events: none;
-  z-index: 0;
+  z-index: -1;
 }
 
 body::before {
@@ -43,7 +72,7 @@ body::before {
   right: -200px;
   width: 600px;
   height: 600px;
-  background: radial-gradient(circle, rgba(44,95,74,0.08) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(100, 181, 210, 0.45) 0%, transparent 70%);
 }
 
 body::after {
@@ -51,5 +80,26 @@ body::after {
   left: -200px;
   width: 500px;
   height: 500px;
-  background: radial-gradient(circle, rgba(44,95,74,0.06) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(70, 150, 190, 0.25) 0%, transparent 70%);
 }
+
+/* === BUTTONS === */
+
+.btn:active { transform: scale(0.98); }
+
+.btn-primary {
+  background: var(--accent);
+  color: white;
+  border: 1px solid var(--accent);
+}
+
+.btn-primary:hover { background: var(--accent-hover); }
+
+.btn-secondary {
+  background: transparent;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+}
+
+.btn-secondary:hover { background: var(--accent-light); }
+
