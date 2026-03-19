@@ -14,9 +14,10 @@ const databaseHandler = new DatabaseHandler(sequelize);
 
 // Set up test details for a specific Schedule entry.
 const testId = 1;
+const testIdMorning = 2;
+const testIdAfternoon = 3;
 const testName = 'Julia';
 const testDate = new Date('2026-03-03');
-const testPartOfDay = 'Afternoon';
 const testNewName = 'Koos';
 const testPassword = 'Password';
 const testSalt = 'salty';
@@ -24,15 +25,18 @@ const testSalt = 'salty';
 let testSchedule = [
   {
     date: testDate,
-    partOfDay: testPartOfDay,
   },
   {
     date: new Date('2026-03-04'),
-    partOfDay: 'Morning',
+  },
+  {
+    date: new Date('2026-03-09'),
+  },
+  {
+    date: new Date('2026-03-10'),
   },
   {
     date: new Date('2026-04-05'),
-    partOfDay: 'Morning',
   },
 ];
 
@@ -75,7 +79,8 @@ describe('DatabaseHandler', () => {
     await databaseHandler.models.Volunteer.bulkCreate(testVolunteers);
 
     testSchedule.forEach(entry => {
-      entry.VolunteerId = testId;
+      entry.morningId = testIdMorning;
+      entry.afternoonId = testIdAfternoon;
     });
     
     await databaseHandler.models.Schedule.bulkCreate(testSchedule);
@@ -92,25 +97,38 @@ describe('DatabaseHandler', () => {
         assert.equal(result[1].date.valueOf(), expectedResult[1].date.valueOf());
       });
     });
+
+    describe(':getScheduleForMonth', () => {
+      it.skip('should return the schedule for a given month', async () => {
+        const expectedResult = [testSchedule[0], testSchedule[1], testSchedule[2], testSchedule[3]];
+        const result = await databaseHandler.getScheduleForMonth(new Date(2026, 2));
+
+        assert.equal(result.length, expectedResult.length);
+
+        for(let i = 0; i < expectedResult.length; i++) {
+          assert.equal(result[i].date, expectedResult[i].date);
+        }
+      })
+    })
       
     describe(':addScheduleEntry', () => {
       it('should add a new schedule entry', async () => {
-        const insertedDate = new Date('2026-03-10');
-        await databaseHandler.addScheduleEntry(insertedDate, testPartOfDay, testId);
+        const insertedDate = new Date('2026-04-10');
+        await databaseHandler.addScheduleEntry(insertedDate, { morning: testIdMorning, afternoon: testIdAfternoon});
         const result = await databaseHandler.models.Schedule.findAll({ where: { date: insertedDate }});
 
         assert.equal(result[0].date.valueOf(), insertedDate.valueOf());
-        assert.equal(result[0].VolunteerId, testId);
+        assert.equal(result[0].morningId, testIdMorning);
+        assert.equal(result[0].afternoonId, testIdAfternoon);
       });
     });
 
     describe(':updateScheduleEntry', () => {
       it('should update the volunteer on an existing schedule entry', async () => {
-        const updatedVolunteer = await databaseHandler.models.Volunteer.findOne({ where: { name: testVolunteers[1].name }});
-        await databaseHandler.updateScheduleEntry(testDate, testPartOfDay, updatedVolunteer.id);
-        const result = await databaseHandler.models.Schedule.findAll({ where: { date: testDate, partOfDay: testPartOfDay }});
+        await databaseHandler.updateScheduleEntry(testDate, { morning: testId });
+        const result = await databaseHandler.models.Schedule.findAll({ where: { date: testDate }});
 
-        assert.equal(result[0].VolunteerId, updatedVolunteer.id);
+        assert.equal(result[0].morningId, testId);
       });
     });
   });

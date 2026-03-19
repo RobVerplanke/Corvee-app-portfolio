@@ -7,10 +7,6 @@ export default (sequelize) => {
       type: DataTypes.DATE,
       allowNull: false,
     },
-    partOfDay: {
-      type: DataTypes.ENUM('Morning', 'Afternoon'),
-      allowNull: false,
-    },
   },
   {
     freezeTableName: true,
