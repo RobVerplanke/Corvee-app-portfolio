@@ -1,11 +1,11 @@
 // Open or close one of the content cards on the dashboard page after clicking on it
-export function toggleCard(id) {
+function toggleCard(id) {
  const card = document.getElementById(id);
  card.classList.toggle('open');
 }
 
 // Add a new row with input elements to be able to add new time tables
-export function addRow() {
+function addRow() {
   const container = document.getElementById('rooster-rijen');
   const rij = document.createElement('div');
   rij.className = 'rooster-rij';
