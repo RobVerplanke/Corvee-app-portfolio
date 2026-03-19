@@ -8,29 +8,52 @@
     <link rel="stylesheet" href="../css/global.css">
     <link rel="stylesheet" href="../css/pages/agenda.css">
     <link rel="stylesheet" href="../css/navbar.css">
-    <title>Rooster corvee diensten</title>
-
-    <!-- Dynamicly creates time tables and populates them with the corresponding data -->
-    <script src="../script/agenda/populateAgendaPage.js" defer></script>
+    <link rel="stylesheet" href="../css/print-agenda.css">
+    <title>Corveerooster</title>
   </head>
 
   <body>
 
-    <!-- Navigation partial -->
+    <!-- NAVIGATION PARTIAL -->
     <%- include ('../partials/navbar.ejs'); %>
-
-    <!-- Page header -->
+    
+    <!-- HEADER -->
     <header class="page-content">
+      <!-- Container in which the name of the month is displayed -->
       <div class="page-header">
         <p class="page-label">Corvee dienst</p>
-
-        <!-- Container in which the name of the month is displayed -->
-        <h1 class="page-title"></h1>
       </div>
+      <h1 class="page-title"><%- tableMonth %></h1>
     </header>
-
+    
     <!-- Container in which the time tables are displayed -->
-    <main class="weeks-grid"></main>
+    <main class="weeks-grid">
+      <% weeks.forEach( week => { %>
+      <div class="week-block">
+        <h2 class="week-title"><%- week.title %></h2>
+        <div class="table-wrapper">
+          <table class="table-agenda">
+            <colgroup>
+              <col class="col-datum">
+              <col class="col-dagdeel">
+              <col class="col-naam">
+            </colgroup>
+            <thead>
+              <tr><th>Datum</th><th>Dagdeel</th><th>Naam</th></tr>
+            </thead>
+            <tbody><%- week.rows %></tbody>
+          </table>
+        </div>
+      </div>
+      <% }) %>
+
+    </main>
+
+    <!-- Print button -->
+    <button class="btn-print" onclick="window.print()">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M640-640v-160H320v160h-66.67v-226.67h453.34V-640H640Zm-493.33 80h666.66H146.67Zm536.66 96.67q14 0 23.67-9.67 9.67-9.67 9.67-23.67 0-14-9.67-23.66-9.67-9.67-23.67-9.67-14 0-23.66 9.67-9.67 9.66-9.67 23.66 0 14 9.67 23.67 9.66 9.67 23.66 9.67ZM640-160v-160H320v160h320Zm66.67 66.67H253.33v-160H120v-246.64q0-43.7 30.17-73.87 30.17-30.16 73.83-30.16h512q43.67 0 73.83 30.16Q840-543.67 840-500v246.67H706.67v160Z"/></svg>
+      Print
+    </button>
 
   </body>
 </html>

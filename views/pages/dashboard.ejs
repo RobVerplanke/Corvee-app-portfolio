@@ -9,14 +9,14 @@
   <link rel="stylesheet" href="../css/navbar.css">
   <link rel="stylesheet" href="../css/pages/dashboard.css">
   
-  <script src="../script/dashboard/dashboard.js" defer></script>
+  <script src="/js/dashboard/dashboard.js" defer></script>
   
-  <title>Documenten</title>
+  <title>Corveerooster Beheer</title>
 </head>
   
-  <body>
+<body>
 
-  <!-- Navigation partial -->
+  <!-- NAVIGATION PARTIAL -->
   <%- include ('../partials/navbar.ejs'); %>
   
   <div class="page-content">
@@ -27,9 +27,9 @@
 
     <div class="sections-grid">
 
-      <!-- === ADD VOLUNTEER === -->
-      <div class="card" id="card-toevoegen">
-        <div class="card-header" onclick="toggleCard('card-toevoegen')">
+      <!-- ADD VOLUNTEER -->
+      <div class="card" id="card-add">
+        <div class="card-header" onclick="toggleCard('card-add')">
           <div class="card-header-left">
             <div class="card-icon">
               <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
@@ -43,10 +43,8 @@
         <div class="card-body">
           <div class="form-row">
             <div class="form-group">
-              <label for="add-naam">Naam</label>
-              <input type="text" id="add-naam" placeholder="Jan Janssen">
-            </div>
-            <div class="form-group">
+              <label for="add-name">Naam</label>
+              <input type="text" id="add-name" placeholder="Jan Janssen">
               <label for="add-gebruikersnaam">Gebruikersnaam</label>
               <input type="text" id="add-gebruikersnaam" placeholder="janjanssen">
             </div>
@@ -54,7 +52,7 @@
           <div class="form-row">
             <div class="form-group">
               <label for="add-email">E-mailadres</label>
-              <input type="email" id="add-email" placeholder="jan@example.com">
+              <input type="email" id="add-email" placeholder="jan@example.com"></br>
             </div>
             <div class="form-group">
               <label for="add-rol">Rol</label>
@@ -73,9 +71,9 @@
         </div>
       </div>
 
-      <!-- === SEARCH OR EDIT VOLUNTEER === -->
-      <div class="card" id="card-zoeken">
-        <div class="card-header" onclick="toggleCard('card-zoeken')">
+      <!-- SEARCH OR EDIT VOLUNTEER -->
+      <div class="card" id="card-search">
+        <div class="card-header" onclick="toggleCard('card-search')">
           <div class="card-header-left">
             <div class="card-icon">
               <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
@@ -88,8 +86,8 @@
         </div>
         <div class="card-body">
           <div class="form-group">
-            <label for="zoek-input">Zoek op naam of gebruikersnaam</label>
-            <input type="text" id="zoek-input" placeholder="Typ een naam…">
+            <label for="search-input">Zoek op naam of gebruikersnaam</label>
+            <input type="text" id="search-input" placeholder="Typ een naam…">
           </div>
 
           <!-- SEARCH RESULTS -->
@@ -132,10 +130,8 @@
           <p class="subsection-title">Gegevens wijzigen</p>
           <div class="form-row">
             <div class="form-group">
-              <label for="edit-naam">Naam</label>
-              <input type="text" id="edit-naam" placeholder="Harrie de Vries" value="Harrie de Vries">
-            </div>
-            <div class="form-group">
+              <label for="edit-name">Naam</label>
+              <input type="text" id="edit-name" placeholder="Harrie de Vries" value="Harrie de Vries">
               <label for="edit-gebruikersnaam">Gebruikersnaam</label>
               <input type="text" id="edit-gebruikersnaam" placeholder="harriedevries" value="harriedevries">
             </div>
@@ -157,9 +153,9 @@
         </div>
       </div>
 
-      <!-- === CREATE TIMETABLE === -->
-      <div class="card" id="card-aanmaken">
-        <div class="card-header" onclick="toggleCard('card-aanmaken')">
+      <!-- CREATE TIMETABLE -->
+      <div class="card" id="card-create">
+        <div class="card-header" onclick="toggleCard('card-create')">
           <div class="card-header-left">
             <div class="card-icon">
               <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
@@ -173,8 +169,8 @@
         <div class="card-body">
           <div class="form-row">
             <div class="form-group">
-              <label for="rooster-naam">Naam rooster</label>
-              <input type="text" id="rooster-naam" placeholder="Rooster April">
+              <label for="rooster-name">Naam rooster</label>
+              <input type="text" id="rooster-name" placeholder="Rooster April">
             </div>
             <div class="form-group">
               <label for="rooster-maand">Maand</label>
@@ -236,7 +232,7 @@
         </div>
       </div>
 
-      <!-- === EDIT EXISTING TIMETABLE === -->
+      <!-- EDIT EXISTING TIMETABLE -->
       <div class="card" id="card-wijzigen">
         <div class="card-header" onclick="toggleCard('card-wijzigen')">
           <div class="card-header-left">
@@ -312,5 +308,5 @@
     </div><!-- .sections-grid -->
   </div><!-- .page-content -->
 
-</body>
+  </body>
 </html>
