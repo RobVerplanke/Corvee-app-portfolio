@@ -46,10 +46,10 @@ const testData = {
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import sequelize from 'sequelize';
+import Sequelize from 'sequelize';
 import Sqlite3 from '@vscode/sqlite3';
-import databaseHandler from 'databaseHandler';
-import toggleCard from 'script/dashboard/dashboard.js'; // WERKT NIET
+import DatabaseHandler from './databaseHandler.js';
+//import toggleCard from './script/dashboard/dashboard.js'; // WERKT NIET
 
 const app = express();
 const port = 3000;
