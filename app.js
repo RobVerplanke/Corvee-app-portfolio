@@ -1,9 +1,10 @@
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import Sequelize from 'sequelize';
+import sequelize from 'sequelize';
 import Sqlite3 from '@vscode/sqlite3';
-import DatabaseHandler from './databaseHandler.js';
+import databaseHandler from 'databaseHandler';
+import toggleCard from 'script/dashboard/dashboard.js'; // WERKT NIET
 
 const app = express();
 const port = 3000;
@@ -39,9 +40,9 @@ app.get('/agenda', (req, res) => {
   res.render('pages/agenda', { activePage: 'agenda'});
 });
 
-// Admin dashboard page
+// Admin dashboard page + add the JS function that toggles open/close status
 app.get('/dashboard', (req, res) => {
-  res.render('pages/dashboard', { activePage: 'dashboard'});
+  res.render('pages/dashboard', { activePage: 'dashboard', toggleCard: toggleCard});
 });
 
 // Instructions page
