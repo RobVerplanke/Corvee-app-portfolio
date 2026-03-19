@@ -76,7 +76,7 @@ describe('DatabaseHandler', () => {
     await sequelize.query('DELETE FROM sqlite_sequence');
 
     // Insert test data and use first volunteer id for tests.
-    await databaseHandler.models.Volunteer.bulkCreate(testVolunteers);
+    const volunteers = await databaseHandler.models.Volunteer.bulkCreate(testVolunteers);
 
     testSchedule.forEach(entry => {
       entry.morningId = testIdMorning;
@@ -98,15 +98,15 @@ describe('DatabaseHandler', () => {
       });
     });
 
-    describe(':getScheduleForMonth', () => {
-      it.skip('should return the schedule for a given month', async () => {
-        const expectedResult = [testSchedule[0], testSchedule[1], testSchedule[2], testSchedule[3]];
-        const result = await databaseHandler.getScheduleForMonth(new Date(2026, 2));
+    describe(':getScheduleForWeek', () => {
+      it('should return the schedule for a given week', async () => {
+        const expectedResult = [testSchedule[2], testSchedule[3]];
+        const result = await databaseHandler.getScheduleForWeek(11);
 
-        assert.equal(result.length, expectedResult.length);
+        assert.equal(result.entries.length, expectedResult.length);
 
         for(let i = 0; i < expectedResult.length; i++) {
-          assert.equal(result[i].date, expectedResult[i].date);
+          assert.equal(result.entries[i].date.valueOf(), expectedResult[i].date.valueOf());
         }
       })
     })

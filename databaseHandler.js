@@ -1,6 +1,6 @@
 import { Op } from 'sequelize';
 import crypto from 'crypto';
-import { getWeekNumber } from './helpers.js'
+import { getWeekNumber, getMondayFromWeekNumber } from './helpers.js'
 import userModel from './models/user.js';
 import volunteerModel from './models/volunteer.js';
 import scheduleModel from './models/schedule.js';
@@ -17,8 +17,8 @@ export default class DatabaseHandler {
     };
 
     // Set up relations.
-    this.models.Volunteer.hasOne(this.models.Schedule, { as: 'morning'});
-    this.models.Volunteer.hasOne(this.models.Schedule, { as: 'afternoon'});
+    this.models.Schedule.belongsTo(this.models.Volunteer, { as: 'morning'});
+    this.models.Schedule.belongsTo(this.models.Volunteer, { as: 'afternoon'});
   }
 
   // Run this to make sure the models and database are syncronized.
@@ -33,16 +33,17 @@ export default class DatabaseHandler {
           [Op.gte]: startDate,
           [Op.lte]: endDate,
         }
-      } 
+      },
     });
   }
 
-  // TODO: Works with 4 weeks, rename?
-  async getScheduleForMonth(month) {
-    // TODO: decide how four weeks are calculated.
-    const startDate = new Date();
-    const endDate = new Date();
-    const retrievedSchedule = this.models.Schedule.findAll({
+  async getScheduleForWeek(weekNr) {
+    // Get the start date from the weekNr.
+    const startDate = getMondayFromWeekNumber(weekNr);
+    // Get the end date by adding 4 days to equal Friday.
+    const endDate = new Date(startDate.valueOf());
+    endDate.setDate(endDate.getDate() + 4);
+    const retrievedSchedule = await this.models.Schedule.findAll({
       where: {
         date: {
           [Op.gte]: startDate,
@@ -52,24 +53,20 @@ export default class DatabaseHandler {
     });
     
     // Build the restructured schedule from the retrieved data.
-    let restructuredSchedule = {};
-    for (var i = 0; i < retrievedSchedule.length; i++) {
-      // There are 5 days per work week.
-      const weekNr = Math.floor(i / 5);
-
-      // Add the ISO 8601 week number to the week entry.
-      if (i % 5 == 0) {
-        restructuredSchedule.weeks[weekNr].weekNr = getWeekNumber(retrievedSchedule[i].date);
-      }
-      
-      // Create an entry for this day.
-      restructuredSchedule.weeks[weekNr].entries[i] = {
-        date: retrievedSchedule[i].date,
-        morning: retrievedSchedule[i].morningId,
-        afternoon: retrievedSchedule[i].afternoonId,
-      };
+    const restructuredSchedule = {
+      weekNr: weekNr,
+      entries: [],
     }
 
+    for (var i = 0; i < retrievedSchedule.length; i++) {
+      // Create an entry for this day.
+      restructuredSchedule.entries[i] = {
+        date: retrievedSchedule[i].date,
+        morning: await retrievedSchedule[i].getMorning(),
+        afternoon: await retrievedSchedule[i].getAfternoon(),
+      };
+    }
+    console.log(restructuredSchedule);
     return restructuredSchedule;
   }
 

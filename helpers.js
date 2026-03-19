@@ -23,6 +23,26 @@ function getWeekNumber(date) {
   return Math.ceil((((nearestThursday.valueOf() - firstThursday.valueOf()) / MILLISECONDS_PER_DAY) + 1) / DAYS_PER_WEEK);
 }
 
+/**
+  * Returns the first Monday as Date for the given ISO 8601 format week number. 
+  *
+  * @param {int} weekNr - The week number to find the associated Monday for.
+  */
+function getMondayFromWeekNumber(weekNr) {
+  let firstDay = new Date(new Date(Date.now()).getFullYear(), 0 , 1);
+  if (firstDay.getDay() == 1) {
+    // If 1st of Jan is Monday, the monday of given weekNr is a multiple of 7.
+    firstDay.setDate(1 + (weekNr - 1) * 7);
+  } else if (firstDay.getDay() == 0) {
+    // It's Sunday so add 1 day and then calculate the requested Monday.
+    firstDay.setDate(2 + (weekNr - 1) * 7);
+  } else if (firstDay.getDay() > 1) {
+    // If it's any other day, add a week and subtract the extra days back to the next monday.
+    firstDay.setDate(1 + (8 - firstDay.getDay()) + ((weekNr - 2) * 7))
+  }
+  return firstDay;
+}
+
 export {
-  getWeekNumber
+  getWeekNumber, getMondayFromWeekNumber
 }
