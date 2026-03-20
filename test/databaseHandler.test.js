@@ -103,10 +103,10 @@ describe('DatabaseHandler', () => {
         const expectedResult = [testSchedule[2], testSchedule[3]];
         const result = await databaseHandler.getScheduleForWeek(11);
 
-        assert.equal(result.entries.length, expectedResult.length);
+        assert.equal(result.length, expectedResult.length);
 
         for(let i = 0; i < expectedResult.length; i++) {
-          assert.equal(result.entries[i].date.valueOf(), expectedResult[i].date.valueOf());
+          assert.equal(result[i].date.valueOf(), expectedResult[i].date.valueOf());
         }
       })
     })

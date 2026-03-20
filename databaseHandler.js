@@ -1,3 +1,4 @@
+/** @module databaseHandler **/ 
 import { Op } from 'sequelize';
 import crypto from 'crypto';
 import { getWeekNumber, getMondayFromWeekNumber } from './helpers.js'
@@ -5,14 +6,27 @@ import userModel from './models/user.js';
 import volunteerModel from './models/volunteer.js';
 import scheduleModel from './models/schedule.js';
 
-export default class DatabaseHandler {
-  /**
-   * Wraps around a given sequelize object to handle database requests.
-   * It initializes and holds the models and sets relations.
-   * 
-   * @constructor
-   * @param {Sequelize} sequelize - The instance of sequelize to wrap around. 
-   */
+/**
+ * @typedef module:databaseHandler.Day
+ * @type {Object}
+ * @property {Date} date Date of the day.
+ * @property {Model} morning The instance of the volunteer for the morning shift.
+ * @property {Model} afternoon The instance of the volunteer for the afternoon shift.
+ */
+
+/** 
+ * Wraps around the sequelize instance to provide a layer between the app and the database.
+ * @class DatabaseHandler
+ * @type {Object}
+ *
+ * @param {Sequelize} sequelize - The instance of sequelize to wrap around. 
+ * @property {Sequelize} sequelize The instance of sequelize passed in the constructor.
+ * @property {Object} models An object containing the various registered models.
+ * @property {Model} models.User The User model.
+ * @property {Model} models.Volunteer The Volunteer model.
+ * @property {Model} models.Schedule The Schedule model.
+ */
+class DatabaseHandler {
   constructor(sequelize) {
     this.sequelize = sequelize;
 
@@ -63,12 +77,7 @@ export default class DatabaseHandler {
    * 
    * @param {number} - The requested week number.
    *
-   * @returns {Object} week - The requested week data.
-   * @returns {number} week.weekNr - The week number of the requested week.        TODO: Possibly remove.
-   * @returns {Object[]} week.entries - An array containing each day of the week.
-   * @returns {Date} week.entries[].date - The date of the week day.
-   * @returns {string} week.entries[].morning - The name of the volunteer for the morning.
-   * @returns {string} week.entries[].afternoon - The name of the volunteer for the afternoon.
+   * @returns {module:databaseHandler.Day[]} week - The requested week data as an array of Day data.
    */
   async getScheduleForWeek(weekNr) {
     // Get the start date from the weekNr.
@@ -85,19 +94,15 @@ export default class DatabaseHandler {
       }
     });
     
-    // Build the restructured schedule from the retrieved data.
-    const week = {
-      weekNr: weekNr,
-      entries: [],
-    }
+    let week = [];
 
     for (var i = 0; i < retrievedSchedule.length; i++) {
       // Create an entry for this day.
-      week.entries[i] = {
+      week.push({
         date: retrievedSchedule[i].date,
         morning: await retrievedSchedule[i].getMorning(),
         afternoon: await retrievedSchedule[i].getAfternoon(),
-      };
+      });
     }
     return week;
   }
@@ -210,3 +215,5 @@ export default class DatabaseHandler {
     return user.passwordHash == passwordHash;
   }
 }
+
+export default DatabaseHandler;
