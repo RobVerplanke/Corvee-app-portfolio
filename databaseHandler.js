@@ -6,6 +6,13 @@ import volunteerModel from './models/volunteer.js';
 import scheduleModel from './models/schedule.js';
 
 export default class DatabaseHandler {
+  /**
+   * Wraps around a given sequelize object to handle database requests.
+   * It initializes and holds the models and sets relations.
+   * 
+   * @constructor
+   * @param {Sequelize} sequelize - The instance of sequelize to wrap around. 
+   */
   constructor(sequelize) {
     this.sequelize = sequelize;
 
@@ -21,11 +28,24 @@ export default class DatabaseHandler {
     this.models.Schedule.belongsTo(this.models.Volunteer, { as: 'afternoon'});
   }
 
-  // Run this to make sure the models and database are syncronized.
+  /**
+   * Synronizes the models with the existing tables, creates new tables if not existing.
+   * Simply passes the request on to sequelize.
+   *
+   * @returns {Promise} The promise received from sequelize.
+   */
   async sync() {
     return this.sequelize.sync();
   }
 
+  /**
+   * Retrieves the schedule for the requested date range.
+   *
+   * @param {Date} startDate - The start of the data range (inclusive)
+   * @param {Date} endDate - The end of the data range (inclusive)
+   *
+   * @returns {Promise<Model[]>} The promise made by sequelize which will resolve to the found array of data.
+   */
   async getScheduleForDateRange(startDate, endDate) {
     return this.models.Schedule.findAll({ 
       where: {
@@ -37,6 +57,19 @@ export default class DatabaseHandler {
     });
   }
 
+  /**
+   * Retrieves the schedule for the requested week using the ISO 8601 format.
+   * The result is specifically for display on the agenda page.
+   * 
+   * @param {number} - The requested week number.
+   *
+   * @returns {Object} week - The requested week data.
+   * @returns {number} week.weekNr - The week number of the requested week.        TODO: Possibly remove.
+   * @returns {Object[]} week.entries - An array containing each day of the week.
+   * @returns {Date} week.entries[].date - The date of the week day.
+   * @returns {string} week.entries[].morning - The name of the volunteer for the morning.
+   * @returns {string} week.entries[].afternoon - The name of the volunteer for the afternoon.
+   */
   async getScheduleForWeek(weekNr) {
     // Get the start date from the weekNr.
     const startDate = getMondayFromWeekNumber(weekNr);
@@ -53,23 +86,32 @@ export default class DatabaseHandler {
     });
     
     // Build the restructured schedule from the retrieved data.
-    const restructuredSchedule = {
+    const week = {
       weekNr: weekNr,
       entries: [],
     }
 
     for (var i = 0; i < retrievedSchedule.length; i++) {
       // Create an entry for this day.
-      restructuredSchedule.entries[i] = {
+      week.entries[i] = {
         date: retrievedSchedule[i].date,
         morning: await retrievedSchedule[i].getMorning(),
         afternoon: await retrievedSchedule[i].getAfternoon(),
       };
     }
-    console.log(restructuredSchedule);
-    return restructuredSchedule;
+    return week;
   }
 
+  /**
+   * Adds a new schedule entry to the database.
+   *
+   * @param {Date} data - The date to be added to the database.
+   * @param {Object} volunteerData - The data for the volunteer slots.
+   * @param {Model|number} volunteerData.morning - The model instance or raw id to be associated with the morning shift.
+   * @param {Model|number} volunteerData.afternoon - The model instance or raw id to be associated with the afternoon shift.
+   *
+   * @returns {Promise<Model>} - The promise made by sequelize with the newly created object on success.
+   */
   async addScheduleEntry(date, volunteerData) {
     const morning = volunteerData.morning || null;
     const afternoon = volunteerData.afternoon || null;
@@ -77,6 +119,16 @@ export default class DatabaseHandler {
     return this.models.Schedule.create({ date: date, morningId: morning, afternoonId: afternoon });
   }
 
+  /**
+   * Updates an entry in the schedules table.
+   *
+   * @param {Date} date - The date to change data of.
+   * @param {Object} changedData - The data to be changed.
+   * @param {Model|number} changedData.morning - The model instance or raw id to replace the current morning data.
+   * @param {Model|number} changedData.afternoon - The model instance or raw id to replace the current afternoon data.
+   *
+   * @returns {Promise<number[]>} - The promise made by sequelize with the affected rows as result.
+   */
   async updateScheduleEntry(date, changedData) {
     // TODO: handle changedData being incorrect.
     
@@ -91,22 +143,57 @@ export default class DatabaseHandler {
     return this.models.Schedule.update(queryOptions, { where: { date: date }});
   }
   
+  /**
+   * Retrieves all volunteers in the database table.
+   *
+   * @returns {Promise<Model[]>} - The promise made by sequelize resulting in an array with all volunteers.
+   */
   async getVolunteers() {
     return this.models.Volunteer.findAll();
   }
 
+  /**
+   * Adds a new volunteer to the database.
+   *
+   * @param {string} name - The name of the new volunteer.
+   *
+   * @returns {Promise<Model>} - The promise made by sequelize with the newly created object on success.
+   */
   async addVolunteer(name) {
     return this.models.Volunteer.create({ name: name });
   }
 
+  /**
+   * Removes a volunteer.
+   *
+   * @param {number} id - The id of the volunteer to be removed.
+   * 
+   * @returns {Promise<number>} - The promise made by sequelize with the number of affected rows as result.
+   */
   async removeVolunteer(id) {
     return this.models.Volunteer.destroy({ where: { id: id } });
   }
 
+  /**
+   * Updates a volunteer's name.
+   *
+   * @param {number} id - The id of the volunteer to be renamed.
+   * @param {string} new_name - The new name for the volunteer.
+   * 
+   * @returns {Promise<number[]>} - The promise made by sequelize with the number of affected rows as result.
+   */
   async updateVolunteer(id, new_name) {
     return this.models.Volunteer.update({ name: new_name }, { where: { id: id }});
   }
 
+  /**
+   * Verifies a login attempt
+   *
+   * @param {string} username - The username for the login attempt.
+   * @param {string} password - The password for the login attempt.
+   *
+   * @returns {boolean} - Whether the login attempt is successful or not.
+   */
   async verifyLogin(username, password) {
     // Find the details of the requested user.
     const user = await this.models.User.findOne({ where: { username: username }});
