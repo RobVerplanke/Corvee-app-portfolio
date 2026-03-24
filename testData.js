@@ -1,7 +1,7 @@
 const testSchedules = [
     // Week 1
     {
-      date: "2026-05-01",
+      date: new Date("2026-05-01"),
       morning: { name: "Harry"},
       afternoon: { name: "Corrie"}
     },

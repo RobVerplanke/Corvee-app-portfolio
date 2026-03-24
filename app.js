@@ -1,5 +1,4 @@
-import { getWeekNumber } from './helpers.js';
-import getScheduleForWeek from './databaseHandler.js';
+import { getWeekNumber, getNameOfDay } from './helpers.js';
 import testSchedules from './testData.js';
 import express from 'express';
 import path from 'path';
@@ -49,11 +48,16 @@ app.get('/agenda', async (req, res) => {
    
   // Get schedules for the upcoming weeks in the current month
   for(let i=0; i<SCHEDULES_PER_MONTH; i++) {
-    schedules.push(getScheduleForWeek(currentWeekNumber+i));
+    schedules.push(databaseHandler.getScheduleForWeek(currentWeekNumber+i));
+  }
+
+  const helper = {
+    getWeekNumber: getWeekNumber,
+    getNameOfDay: getNameOfDay,
   }
 
   // The activePage function is day to highlight the corresponding navigation button of the active page
-  res.render('pages/agenda', { activePage: 'agenda', currentMonthName: currentMonthName, schedules: testSchedules });
+  res.render('pages/agenda', { activePage: 'agenda', currentMonthName: currentMonthName, schedules: testSchedules, helper: helper });
 });
 
 // Admin dashboard page
