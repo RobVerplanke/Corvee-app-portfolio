@@ -37,6 +37,9 @@ app.get('/', (req, res) => {
 
 // Agenda page - Extra span-elements are used for the printed version
 app.get('/agenda', async (req, res) => {
+
+  // TODO: Add data to database to test if the data is forwarded correctly
+
   const MONTHS = ['Januari', 'Februari', 'Maart', 'April', 'Mei', 'Juni', 'Juli', 'Augustus', 'September', 'Oktober', 'November', 'December'];
   const SCHEDULES_PER_MONTH = 4;
 
@@ -45,22 +48,20 @@ app.get('/agenda', async (req, res) => {
   let currentDate = new Date(today); // Create copy to avoid mutation of the original date
   let currentWeekNumber = getWeekNumber(currentDate); // Get current week number
   let currentMonthName = MONTHS[currentDate.getMonth()]; // Get current month name
-   
-  // TODO: Create groups of 4 weeks, each containing 5 days. This makes it easier to loop over the data in the view and create tables
-
+  
   // Get a fixed amount of schedules for the upcoming weeks (defined in SCHEDULES_PER_MONTH constant) of the current month
   for(let i=0; i<SCHEDULES_PER_MONTH; i++) {
-    schedules.push(databaseHandler.getScheduleForWeek(currentWeekNumber+i));
+    schedules.push(await databaseHandler.getScheduleForWeek(currentWeekNumber+i));
   }
-
-  // Methods that are needed in the agenda view
+  
+  // Helper functions that are needed in the agenda view
   const helper = {
     getWeekNumber: getWeekNumber,
     getNameOfDay: getNameOfDay,
   }
 
   // The activePage function is day to highlight the corresponding navigation button of the active page
-  res.render('pages/agenda', { activePage: 'agenda', currentMonthName: currentMonthName, schedules: testSchedules, helper: helper });
+  res.render('pages/agenda', { activePage: 'agenda', currentMonthName: currentMonthName, schedules: schedules, helper: helper });
 });
 
 // Admin dashboard page

@@ -29,10 +29,10 @@
     <!-- MAIN -->
     <main class="weeks-grid">
       <!-- Container in which the time tables are displayed -->
-      <% schedules.forEach( schedule => { %>
       <div class="week-block">
-        <h2 class="week-title"><%= helper.getWeekNumber(schedule.date) %></h2>
+        <% schedules.forEach( schedule => { console.log('schedule: ', schedule)%>
         <div class="table-wrapper">
+          <h2 class="week-title"><%= helper.getWeekNumber(schedule.date) %></h2>
           <table class="table-agenda">
             <colgroup>
               <col class="col-datum">
