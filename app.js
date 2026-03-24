@@ -46,11 +46,14 @@ app.get('/agenda', async (req, res) => {
   let currentWeekNumber = getWeekNumber(currentDate); // Get current week number
   let currentMonthName = MONTHS[currentDate.getMonth()]; // Get current month name
    
-  // Get schedules for the upcoming weeks in the current month
+  // TODO: Create groups of 4 weeks, each containing 5 days. This makes it easier to loop over the data in the view and create tables
+
+  // Get a fixed amount of schedules for the upcoming weeks (defined in SCHEDULES_PER_MONTH constant) of the current month
   for(let i=0; i<SCHEDULES_PER_MONTH; i++) {
     schedules.push(databaseHandler.getScheduleForWeek(currentWeekNumber+i));
   }
 
+  // Methods that are needed in the agenda view
   const helper = {
     getWeekNumber: getWeekNumber,
     getNameOfDay: getNameOfDay,
