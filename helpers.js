@@ -43,6 +43,12 @@ function getMondayFromWeekNumber(weekNr) {
   return firstDay;
 }
 
+// Returns the name of the day based on the given date
+function getNameOfDay(date) {
+  const DAY_NAMES = ['Zondag', 'Maandag', 'Dinsdag', 'Woensdag', 'Donderdag', 'Vrijdag', 'Zaterdag'];
+  return DAY_NAMES[date.getDay()];
+}
+
 export {
-  getWeekNumber, getMondayFromWeekNumber
+  getWeekNumber, getMondayFromWeekNumber, getNameOfDay
 }

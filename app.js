@@ -1,48 +1,6 @@
-const testData = {
-  month: "April",
-  weeks: [
-  {
-    title: "Week 1",
-      schedules: [
-        { day: "Maandag", date: "1 april", morning: "Harrie", afternoon: "Corrie" },
-        { day: "Dinsdag", date: "2 april", morning: "Jan", afternoon: "Annie" },
-        { day: "Woensdag", date: "3 april", morning: "Henk", afternoon: "Truus" },
-        { day: "Donderdag", date: "4 april", morning: "Els", afternoon: "Els" },
-        { day: "Vrijdag", date: "5 april", morning: "Jan", afternoon: "Truus" },
-      ]},
-    {
-    title: "Week 2",
-      schedules: [
-        { day: "Maandag", date: "8 april", morning: "Jaap", afternoon: "Miep" },
-        { day: "Dinsdag", date: "9 april", morning: "Niels", afternoon: "Jannie" },
-        { day: "Woensdag", date: "10 april", morning: "Ed", afternoon: "Ed" },
-        { day: "Donderdag", date: "11 april", morning: "Harrie", afternoon: "Harry" },
-        { day: "Vrijdag", date: "12 april", morning: "Corrie", afternoon: "Jan" },
-      ]
-    },
-    {
-    title: "Week 3",
-      schedules: [
-        { day: "Maandag", date: "15 april", morning: "Jaap", afternoon: "Miep" },
-        { day: "Dinsdag", date: "16 april", morning: "Niels", afternoon: "Jannie" },
-        { day: "Woensdag", date: "17 april", morning: "Corrie", afternoon: "Jannie" },
-        { day: "Donderdag", date: "18 april", morning: "Harrie", afternoon: "Ed" },
-        { day: "Vrijdag", date: "19 april", morning: "Jaap", afternoon: "Koen" },
-      ]
-    },
-    {
-      title: "Week 4",
-      schedules: [
-        { day: "Maandag", date: "22 april", morning: "Els", afternoon: "Els" },
-        { day: "Dinsdag", date: "21 april", morning: "Henk", afternoon: "Miep" },
-        { day: "Woensdag", date: "22 april", morning: "Koen", afternoon: "Koen" },
-        { day: "Donderdag", date: "23 april", morning: "Harrie", afternoon: "Harry" },
-        { day: "Vrijdag", date: "24 april", morning: "Els", afternoon: "Jan" },
-      ]
-    }
-  ]
-};
-
+import { getWeekNumber } from './helpers.js';
+import getScheduleForWeek from './databaseHandler.js';
+import testSchedules from './testData.js';
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -78,26 +36,24 @@ app.get('/', (req, res) => {
   res.render('pages/index');
 });
 
-// Agenda page - Different span elements are for the printed version
+// Agenda page - Extra span-elements are used for the printed version
 app.get('/agenda', async (req, res) => {
-  const weeks = testData.weeks.map( week => {
-    const rows = week.schedules.map( schedule => `
-      <tr>
-        <td class="td-dag" rowspan="2">${schedule.day}<span class="datum">${schedule.date}</span></td>
-        <td><span class="badge badge-ochtend">Ochtend</span><span class="dagdeel-print">Ochtend</span></td>
-        <td class="td-naam">${schedule.morning}</td>
-      </tr>
-      <tr>
-        <td><span class="badge badge-middag">Middag</span><span class="dagdeel-print">Middag</span></td>
-        <td class="td-naam td-naam-middag">${schedule.afternoon}</td>
-      </tr>
-      `).join('');
+  const MONTHS = ['Januari', 'Februari', 'Maart', 'April', 'Mei', 'Juni', 'Juli', 'Augustus', 'September', 'Oktober', 'November', 'December'];
+  const SCHEDULES_PER_MONTH = 4;
 
-      return { title: week.title, rows: rows };
-    });
-    
-    // The activePage function is used to highlight the corresponding navigation button of the active page
-  res.render('pages/agenda', { activePage: 'agenda', weeks: weeks, tableMonth: testData.month });
+  let schedules = [];
+  let today = new Date();
+  let currentDate = new Date(today); // Create copy to avoid mutation of the original date
+  let currentWeekNumber = getWeekNumber(currentDate); // Get current week number
+  let currentMonthName = MONTHS[currentDate.getMonth()]; // Get current month name
+   
+  // Get schedules for the upcoming weeks in the current month
+  for(let i=0; i<SCHEDULES_PER_MONTH; i++) {
+    schedules.push(getScheduleForWeek(currentWeekNumber+i));
+  }
+
+  // The activePage function is day to highlight the corresponding navigation button of the active page
+  res.render('pages/agenda', { activePage: 'agenda', currentMonthName: currentMonthName, schedules: testSchedules });
 });
 
 // Admin dashboard page
