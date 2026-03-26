@@ -1,5 +1,4 @@
 import { getWeekNumber, getNameOfDay } from './helpers.js';
-import testSchedules from './testData.js';
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -44,7 +43,7 @@ app.get('/agenda', async (req, res) => {
 
   let schedules = [];
   let today = new Date();
-  let currentDate = new Date(today); // Create copy to avoid mutation of the original date
+  let currentDate = new Date(2026, 1, 2); // Create copy to avoid mutation of the original date, TODO: Remove set date after testing!
   let currentWeekNumber = getWeekNumber(currentDate); // Get current week number
   let currentMonthName = MONTHS[currentDate.getMonth()]; // Get current month name
   

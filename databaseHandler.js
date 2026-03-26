@@ -82,9 +82,10 @@ class DatabaseHandler {
   async getScheduleForWeek(weekNr) {
     // Get the start date from the weekNr.
     const startDate = getMondayFromWeekNumber(weekNr);
-    // Get the end date by adding 4 days to equal Friday.
+
+    // Get the end date by adding 5 days to equal Saturday since timezones mess up things.
     const endDate = new Date(startDate.valueOf());
-    endDate.setDate(endDate.getDate() + 4);
+    endDate.setDate(endDate.getDate() + 5);
     const retrievedSchedule = await this.models.Schedule.findAll({
       where: {
         date: {

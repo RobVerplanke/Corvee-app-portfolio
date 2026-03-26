@@ -1,108 +1,160 @@
-const testSchedules = [
-    // Week 1
-    {
-      date: new Date("2026-05-02"),
-      morning: { name: "Harry"},
-      afternoon: { name: "Corrie"}
-    },
-    {
-      date: new Date("2026-05-03"),
-      morning: { name: "Jan"},
-      afternoon: { name: "Annie"}
-    },
-    {
-      date: new Date("2026-05-04"),
-      morning: { name: "Truus"},
-      afternoon: { name: "Henk"}
-    },
-    {
-      date: new Date("2026-05-05"),
-      morning: { name: "Jan"},
-      afternoon: { name: "Harry"}
-    },
-    {
-      date: new Date("2026-05-06"),
-      morning: { name: "Miep"},
-      afternoon: { name: "Edje"}
-    },
-    // Week 2
-    {
-      date: new Date("2026-05-09"),
-      morning: { name: "Harry"},
-      afternoon: { name: "Corrie"}
-    },
-    {
-      date: new Date("2026-05-10"),
-      morning: { name: "Jan"},
-      afternoon: { name: "Annie"}
-    },
-    {
-      date: new Date("2026-05-11"),
-      morning: { name: "Truus"},
-      afternoon: { name: "Henk"}
-    },
-    {
-      date: new Date("2026-05-12"),
-      morning: { name: "Jan"},
-      afternoon: { name: "Harry"}
-    },
-    {
-      date: new Date("2026-05-13"),
-      morning: { name: "Miep"},
-      afternoon: { name: "Edje"}
-    },
-    // Week 3
-    {
-      date: new Date("2026-05-16"),
-      morning: { name: "Harry"},
-      afternoon: { name: "Corrie"}
-    },
-    {
-      date: new Date("2026-05-17"),
-      morning: { name: "Jan"},
-      afternoon: { name: "Annie"}
-    },
-    {
-      date: new Date("2026-05-18"),
-      morning: { name: "Truus"},
-      afternoon: { name: "Jan"}
-    },
-    {
-      date: new Date("2026-05-19"),
-      morning: { name: "Henk"},
-      afternoon: { name: "Henk"}
-    },
-    {
-      date: new Date("2026-05-20"),
-      morning: { name: "Miep"},
-      afternoon: { name: "Harry"}
-    },
-    // Week 4
-    {
-      date: new Date("2026-05-23"),
-      morning: { name: "Harry"},
-      afternoon: { name: "Corrie"}
-    },
-    {
-      date: new Date("2026-05-24"),
-      morning: { name: "Jan"},
-      afternoon: { name: "Annie"}
-    },
-    {
-      date: new Date("2026-05-25"),
-      morning: { name: "Truus"},
-      afternoon: { name: "Jan"}
-    },
-    {
-      date: new Date("2026-05-26"),
-      morning: { name: "Henk"},
-      afternoon: { name: "Henk"}
-    },
-    {
-      date: new Date("2026-05-27"),
-      morning: { name: "Miep"},
-      afternoon: { name: "Harry"}
-    }
-  ];
+import Sequelize from 'sequelize';
+import Sqlite3 from '@vscode/sqlite3';
+import DatabaseHandler from './databaseHandler.js';
 
-export default testSchedules;
+const sequelize = new Sequelize({
+  dialect: 'sqlite',
+  dialectModule: Sqlite3,
+  storage: 'database.sqlite',
+});
+
+const databaseHandler = new DatabaseHandler(sequelize);
+await databaseHandler.sync();
+
+// Clean the database before adding the test data.
+await sequelize.truncate();
+await sequelize.query('DELETE FROM sqlite_sequence');
+
+const testVolunteers = [
+  {
+    name: "Harry"
+  },
+  {
+    name: "Corrie"
+  },
+  {
+    name: "Jan"
+  },
+  { 
+    name: "Annie"
+  },
+  {
+    name: "Truus"
+  },
+  {
+    name: "Henk"
+  },
+  {
+    name: "Jan"
+  },
+  {
+    name: "Miep"
+  },
+  {
+    name: "Edje",
+  }
+]
+
+const volunteers = await databaseHandler.models.Volunteer.bulkCreate(testVolunteers);
+console.log(volunteers[0]);
+
+const testSchedules = [
+  // Week 1
+  {
+    date: new Date("2026-02-02"),
+    morningId: volunteers[0].id,
+    afternoonId: volunteers[1].id,
+  },
+  {
+    date: new Date("2026-02-03"),
+    morningId: volunteers[2].id,
+    afternoonId: volunteers[3].id,
+  },
+  {
+    date: new Date("2026-02-04"),
+    morningId: volunteers[4].id,
+    afternoonId: volunteers[5].id,
+  },
+  {
+    date: new Date("2026-02-05"),
+    morningId: volunteers[6].id,
+    afternoonId: volunteers[0].id,
+  },
+  {
+    date: new Date("2026-02-06"),
+    morningId: volunteers[7].id,
+    afternoonId: volunteers[8].id,
+  },
+  // Week 2
+  {
+    date: new Date("2026-02-09"),
+    morningId: volunteers[0].id,
+    afternoonId: volunteers[1].id,
+  },
+  {
+    date: new Date("2026-02-10"),
+    morningId: volunteers[2].id,
+    afternoonId: volunteers[3].id,
+  },
+  {
+    date: new Date("2026-02-11"),
+    morningId: volunteers[4].id,
+    afternoonId: volunteers[5].id,
+  },
+  {
+    date: new Date("2026-02-12"),
+    morningId: volunteers[6].id,
+    afternoonId: volunteers[0].id,
+  },
+  {
+    date: new Date("2026-02-13"),
+    morningId: volunteers[7].id,
+    afternoonId: volunteers[8].id,
+  },
+  // Week 3
+  {
+    date: new Date("2026-02-16"),
+    morningId: volunteers[0].id,
+    afternoonId: volunteers[1].id,
+  },
+  {
+    date: new Date("2026-02-17"),
+    morningId: volunteers[2].id,
+    afternoonId: volunteers[3].id,
+  },
+  {
+    date: new Date("2026-02-18"),
+    morningId: volunteers[4].id,
+    afternoonId: volunteers[5].id,
+  },
+  {
+    date: new Date("2026-02-19"),
+    morningId: volunteers[6].id,
+    afternoonId: volunteers[0].id,
+  },
+  {
+    date: new Date("2026-02-20"),
+    morningId: volunteers[7].id,
+    afternoonId: volunteers[8].id,
+  },
+  // Week 4
+  {
+    date: new Date("2026-02-23"),
+    morningId: volunteers[0].id,
+    afternoonId: volunteers[1].id,
+  },
+  {
+    date: new Date("2026-02-24"),
+    morningId: volunteers[2].id,
+    afternoonId: volunteers[3].id,
+  },
+  {
+    date: new Date("2026-02-25"),
+    morningId: volunteers[4].id,
+    afternoonId: volunteers[5].id,
+  },
+  {
+    date: new Date("2026-02-26"),
+    morningId: volunteers[6].id,
+    afternoonId: volunteers[0].id,
+  },
+  {
+    date: new Date("2026-02-27"),
+    morningId: volunteers[7].id,
+    afternoonId: volunteers[8].id,
+  }
+];
+
+await databaseHandler.models.Schedule.bulkCreate(testSchedules);
+console.log("Test data added.");
+
