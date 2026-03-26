@@ -28,38 +28,41 @@
     
     <!-- MAIN -->
     <main class="weeks-grid">
-      <!-- Container in which the time tables are displayed -->
-      <div class="week-block">
-        <div class="table-wrapper">
-          <% schedules.forEach( schedule => { 
-            schedule.forEach( day => { %>
-          
-          <h2 class="week-title"><%= helper.getWeekNumber(day.date) %></h2>
-          <table class="table-agenda">
-            <colgroup>
-              <col class="col-datum">
-              <col class="col-dagdeel">
-              <col class="col-naam">
-            </colgroup>
-            <thead>
-              <tr><th>Datum</th><th>Dagdeel</th><th>Naam</th></tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="td-dag" rowspan="2"><%= helper.getNameOfDay(day.date) %><span class="datum"><%= day.date %></span></td>
-                <td><span class="badge badge-ochtend">Ochtend</span><span class="dagdeel-print">Ochtend</span></td>
-                <td class="td-naam"><%= day.morning.name %></td>
-              </tr>
-              <tr>
-                <td><span class="badge badge-middag">Middag</span><span class="dagdeel-print">Middag</span></td>
-                <td class="td-naam td-naam-middag"><%= day.afternoon.name %></td>
-              </tr>
-            </tbody>
-          </table>
-          <% }) %>
-          <% }) %>
+      
+      <!-- Create a table for each week -->
+      <% schedules.forEach(schedule => { %>
+      
+        <div class="week-block">
+          <h2 class="week-title">Week titel</h2>
+          <div class="table-wrapper">
+            <table class="table-agenda">
+              <colgroup>
+                <col class="col-datum">
+                <col class="col-dagdeel">
+                <col class="col-naam">
+              </colgroup>
+              <thead>
+                <tr><th>Datum</th><th>Dagdeel</th><th>Naam</th></tr>
+              </thead>
+              <tbody>
+
+                <!-- Create rows for each day -->
+                <% schedule.forEach(day => { %>
+                  <tr>
+                    <td class="td-dag" rowspan="2"><%= helper.getNameOfDay(day.date) %><span class="datum"><%= day.date %></span></td>
+                    <td><span class="badge badge-ochtend">Ochtend</span><span class="dagdeel-print">Ochtend</span></td>
+                    <td class="td-naam"><%= day.morning.name %></td>
+                  </tr>
+                  <tr>
+                    <td><span class="badge badge-middag">Middag</span><span class="dagdeel-print">Middag</span></td>
+                    <td class="td-naam td-naam-middag"><%= day.afternoon.name %></td>
+                  </tr>
+                <% }) %>
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
+      <% }) %>
     </main>
 
     <!-- Print button -->
