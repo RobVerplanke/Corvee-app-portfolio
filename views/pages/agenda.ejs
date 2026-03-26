@@ -30,9 +30,11 @@
     <main class="weeks-grid">
       <!-- Container in which the time tables are displayed -->
       <div class="week-block">
-        <% schedules.forEach( schedule => { console.log('schedule: ', schedule)%>
         <div class="table-wrapper">
-          <h2 class="week-title"><%= helper.getWeekNumber(schedule.date) %></h2>
+          <% schedules.forEach( schedule => { 
+            schedule.forEach( day => { %>
+          
+          <h2 class="week-title"><%= helper.getWeekNumber(day.date) %></h2>
           <table class="table-agenda">
             <colgroup>
               <col class="col-datum">
@@ -44,16 +46,17 @@
             </thead>
             <tbody>
               <tr>
-                <td class="td-dag" rowspan="2"><%= helper.getNameOfDay(schedule.date) %><span class="datum"><%= schedule.date %></span></td>
+                <td class="td-dag" rowspan="2"><%= helper.getNameOfDay(day.date) %><span class="datum"><%= day.date %></span></td>
                 <td><span class="badge badge-ochtend">Ochtend</span><span class="dagdeel-print">Ochtend</span></td>
-                <td class="td-naam"><%= schedule.morning.name %></td>
+                <td class="td-naam"><%= day.morning.name %></td>
               </tr>
               <tr>
                 <td><span class="badge badge-middag">Middag</span><span class="dagdeel-print">Middag</span></td>
-                <td class="td-naam td-naam-middag"><%= schedule.afternoon.name %></td>
+                <td class="td-naam td-naam-middag"><%= day.afternoon.name %></td>
               </tr>
             </tbody>
           </table>
+          <% }) %>
           <% }) %>
         </div>
       </div>
