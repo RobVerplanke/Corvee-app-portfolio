@@ -15,8 +15,7 @@ const __dirname = path.dirname(__filename);
 const sequelize = new Sequelize({
   dialect: 'sqlite',
   dialectModule: Sqlite3,
-  // TODO: change this to a proper file location in future.
-  storage: ':memory:',
+  storage: 'database.sqlite',
   logging: false,
 });
 const databaseHandler = new DatabaseHandler(sequelize);
