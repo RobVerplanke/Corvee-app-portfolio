@@ -42,6 +42,7 @@ app.get('/agenda', async (req, res) => {
   const SCHEDULES_PER_MONTH = 4;
 
   let schedules = [];
+  let weekNumbers = [];
   let today = new Date();
   let currentDate = new Date(today); // Create copy to avoid mutation of the original date
   let currentWeekNumber = getWeekNumber(currentDate); // Get current week number
@@ -50,6 +51,7 @@ app.get('/agenda', async (req, res) => {
   // Get a fixed amount of schedules for the upcoming weeks (defined in SCHEDULES_PER_MONTH constant) of the current month
   for(let i=0; i<SCHEDULES_PER_MONTH; i++) {
     schedules.push(await databaseHandler.getScheduleForWeek(currentWeekNumber+i));
+    weekNumbers.push(currentWeekNumber+i);
   }
   
   // Helper functions that are needed in the agenda view
@@ -57,6 +59,7 @@ app.get('/agenda', async (req, res) => {
     getWeekNumber: getWeekNumber,
     getNameOfDay: getNameOfDay,
     formatDate: formatDate,
+    weekNumbers: weekNumbers,
   }
 
   // The activePage function is day to highlight the corresponding navigation button of the active page

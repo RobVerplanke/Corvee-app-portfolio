@@ -29,10 +29,11 @@
     <main class="weeks-grid">
       
       <!-- Create a table for each week -->
-      <% schedules.forEach(schedule => { %>
+      <% schedules.forEach((schedule, index) => { %>
       
         <div class="week-block">
-          <h2 class="week-title">test title
+          <h2 class="week-title">
+            Week <%= helper.weekNumbers[index] %>
           </h2>
           <div class="table-wrapper">
             <table class="table-agenda">
@@ -46,7 +47,7 @@
               </thead>
               <tbody>
 
-                <!-- Create rows for each day  - Extra span-elements are used for the printed version -->
+                <!-- Create rows for each day - Extra span-elements are used for the printed version -->
                 <% schedule.forEach(day => {
                   %>
                   <tr>
