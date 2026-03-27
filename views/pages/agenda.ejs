@@ -19,7 +19,6 @@
     
     <!-- HEADER -->
     <header class="page-content">
-      <!-- Container in which the name of the month is displayed -->
       <div class="page-header">
         <p class="page-label">Corvee dienst</p>
       </div>
@@ -33,7 +32,8 @@
       <% schedules.forEach(schedule => { %>
       
         <div class="week-block">
-          <h2 class="week-title">Week titel</h2>
+          <h2 class="week-title">test title
+          </h2>
           <div class="table-wrapper">
             <table class="table-agenda">
               <colgroup>
@@ -46,10 +46,11 @@
               </thead>
               <tbody>
 
-                <!-- Create rows for each day -->
-                <% schedule.forEach(day => { %>
+                <!-- Create rows for each day  - Extra span-elements are used for the printed version -->
+                <% schedule.forEach(day => {
+                  %>
                   <tr>
-                    <td class="td-dag" rowspan="2"><%= helper.getNameOfDay(day.date) %><span class="datum"><%= day.date %></span></td>
+                    <td class="td-dag" rowspan="2"><%= helper.getNameOfDay(day.date) %><span class="datum"><%= helper.formatDate(day.date) %></span></td>
                     <td><span class="badge badge-ochtend">Ochtend</span><span class="dagdeel-print">Ochtend</span></td>
                     <td class="td-naam"><%= day.morning.name %></td>
                   </tr>

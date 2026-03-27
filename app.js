@@ -1,4 +1,4 @@
-import { getWeekNumber, getNameOfDay } from './helpers.js';
+import { getWeekNumber, getNameOfDay, formatDate } from './helpers.js';
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -43,7 +43,7 @@ app.get('/agenda', async (req, res) => {
 
   let schedules = [];
   let today = new Date();
-  let currentDate = new Date(2026, 1, 2); // Create copy to avoid mutation of the original date, TODO: Remove set date after testing!
+  let currentDate = new Date(today); // Create copy to avoid mutation of the original date
   let currentWeekNumber = getWeekNumber(currentDate); // Get current week number
   let currentMonthName = MONTHS[currentDate.getMonth()]; // Get current month name
   
@@ -56,6 +56,7 @@ app.get('/agenda', async (req, res) => {
   const helper = {
     getWeekNumber: getWeekNumber,
     getNameOfDay: getNameOfDay,
+    formatDate: formatDate,
   }
 
   // The activePage function is day to highlight the corresponding navigation button of the active page

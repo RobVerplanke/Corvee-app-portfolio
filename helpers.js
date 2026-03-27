@@ -49,6 +49,16 @@ function getNameOfDay(date) {
   return DAY_NAMES[date.getDay()];
 }
 
+// Adjust the long date notation to a more readable format
+function formatDate(date) {
+  const formattedDate = new Date(date).toLocaleDateString('nl-NL', {
+    weekday: 'long',
+    day: '2-digit',
+    month: 'long'
+  })
+  return formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1); // Return first letter with capital
+};
+
 export {
-  getWeekNumber, getMondayFromWeekNumber, getNameOfDay
+  getWeekNumber, getMondayFromWeekNumber, getNameOfDay, formatDate
 }
