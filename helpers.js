@@ -43,21 +43,27 @@ function getMondayFromWeekNumber(weekNr) {
   return firstDay;
 }
 
-// Returns the name of the day based on the given date
+// Returns the name of the day based on the given date, or empty string if no date is available
 function getNameOfDay(date) {
   const DAY_NAMES = ['Zondag', 'Maandag', 'Dinsdag', 'Woensdag', 'Donderdag', 'Vrijdag', 'Zaterdag'];
-  return DAY_NAMES[date.getDay()];
+  return date === '' ? '' : DAY_NAMES[date.getDay()];
 }
 
 // Adjust the long date notation to a more readable format
 function formatDate(date) {
+
+  // In case there is no date available, return placeholder content
+  if (!date) return 'Geen datum gevonden';
+  
   const formattedDate = new Date(date).toLocaleDateString('nl-NL', {
     weekday: 'long',
     day: '2-digit',
     month: 'long'
   })
-  return formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1); // Return first letter with capital
-};
+  
+  // In case there is a date available, return the first letters in capital
+  return formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1); 
+}
 
 export {
   getWeekNumber, getMondayFromWeekNumber, getNameOfDay, formatDate
