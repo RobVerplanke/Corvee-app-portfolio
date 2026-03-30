@@ -36,20 +36,21 @@
             Week <%= helper.weekNumbers[index] %>
           </h2>
           <div class="table-wrapper">
+
             <table class="table-agenda">
               <colgroup>
                 <col class="col-datum">
                 <col class="col-dagdeel">
                 <col class="col-naam">
               </colgroup>
+
               <thead>
                 <tr><th>Datum</th><th>Dagdeel</th><th>Naam</th></tr>
               </thead>
-              <tbody>
 
+              <tbody>
                 <!-- Create rows for each day - Extra span-elements are used for the printed version -->
-                <% schedule.forEach(day => {
-                  %>
+                <% schedule.forEach(day => { %>
                   <tr>
                     <td class="td-dag" rowspan="2"><%= helper.getNameOfDay(day.date) %><span class="datum"><%= helper.formatDate(day.date) %></span></td>
                     <td><span class="badge badge-ochtend">Ochtend</span><span class="dagdeel-print">Ochtend</span></td>
@@ -61,10 +62,12 @@
                   </tr>
                 <% }) %>
               </tbody>
+              
             </table>
-          </div>
-        </div>
+          </div> <!-- table-wrapper -->
+        </div> <!-- week-block -->
       <% }) %>
+
     </main>
 
     <!-- Print button -->

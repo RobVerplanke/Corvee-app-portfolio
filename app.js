@@ -36,26 +36,24 @@ app.get('/', (req, res) => {
 // Agenda page - Extra span-elements are used for the printed version
 app.get('/agenda', async (req, res) => {
 
-  // TODO: Add data to database to test if the data is forwarded correctly
+  // Used for the convertion of month numbers to month names
   const MONTHS = ['Januari', 'Februari', 'Maart', 'April', 'Mei', 'Juni', 'Juli', 'Augustus', 'September', 'Oktober', 'November', 'December'];
-  const SCHEDULES_PER_MONTH = 4;
+  const SCHEDULES_PER_MONTH = 4; // Amount of schedules displayed per month
+  const DAYS_PER_WEEK = 5;
 
   let schedules = [];
   let weekNumbers = [];
-  let today = new Date();
+  let today = new Date(); // Get current date
   let currentDate = new Date(today); // Create copy to avoid mutation of the original date
   let currentWeekNumber = getWeekNumber(currentDate); // Get current week number
   let currentMonthName = MONTHS[currentDate.getMonth()]; // Get current month name
  
-   // Placeholder data for an empty day, in case there is no data available
+  // Placeholder data for an empty day, in case there is no data available
   const emptyDay = {
     date: '',
     morning: { name: '-' },
     afternoon: { name: '-' }
   }
-
-  // Fill an empty week with the placeholder data
-  const emptyWeek = Array(5).fill(emptyDay);
   
   // Get a fixed amount of schedules for the upcoming weeks (defined in SCHEDULES_PER_MONTH constant) of the current month
   for (let i=0; i<SCHEDULES_PER_MONTH; i++) {
@@ -63,10 +61,13 @@ app.get('/agenda', async (req, res) => {
     weekNumbers.push(currentWeekNumber+i);
   }
   
-  // When the schedule is missing one or more days, display pladeholder content instead
-  const schedulesAutoFilled = schedules.map( schedule => {
-    return schedule.length === 0 ? emptyWeek : schedule;
-  })
+  // When the schedule is missing data for one or more days, add placeholder content for the missing days
+  const schedulesAutoFilled = schedules.map(schedule => {
+    while (schedule.length < DAYS_PER_WEEK) {
+      schedule.push(emptyDay);
+    }
+    return schedule;
+  });
 
   // Functions and data which are needed to display titles and dates in the agenda view
   const helper = {

@@ -52,7 +52,7 @@ function getNameOfDay(date) {
 // Adjust the long date notation to a more readable format
 function formatDate(date) {
 
-  // In case there is no date available, return placeholder content
+  // In case there is no date available, show placeholder content
   if (!date) return 'Geen datum gevonden';
   
   const formattedDate = new Date(date).toLocaleDateString('nl-NL', {
