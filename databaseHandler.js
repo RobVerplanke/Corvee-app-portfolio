@@ -113,8 +113,8 @@ class DatabaseHandler {
    *
    * @param {Date} data - The date to be added to the database.
    * @param {Object} volunteerData - The data for the volunteer slots.
-   * @param {Model|number} volunteerData.morning - The model instance or raw id to be associated with the morning shift.
-   * @param {Model|number} volunteerData.afternoon - The model instance or raw id to be associated with the afternoon shift.
+   * @param {number} volunteerData.morning - The id of the volunteer to be associated with the morning shift.
+   * @param {number} volunteerData.afternoon - The id of the volunteer to be associated with the afternoon shift.
    *
    * @returns {Promise<Model>} - The promise made by sequelize with the newly created object on success.
    */
@@ -130,14 +130,17 @@ class DatabaseHandler {
    *
    * @param {Date} date - The date to change data of.
    * @param {Object} changedData - The data to be changed.
-   * @param {Model|number} changedData.morning - The model instance or raw id to replace the current morning data.
-   * @param {Model|number} changedData.afternoon - The model instance or raw id to replace the current afternoon data.
+   * @param {number} changedData.morning - The id of the volunteer to replace the current morning id with.
+   * @param {number} changedData.afternoon - The id of the volunteer to replace the current afternoon id with.
    *
    * @returns {Promise<number[]>} - The promise made by sequelize with the affected rows as result.
+   * @throws Will throw an error when not providing either a morning or afternoon field in the changedData paramater.
    */
   async updateScheduleEntry(date, changedData) {
-    // TODO: handle changedData being incorrect.
-    
+    if (changedData.afternoon == undefined && changedData.morning == undefined) {
+      throw Error("Missing data to update schedule with.");
+    }
+
     // Set the query options depending on the changedData.
     let queryOptions = {};
     if (changedData['morning'] != undefined) {
