@@ -56,7 +56,6 @@ function formatDate(date) {
   if (!date) return 'Geen datum gevonden';
   
   const formattedDate = new Date(date).toLocaleDateString('nl-NL', {
-    weekday: 'long',
     day: '2-digit',
     month: 'long'
   })
