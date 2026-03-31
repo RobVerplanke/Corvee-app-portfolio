@@ -102,8 +102,79 @@ app.get('/agenda', async (req, res) => {
 });
 
 // Admin dashboard page
-app.get('/dashboard', (req, res) => {
-  res.render('pages/dashboard', { activePage: 'dashboard' });
+app.get('/dashboard', async (req, res) => {
+
+  /* --- TODO:
+  - Generate dates for empty rows
+  - Save and send selection of names to db after submit
+  --- */
+
+  // Used for the convertion of month numbers to month names
+  const MONTHS = ['Januari', 'Februari', 'Maart', 'April', 'Mei', 'Juni', 'Juli', 'Augustus', 'September', 'Oktober', 'November', 'December'];
+  const SCHEDULES_PER_MONTH = 4; // Amount of schedules displayed per month
+  const DAYS_PER_WEEK = 5;
+
+  let schedules = [];
+  let weekNumbers = [];
+  let today = new Date(); // Get current date
+  let currentDate = new Date(today); // Create copy to avoid mutation of the original date
+  let currentWeekNumber = getWeekNumber(currentDate); // Get current week number
+  let currentMonth = today.getMonth(); // Get current month number
+  let volunteers = await databaseHandler.getVolunteers(); // Get all volunteer names
+  let mostCommonMonth = ''; // Most common month, becomes the page title
+
+  // Placeholder data for an empty day, in case there is no data available
+  const emptyDay = {
+    date: '',
+    morning: { name: '' },
+    afternoon: { name: '' }
+  }
+  
+  // Get a fixed amount of schedules for the upcoming weeks (defined in SCHEDULES_PER_MONTH constant) of the current month
+  for (let i=0; i<SCHEDULES_PER_MONTH; i++) {
+    schedules.push(await databaseHandler.getScheduleForWeek(currentWeekNumber+i));
+    weekNumbers.push(currentWeekNumber+i);
+  }
+
+  // Determine what is the most common month name in the schedules so it can be uses as page title
+  schedules.map( schedule => {
+    let monthCountOne = 0;
+    let monthCountTwo = 0;
+    
+    // Count each month
+    schedule.map( day => {
+      if (day.date.getMonth()+1 === currentMonth) monthCountOne++;
+      if (day.date.getMonth()+1 != currentMonth) monthCountTwo++;
+    });
+
+    // Keep track of the month that occurs the most
+    mostCommonMonth = monthCountOne > monthCountTwo ? MONTHS[monthCountOne +1] : MONTHS[monthCountTwo +1];
+
+  });
+  
+  // When the schedule is missing data for one or more days, add placeholder content for the missing days
+  const schedulesAutoFilled = schedules.map(schedule => {
+    while (schedule.length < DAYS_PER_WEEK) {
+      schedule.push(emptyDay);
+    }
+    return schedule;
+  });
+
+  // Functions and data which are needed to display titles and dates in the agenda view
+  const helper = {
+    getWeekNumber: getWeekNumber,
+    getNameOfDay: getNameOfDay,
+    formatDate: formatDate,
+    weekNumbers: weekNumbers,
+    volunteers: volunteers
+  }
+  
+  // activePage - function that highlights the corresponding navigation button of the active page
+  // currentMonthName - used as the page title
+  // schedules - contains all table data
+  // helper - contains functions and weeknumbers to correctly display the data
+  // volunteers - Contains the names of all volunteers
+  res.render('pages/dashboard', { activePage: 'dashboard', currentMonthName: mostCommonMonth, schedules: schedulesAutoFilled, helper: helper, volunteers: volunteers });
 });
 
 // Instructions manual page
