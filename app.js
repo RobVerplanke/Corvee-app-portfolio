@@ -46,7 +46,10 @@ app.get('/agenda', async (req, res) => {
   let today = new Date(); // Get current date
   let currentDate = new Date(today); // Create copy to avoid mutation of the original date
   let currentWeekNumber = getWeekNumber(currentDate); // Get current week number
-  let currentMonthName = MONTHS[currentDate.getMonth()]; // Get current month name
+  let currentMonth = today.getMonth(); // Get current month number
+  let mostCommonMonth = '';
+
+  // let currentMonthName = MONTHS[currentDate.getMonth()]; // Get current month name
  
   // Placeholder data for an empty day, in case there is no data available
   const emptyDay = {
@@ -60,6 +63,21 @@ app.get('/agenda', async (req, res) => {
     schedules.push(await databaseHandler.getScheduleForWeek(currentWeekNumber+i));
     weekNumbers.push(currentWeekNumber+i);
   }
+
+  // Determine what is the most common month name in the schedules and use that name as page title
+  const currentMonthName = schedules.map( schedule => {
+    let monthCountOne = 0;
+    let monthCountTwo = 0;
+    
+    schedule.map( day => {
+      if ( day.date.getMonth()+1 === currentMonth) monthCountOne++;
+      if ( day.date.getMonth()+1 != currentMonth) monthCountTwo++;
+    });
+
+    // Keep track of the month that occurs the most
+    monthCountOne > monthCountTwo ? mostCommonMonth = monthCountOne +1 : mostCommonMonth = monthCountTwo +1;
+
+  });
   
   // When the schedule is missing data for one or more days, add placeholder content for the missing days
   const schedulesAutoFilled = schedules.map(schedule => {
@@ -81,7 +99,7 @@ app.get('/agenda', async (req, res) => {
   // currentMonthName - used as the page title
   // schedules - contains all table data
   // helper - contains functions and weeknumbers to correctly display the data
-  res.render('pages/agenda', { activePage: 'agenda', currentMonthName: currentMonthName, schedules: schedulesAutoFilled, helper: helper });
+  res.render('pages/agenda', { activePage: 'agenda', currentMonthName: MONTHS[mostCommonMonth], schedules: schedulesAutoFilled, helper: helper });
 });
 
 // Admin dashboard page
