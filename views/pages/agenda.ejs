@@ -22,18 +22,18 @@
       <div class="page-header">
         <p class="page-label">Corvee dienst</p>
       </div>
-      <h1 class="page-title"><%- currentMonthName %></h1>
+      <h1 class="page-title"><%- data.mostCommonMonth %></h1>
     </header>
     
     <!-- MAIN -->
     <main class="weeks-grid">
       
       <!-- Create a table for each week -->
-      <% schedules.forEach((schedule, index) => { %>
+      <% data.schedules.forEach((schedule, index) => { %>
       
         <div class="week-block">
           <h2 class="week-title">
-            Week <%= helper.weekNumbers[index] %>
+            Week <%= data.weekNumbers[index] %>
           </h2>
           <div class="table-wrapper">
 

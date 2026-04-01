@@ -101,8 +101,8 @@ function getAutoFillSchedule(schedules, weekNumbers, DAYS_PER_WEEK) {
 
       schedule.push({
         date: date,
-        morning: { name: '' },
-        afternoon: { name: '' }
+        morning: { name: '-' },
+        afternoon: { name: '-' }
       });
     }
     return schedule;

@@ -58,7 +58,7 @@
                       <td class="td-dag" rowspan="2"><%= helper.getNameOfDay(day.date) %><span class="datum"><%= helper.formatDate(day.date) %></span></td>
                       <td><span class="badge badge-ochtend">Ochtend</span><span class="dagdeel-print">Ochtend</span></td>
                       <td class="td-naam">
-                        <% if(day.morning.name === '' ) { %>
+                        <% if(day.morning.name === '-' ) { %>
                           <select id="volunteer-select-<%= index %>-morning" class="select-name">
                             <option value="">-- Selecteer vrijwilliger --</option>
                             <% data.volunteers.forEach(volunteer => { %>
@@ -73,7 +73,7 @@
                     <tr>
                       <td><span class="badge badge-middag">Middag</span><span class="dagdeel-print">Middag</span></td>
                       <td class="td-naam td-naam-middag">
-                        <% if(day.afternoon.name === '' ) { %>
+                        <% if(day.afternoon.name === '-' ) { %>
                           <select id="volunteer-select-<%= index %>-afternoon" class="select-name">
                             <option value="">-- Selecteer vrijwilliger --</option>
                             <% data.volunteers.forEach(volunteer => { %>
