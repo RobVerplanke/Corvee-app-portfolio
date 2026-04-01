@@ -53,6 +53,7 @@ function getNameOfDay(date) {
 function formatDate(date) {
 
   // In case there is no date available, show placeholder content
+  // TODO: generate new dates to replace empty dates
   if (!date) return 'Geen datum gevonden';
   
   const formattedDate = new Date(date).toLocaleDateString('nl-NL', {
@@ -64,6 +65,50 @@ function formatDate(date) {
   return formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1); 
 }
 
+// Determine which month is the most common in the schedule, this will be used as page title
+function getMostCommonMonth (schedules) {
+  const allMonths = [];
+  
+  // If there is a date, add the month of that date to the list
+  schedules.map(schedule => {
+    schedule.map(day => {
+      if (day.date) {
+        allMonths.push(day.date.getMonth());
+      }
+    });
+  });
+
+  // Count the amount of times a month occurs
+  const monthCounts = {};
+  allMonths.map(month => {
+    monthCounts[month] = monthCounts[month || 0 + 1];
+  });
+
+  // Return the most common month
+  return Object.keys(monthCounts).reduce((a, b) => monthCounts[a] > monthCounts[b] ? a : b);
+}
+
+// Used in Dashboard view to automaticly add a date and a dropdown menu in case when that data is missing
+function getAutoFillSchedule(schedules, weekNumbers, DAYS_PER_WEEK) {
+  return schedules.map((schedule, index) => {
+    const monday = getMondayFromWeekNumber(weekNumbers[index]);
+
+    // Check the schedule for missing days and replace it with data
+    while (schedule.length < DAYS_PER_WEEK) {
+      const dayIndex = schedule.length; // Determine the day. 0=ma, 1=di, 2=wo, 3=do, 4=vr
+      const date = new Date(monday);
+      date.setDate(monday.getDate() + dayIndex);
+
+      schedule.push({
+        date: date,
+        morning: { name: '' },
+        afternoon: { name: '' }
+      });
+    }
+    return schedule;
+  });
+}
+
 export {
-  getWeekNumber, getMondayFromWeekNumber, getNameOfDay, formatDate
+  getWeekNumber, getMondayFromWeekNumber, getNameOfDay, formatDate, getMostCommonMonth, getAutoFillSchedule
 }
