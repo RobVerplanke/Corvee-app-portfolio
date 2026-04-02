@@ -81,7 +81,7 @@ function getMostCommonMonth (schedules) {
   // Count the amount of times a month occurs
   const monthCounts = {};
   allMonths.map(month => {
-    monthCounts[month] = monthCounts[month || 0 + 1];
+    monthCounts[month] = (monthCounts[month] || 0) + 1;
   });
 
   // Return the most common month
