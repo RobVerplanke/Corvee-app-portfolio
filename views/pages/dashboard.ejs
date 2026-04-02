@@ -25,6 +25,9 @@
       <h1 class="page-title"><%- data.currentMonthName %></h1>
     </header>
     
+    <!-- Send selected names to the database after submit -->
+    <form id="dashboard-form" action="/dashboard/save" method="POST">
+
     <!-- MAIN -->
     <main class="weeks-grid">
       
@@ -37,20 +40,19 @@
           </h2>
           <div class="table-wrapper">
 
-            <table class="table-agenda">
-              <colgroup>
-                <col class="col-datum">
-                <col class="col-dagdeel">
-                <col class="col-naam">
-              </colgroup>
 
-              <thead>
-                <tr><th>Datum</th><th>Dagdeel</th><th>Naam</th></tr>
-              </thead>
+              <table class="table-agenda">
+                <colgroup>
+                  <col class="col-datum">
+                  <col class="col-dagdeel">
+                  <col class="col-naam">
+                </colgroup>
 
-              <tbody>
-                <!-- Send selected names to the database after submit -->
-                <form id="dashboard-form" action="/dashboard/save" method="POST">
+                <thead>
+                  <tr><th>Datum</th><th>Dagdeel</th><th>Naam</th></tr>
+                </thead>
+
+                <tbody>
 
                   <!-- Create rows for each day - Extra span-elements are used for the printed version -->
                   <% schedule.forEach((day, index) => { %>
@@ -58,13 +60,13 @@
                       <td class="td-dag" rowspan="2"><%= helper.getNameOfDay(day.date) %><span class="datum"><%= helper.formatDate(day.date) %></span></td>
                       <td><span class="badge badge-ochtend">Ochtend</span><span class="dagdeel-print">Ochtend</span></td>
                       <td class="td-naam">
-                        <% if(day.morning.name === '-' ) { %>
-                          <select id="volunteer-select-<%= index %>-morning" class="select-name">
-                            <option value="">-- Selecteer vrijwilliger --</option>
-                            <% data.volunteers.forEach(volunteer => { %>
-                              <option value="<%= volunteer.id %>"><%= volunteer.name %></option>
-                            <% }) %>
-                          </select>
+                        <% if(!day.morning || day.morning.name === '-' ) { %>
+                        <select name="<%= new Date(day.date).toISOString().split('T')[0] %>[morning]" id="volunteer-select-<%= index %>-morning" class="select-name">
+                          <option value="">-- Selecteer vrijwilliger --</option>
+                          <% data.volunteers.forEach(volunteer => { %>
+                            <option value="<%= volunteer.id %>"><%= volunteer.name %></option>
+                          <% }) %>
+                        </select>
                         <% } else { %>
                           <%= day.morning.name %>
                         <% } %>
@@ -73,8 +75,8 @@
                     <tr>
                       <td><span class="badge badge-middag">Middag</span><span class="dagdeel-print">Middag</span></td>
                       <td class="td-naam td-naam-middag">
-                        <% if(day.afternoon.name === '-' ) { %>
-                          <select id="volunteer-select-<%= index %>-afternoon" class="select-name">
+                        <% if(!day.afternoon || day.afternoon.name === '-' ) { %>
+                          <select name="<%= new Date(day.date).toISOString().split('T')[0] %>[afternoon]" id="volunteer-select-<%= index %>-afternoon" class="select-name">
                             <option value="">-- Selecteer vrijwilliger --</option>
                             <% data.volunteers.forEach(volunteer => { %>
                               <option value="<%= volunteer.id %>"><%= volunteer.name %></option>
@@ -86,15 +88,14 @@
                       </td>
                     </tr>
                   <% }) %>
-                </form>
-              </tbody>
-            </table>
-          </div> <!-- table-wrapper -->
+                </tbody>
+              </table>
+            </div> <!-- table-wrapper -->
         </div> <!-- week-block -->
       <% }) %>
-
     </main>
-
+        
+      </form>
     <!-- Submit button -->      
     <div class="btn-container">
       <button form="dashboard-form" class="btn-submit-name" type="submit">Opslaan</button>
