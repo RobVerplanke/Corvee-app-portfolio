@@ -1,4 +1,4 @@
-import { getWeekNumber, getNameOfDay, formatDate, getMostCommonMonth, getAutoFillSchedule } from './helpers.js';
+import { getWeekNumber, getNameOfDay, formatDate, getMostCommonMonth, getAutoFilledSchedule } from './helpers.js';
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -26,6 +26,7 @@ await databaseHandler.sync();
 
 // Use static files for CSS-styling, scripts and assets (images)
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.urlencoded({ extended: true })); // Read form data (sent from dashboard) correctly
 
 // Set the view engine to ejs and build an absolute path to the views folder
 app.set('view engine', 'ejs');
@@ -55,7 +56,7 @@ app.get('/agenda', async (req, res) => {
   let mostCommonMonth = MONTHS[getMostCommonMonth(schedules)];
   
   // When the schedule is missing data for one or more days, add placeholder content for the missing days
-  let autoFilledSchedule = getAutoFillSchedule(schedules, weekNumbers, DAYS_PER_WEEK)
+  let autoFilledSchedule = getAutoFilledSchedule(schedules, weekNumbers, DAYS_PER_WEEK)
 
   // Functions and data which are needed to display titles and dates in the agenda view
   const helper = {
@@ -72,9 +73,6 @@ app.get('/agenda', async (req, res) => {
   }
   
   // activePage - function that highlights the corresponding navigation button of the active page
-  // currentMonthName - used as the page title
-  // schedules - contains all table data
-  // helper - contains functions and weeknumbers to correctly display the data
   res.render('pages/agenda', { activePage: 'agenda', helper: helper, data: data });
 });
 
@@ -100,7 +98,7 @@ app.get('/dashboard', async (req, res) => {
   let mostCommonMonth = MONTHS[getMostCommonMonth(schedules)];
 
   // When the schedule is missing data for one or more days, calculate dates for the missing days
-  let autoFilledSchedule = getAutoFillSchedule(schedules, weekNumbers, DAYS_PER_WEEK);
+  let autoFilledSchedule = getAutoFilledSchedule(schedules, weekNumbers, DAYS_PER_WEEK);
 
   // Functions which are needed to display corresponding content
   const helper = {
@@ -118,10 +116,13 @@ app.get('/dashboard', async (req, res) => {
   }
   
   // activePage - function that highlights the corresponding navigation button of the active page
-  // currentMonthName - used as the page title
-  // schedules - contains all table data
-  // helper - contains functions and data to display corresponding content
   res.render('pages/dashboard', { activePage: 'dashboard', helper: helper, data: data });
+});
+
+// Admin dashboard page - Save new schedule from form
+app.post('/dashboard/save', async (req, res) => {
+  console.log('request body: ', req.body);
+  res.redirect('/dashboard');
 });
 
 // Instructions manual page

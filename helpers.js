@@ -89,7 +89,7 @@ function getMostCommonMonth (schedules) {
 }
 
 // Used in Dashboard view to automaticly add a date and a dropdown menu in case when that data is missing
-function getAutoFillSchedule(schedules, weekNumbers, DAYS_PER_WEEK) {
+function getAutoFilledSchedule(schedules, weekNumbers, DAYS_PER_WEEK) {
   return schedules.map((schedule, index) => {
     const monday = getMondayFromWeekNumber(weekNumbers[index]);
 
@@ -110,5 +110,5 @@ function getAutoFillSchedule(schedules, weekNumbers, DAYS_PER_WEEK) {
 }
 
 export {
-  getWeekNumber, getMondayFromWeekNumber, getNameOfDay, formatDate, getMostCommonMonth, getAutoFillSchedule
+  getWeekNumber, getMondayFromWeekNumber, getNameOfDay, formatDate, getMostCommonMonth, getAutoFilledSchedule
 }
