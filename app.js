@@ -26,7 +26,8 @@ await databaseHandler.sync();
 
 // Use static files for CSS-styling, scripts and assets (images)
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.urlencoded({ extended: true })); // Read form data (sent from dashboard) correctly
+// Read form data (sent from dashboard) correctly
+app.use(express.urlencoded({ extended: true })); 
 
 // Set the view engine to ejs and build an absolute path to the views folder
 app.set('view engine', 'ejs');
@@ -94,17 +95,20 @@ app.get('/dashboard', async (req, res) => {
     weekNumbers.push(currentWeekNumber+i); // Corresponding weeknumbers will be used as table titles
   }
 
-  // Determine what is the most common month name in the schedules so it can be uses as page title
-  let mostCommonMonth = MONTHS[getMostCommonMonth(schedules)];
-
   // When the schedule is missing data for one or more days, calculate dates for the missing days
   let autoFilledSchedule = getAutoFilledSchedule(schedules, weekNumbers, DAYS_PER_WEEK);
+
+  // Determine what is the most common month name in the schedules so it can be uses as page title
+  let mostCommonMonth = MONTHS[getMostCommonMonth(schedules)];
 
   // Functions which are needed to display corresponding content
   const helper = {
     getWeekNumber: getWeekNumber,
     getNameOfDay: getNameOfDay,
     formatDate: formatDate,
+    toLocalDateString: (date) => {
+      return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+    }
   }
 
   // Data that needs to be displayd
@@ -121,7 +125,10 @@ app.get('/dashboard', async (req, res) => {
 
 // Admin dashboard page - Save new schedule from form
 app.post('/dashboard/save', async (req, res) => {
-  console.log('request body: ', req.body);
+  let formData = req.body;
+  for (const [data, dayParts] of Object.entries(formData)) {
+    await databaseHandler.addScheduleEntry(new Date(data), dayParts);
+  }
   res.redirect('/dashboard');
 });
 
