@@ -134,11 +134,24 @@ class DatabaseHandler {
    * @param {number} changedData.afternoon - The id of the volunteer to replace the current afternoon id with.
    *
    * @returns {Promise<number[]>} - The promise made by sequelize with the affected rows as result.
-   * @throws Will throw an error when not providing either a morning or afternoon field in the changedData paramater.
+   * @throws Will throw an error when a schedule entry does not exist for the given date.
    */
   async updateScheduleEntry(date, changedData) {
     if (changedData.afternoon == undefined && changedData.morning == undefined) {
-      throw Error("Missing data to update schedule with.");
+      console.log("Both afternoon or morning are undefined");
+      return null;
+    }
+
+    // Find whether a record with the date already exists.
+    const scheduleEntry = await this.models.Schedule.findAll({
+      where: {
+        date: date
+      }
+    });
+
+    if (scheduleEntry.length == 0) {
+      // No entries found, throw error so caller can potentially add the record instead.
+      throw new Error("No schedule entries found for date: " + date.toDateString());
     }
 
     // Set the query options depending on the changedData.
