@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="../css/navbar.css">
     <link rel="stylesheet" href="../css/print-agenda.css">
     <title>Corveerooster</title>
+    <script src="../js/datepicker.js"></script>
   </head>
 
   <body>
@@ -25,6 +26,8 @@
       <h1 class="page-title"><%- data.currentMonthName %></h1>
     </header>
     
+    <div class="date-picker"><input type="date" id="datepicker" onchange="onDateChanged(event);"></div>
+
     <!-- Send selected names to the database after submit -->
     <form id="dashboard-form" action="/dashboard/save" method="POST">
 
