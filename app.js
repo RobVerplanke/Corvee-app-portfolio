@@ -40,7 +40,6 @@ app.get('/', (req, res) => {
 
 // Agenda page - Extra span-elements are used for the printed version
 app.get('/agenda', async (req, res) => {
-
   let schedules = [];
   let weekNumbers = [];
   let today = new Date(); // Get current date
@@ -79,9 +78,6 @@ app.get('/agenda', async (req, res) => {
 
 // Admin dashboard page
 app.get('/dashboard', async (req, res) => {
-
-  // TODO: Save and send selection of names to db after submit (volunteer id's)
-
   let schedules = [];
   let weekNumbers = [];
   let today = new Date(); // Get current date
@@ -98,7 +94,7 @@ app.get('/dashboard', async (req, res) => {
   // When the schedule is missing data for one or more days, calculate dates for the missing days
   let autoFilledSchedule = getAutoFilledSchedule(schedules, weekNumbers, DAYS_PER_WEEK);
 
-  // Determine what is the most common month name in the schedules so it can be uses as page title
+  // Determine what is the most common month name in the schedules so it can be used as page title
   let mostCommonMonth = MONTHS[getMostCommonMonth(schedules)];
 
   // Functions which are needed to display corresponding content
@@ -106,7 +102,8 @@ app.get('/dashboard', async (req, res) => {
     getWeekNumber: getWeekNumber,
     getNameOfDay: getNameOfDay,
     formatDate: formatDate,
-    toLocalDateString: (date) => {
+    toLocalDateString: (date) => { 
+      // Use local time instead of UTC-time. This fixes shifting of time when a new schedule is added, which resulted in different days having the same date.
       return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
     }
   }
@@ -126,8 +123,12 @@ app.get('/dashboard', async (req, res) => {
 // Admin dashboard page - Save new schedule from form
 app.post('/dashboard/save', async (req, res) => {
   let formData = req.body;
+
   for (const [data, dayParts] of Object.entries(formData)) {
-    await databaseHandler.addScheduleEntry(new Date(data), dayParts);
+    await databaseHandler.updateScheduleEntry (new Date(data), dayParts).catch(async (error) => {
+      // On error create.
+      await databaseHandler.addScheduleEntry(new Date(data), dayParts);
+    });
   }
   res.redirect('/dashboard');
 });
