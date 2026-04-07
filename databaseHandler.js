@@ -119,8 +119,8 @@ class DatabaseHandler {
    * @returns {Promise<Model>} - The promise made by sequelize with the newly created object on success.
    */
   async addScheduleEntry(date, volunteerData) {
-    const morning = volunteerData.morning || null;
-    const afternoon = volunteerData.afternoon || null;
+    const morning = volunteerData.morning && volunteerData.morning != '' ? volunteerData.morning : null;
+    const afternoon = volunteerData.afternoon && volunteerData.afternoon != '' ? volunteerData.afternoon : null;
 
     return this.models.Schedule.create({ date: date, morningId: morning, afternoonId: afternoon });
   }
@@ -156,10 +156,10 @@ class DatabaseHandler {
 
     // Set the query options depending on the changedData.
     let queryOptions = {};
-    if (changedData['morning'] != undefined) {
+    if (changedData['morning'] != undefined && changedData['morning'] != '') {
       queryOptions.morningId = changedData.morning;
     } 
-    if (changedData['afternoon'] != undefined) {
+    if (changedData['afternoon'] != undefined && changedData['afternoon'] != '') {
       queryOptions.afternoonId = changedData.afternoon;
     }
     return this.models.Schedule.update(queryOptions, { where: { date: date }});
