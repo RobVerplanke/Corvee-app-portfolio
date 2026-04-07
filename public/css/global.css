@@ -33,17 +33,14 @@ html, body {
   overflow-x: hidden;
 }
 
-html {
-  overflow-x: hidden;
+.header-content {
+  display: flex;
+  align-items: center;
 }
 
 body {
   font-family: var(--font-alphapipe-reg);
   background-color: var(--bg);
-}
-
-.body-centered {
-  height: 100vh;
 }
 
 .page-content {
@@ -55,6 +52,20 @@ body {
   margin: 0 auto;
   max-width: 1000px;
   padding: 48px 24px 48px;
+}
+
+.page-label {
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.page-title {
+  font-family: var(--font-quicksand-bold);
+  font-size: 36px;
+  color: var(--text);
 }
 
 /* === DECORATIVE BACKGROUND === */
@@ -84,7 +95,6 @@ body::after {
 }
 
 /* === BUTTONS === */
-
 .btn:active { transform: scale(0.98); }
 
 .btn-primary {

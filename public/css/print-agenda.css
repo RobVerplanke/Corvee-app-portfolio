@@ -1,4 +1,3 @@
-
 /* Hide 'part of day' labels that are meant for the print version, badges are used for the front-end */
 .dagdeel-print {
   display: none !important;

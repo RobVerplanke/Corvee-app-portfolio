@@ -149,8 +149,8 @@ app.post('/dashboard/save', async (req, res) => {
 });
 
 // Instructions manual page
-app.get('/manual', (req, res) => {
-  res.render('pages/manual', { activePage: 'manual'});
+app.get('/manuals', (req, res) => {
+  res.render('pages/manuals', { activePage: 'manuals'});
 });
 
 app.listen(port, () => {
