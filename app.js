@@ -39,12 +39,19 @@ app.get('/', (req, res) => {
 });
 
 // Agenda page - Extra span-elements are used for the printed version
-app.get('/agenda', async (req, res) => {
+app.get('/agenda/', async (req, res) => {
+  let requestedDate = null;
+
+  // Create a RegExp to test the date for validity. If invalid, use today.
+  const re = /^20[0-9]{2}-[0-1][0-9]-[0-3][0-9]\b/;
+  if (!re.test(req.query.date)) {
+    requestedDate = new Date();
+  } else {
+    requestedDate = new Date(req.query.date);
+  }
   let schedules = [];
   let weekNumbers = [];
-  let today = new Date(); // Get current date
-  let currentDate = new Date(today); // Create copy to avoid mutation of the original date
-  let currentWeekNumber = getWeekNumber(currentDate); // Get current week number
+  let currentWeekNumber = getWeekNumber(requestedDate); // Get current week number
  
   // Get a fixed amount of schedules for the upcoming weeks (defined in SCHEDULES_PER_MONTH constant) of the current month
   for (let i=0; i<SCHEDULES_PER_MONTH; i++) {
