@@ -52,11 +52,11 @@ app.get('/agenda', async (req, res) => {
     weekNumbers.push(currentWeekNumber+i);
   }
 
-  // Determine what is the most common month name in the schedules so it can be uses as page title
-  let mostCommonMonth = MONTHS[getMostCommonMonth(schedules)];
-  
   // When the schedule is missing data for one or more days, add placeholder content for the missing days
   let autoFilledSchedule = getAutoFilledSchedule(schedules, weekNumbers, DAYS_PER_WEEK)
+
+  // Determine what is the most common month name in the schedules so it can be uses as page title
+  let mostCommonMonth = MONTHS[getMostCommonMonth(schedules)];
 
   // Functions and data which are needed to display titles and dates in the agenda view
   const helper = {
