@@ -3,34 +3,6 @@
   display: none !important;
 }
 
-/* === PRINT BUTTON === */
-.btn-print {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  gap: 5px;
-  width: 80px;
-  height: 32px;
-  margin: 0 auto 48px auto;
-
-  background: var(--accent);
-  color: white;
-  border-radius: 4px;
-  animation: fadeUp 0.4s ease both;
-}
-
-.btn-print:hover { 
-  cursor: pointer;
-  background: var(--accent-hover); 
-}
-
-.btn-print svg {
-  width: 16px;
-  height: 16px;
-  fill: white;
-}
-
 /* === KEYFRAMES === */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(16px); }

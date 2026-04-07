@@ -37,6 +37,47 @@
   animation: fadeUp 0.4s ease both;
 }
 
+/* === DATE PICKER === */
+.date-picker {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  color: var(--text);
+  margin: 0 auto 32px auto;
+  max-width: 980px;
+  padding: 0 24px;
+}
+
+.date-picker input[type="date"] {
+  padding: 11px 14px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-family: var(--font-quicksand-reg);
+  font-size: 14px;
+  color: var(--text);
+  cursor: pointer;
+  outline: none;
+  box-shadow: var(--shadow);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.date-picker input[type="date"]:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(44,95,74,0.1);
+}
+
+.date-picker input[type="date"]:hover {
+  border-color: var(--accent);
+}
+
+.date-picker input[type="date"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  opacity: 0.6;
+  filter: invert(30%) sepia(50%) saturate(400%) hue-rotate(110deg);
+}
 
 /* === TABEL === */
 .table-agenda {
