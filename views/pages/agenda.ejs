@@ -54,11 +54,11 @@
                   <tr>
                     <td class="td-dag" rowspan="2"><%= helper.getNameOfDay(day.date) %><span class="datum"><%= helper.formatDate(day.date) %></span></td>
                     <td><span class="badge badge-ochtend">Ochtend</span><span class="dagdeel-print">Ochtend</span></td>
-                    <td class="td-naam"><%= day.morning.name %></td>
+                    <td class="td-naam"><%= day.morning ? day.morning.name : '-' %></td>
                   </tr>
                   <tr>
                     <td><span class="badge badge-middag">Middag</span><span class="dagdeel-print">Middag</span></td>
-                    <td class="td-naam td-naam-middag"><%= day.afternoon.name %></td>
+                    <td class="td-naam td-naam-middag"><%= day.afternoon ? day.afternoon.name : '-' %></td>
                   </tr>
                 <% }) %>
               </tbody>
