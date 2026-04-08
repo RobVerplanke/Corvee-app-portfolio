@@ -1,0 +1,53 @@
+.manuals-container{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  font-family: var(--font-quicksand-reg);
+}
+
+.manuals-index{
+  flex: 1;
+  width: 100%;
+  padding-top: 20px;
+  padding-bottom: 30px;
+  background-color: var(--accent-light);
+}
+
+.manuals-content{
+  flex: 3;
+  width: 100%;
+  padding: 20px 20px 20px 20px ;
+  background-color: var(--card);
+}
+
+.manuals-link{
+  display: flex;
+  justify-content: space-between;
+  font-weight: 700;
+  color: var(--text);
+  padding: 10px 10px 10px 16px;
+}
+
+.manuals-link:hover{
+  background-color: var(--bg);
+}
+
+.active {
+  background-color: var(--bg);
+  border-radius: 3px;
+}
+
+.link-symbol{
+  display: block;
+}
+
+/* Move navigation to the top when app is viewed on small screen */
+@media (max-width: 1024px) {
+  .manuals-container {
+    flex-direction: column;
+  }
+
+  .link-symbol{
+    display: none;
+  }
+}
