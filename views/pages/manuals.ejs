@@ -13,19 +13,17 @@
 
   <body>
 
-    <!-- NAVIGATION PARTIAL -->
-    <div class="manuals-index">
-      <%- include ('../partials/navbar.ejs'); %>
-    </div>
+    <!-- TOP NAVIGATION PARTIAL -->
+    <%- include ('../partials/navbar.ejs'); %>
 
-    <!-- MANUALS NAVIGATION PARTIAL -->
     <div class="manuals-container">
+
+      <!-- MANUALS NAVIGATION PARTIAL -->
       <%- include ('../partials/navbar-manuals.ejs'); %>
-        
+      
       <!-- MANUALS CONTENT PARTIAL -->
-      <div class="manuals-content">
-        <%- include ('../partials/manuals/vaatwasser.ejs'); %>
-      </div>
+      <%- include ('../partials/manuals/vaatwasser.ejs'); %>
+
     </div>
 
   </body>
