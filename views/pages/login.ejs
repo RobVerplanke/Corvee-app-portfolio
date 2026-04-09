@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/pages/index.css">
+  <title>Login</title>
+</head>
+<body class="body-centered">
+<main>
+    <div class="form-container">
+      <div class="login-header">
+      <div class="login-logo">
+        <img src="/assets/logo_aletho.jpeg" alt="" srcset="">
+      </div>
+        <p class="login-label">Corvee dienst</p>
+        <h1 class="login-title">Welkom terug</h1>
+        <% if (loginError) { %><h3>Password incorrect.</h3><% } %>
+      </div>
+      <form class="login-form" action="/login" method="POST">
+        <div class="field">
+          <label for="password">Wachtwoord</label>
+          <input type="password" id="password" name="password" placeholder="••••••••" autocomplete="current-password">
+        </div>
+        <button type="submit" class="btn-login">Inloggen</button>
+      </form>
+    </div>
+  </main>
+
+</body>
+</html>

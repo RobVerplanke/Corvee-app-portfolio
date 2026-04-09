@@ -1,5 +1,6 @@
 import { getWeekNumber, getNameOfDay, formatDate, getMostCommonMonth, getAutoFilledSchedule } from './helpers.js';
 import express from 'express';
+import session from 'express-session';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import Sequelize from 'sequelize';
@@ -9,6 +10,7 @@ import DatabaseHandler from './databaseHandler.js';
 const MONTHS = ['Januari', 'Februari', 'Maart', 'April', 'Mei', 'Juni', 'Juli', 'Augustus', 'September', 'Oktober', 'November', 'December'];
 const SCHEDULES_PER_MONTH = 4; // Amount of schedules displayed per month
 const DAYS_PER_WEEK = 5; // Working days
+const PASSWORD = '321';
 
 const app = express();
 const port = 3000;
@@ -21,17 +23,31 @@ const sequelize = new Sequelize({
   logging: false,
 });
 const databaseHandler = new DatabaseHandler(sequelize);
-// Synchronize the database so the tables exist in the database.
+// Synchronize the database so the tables exist in the database
 await databaseHandler.sync();
 
 // Use static files for CSS-styling, scripts and assets (images)
 app.use(express.static(path.join(__dirname, 'public')));
 // Read form data (sent from dashboard) correctly
 app.use(express.urlencoded({ extended: true })); 
+// Setup session middleware
+app.use(session({
+  secret: 'TEMP_SECRET_KEY',
+  resave: false,
+  saveUninitialized: false,
+}));
 
 // Set the view engine to ejs and build an absolute path to the views folder
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
+
+function isLoggedIn(req, res, next) {
+  if (req.session.isLoggedIn) {
+    next();
+  } else {
+    res.redirect('/login');
+  }
+}
 
 // Login page
 app.get('/', (req, res) => {
@@ -39,30 +55,44 @@ app.get('/', (req, res) => {
   // TODO: show agenda? Redirect or move it here?
 });
 
-// TODO: Move login screen here to separate login and agenda better.
 app.get('/login', (req, res) => {
-  // TODO: Show login error when attempt fails after post (using req.body?)
+  // If already logged in, redirect to the dashboard for admin use.
+  if (req.session.isLoggedIn) {
+    res.redirect('/dashboard');
+  } else {
+    // If not logged in, show login and any error if present.
+    res.render('pages/login', { loginError: req.session.loginError });
+  }
 })
 
 app.post('/login', (req, res) => {
-  // Retrieve the posted data for authentication.
-  let formData = req.body;
-
-  // TODO: Add data validation before attempting verification? Or is that unnecessary.
-  // Would be good practice for security.
-  let username = formData.username;
-  let password = formData.password;
+  // Retrieve the posted data for authentication. Only password for now.
+  const password = req.body.password;
 
   // Check if the login details are valid and create a session or reject the login attempt.
-  if (databaseHandler.verifyLogin(username, password)) {
-    // TODO: Create login session.
+  if (password == PASSWORD) {
+    // Create login session and redirect to the admin view
+    req.session.isLoggedIn = true;
+    res.redirect('/dashboard');
   } else {
-    // TODO: Reject login, go back to login page and show warning.
+    // Reject login, go back to login page and show warning
+    req.session.loginError = true;
+    res.redirect('/login');
   }
 });
 
+// Logout and return to agenda.
+app.get('/logout', (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      console.log(err);
+    }
+    res.redirect('/agenda');
+  });
+});
+
 // Agenda page - Extra span-elements are used for the printed version
-app.get('/agenda/', async (req, res) => {
+app.get('/agenda', async (req, res) => {
   let requestedDate = null;
 
   // Create a RegExp to test the date for validity. If invalid, use today.
@@ -107,7 +137,7 @@ app.get('/agenda/', async (req, res) => {
 });
 
 // Admin dashboard page
-app.get('/dashboard', async (req, res) => {
+app.get('/dashboard', isLoggedIn, async (req, res) => {
   let requestedDate = null;
 
   // Create a RegExp to test the date for validity. If invalid, use today.
@@ -159,7 +189,7 @@ app.get('/dashboard', async (req, res) => {
 });
 
 // Admin dashboard page - Save new schedule from form
-app.post('/dashboard/save', async (req, res) => {
+app.post('/dashboard/save', isLoggedIn, async (req, res) => {
   let formData = req.body;
 
   for (const [data, dayParts] of Object.entries(formData)) {
