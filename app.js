@@ -21,7 +21,7 @@ const sequelize = new Sequelize({
   logging: false,
 });
 const databaseHandler = new DatabaseHandler(sequelize);
-// TODO: Find out if synchronization can be done in a better way.
+// Synchronize the database so the tables exist in the database.
 await databaseHandler.sync();
 
 // Use static files for CSS-styling, scripts and assets (images)
@@ -36,6 +36,29 @@ app.set('views', path.join(__dirname, 'views'));
 // Login page
 app.get('/', (req, res) => {
   res.render('pages/index');
+  // TODO: show agenda? Redirect or move it here?
+});
+
+// TODO: Move login screen here to separate login and agenda better.
+app.get('/login', (req, res) => {
+  // TODO: Show login error when attempt fails after post (using req.body?)
+})
+
+app.post('/login', (req, res) => {
+  // Retrieve the posted data for authentication.
+  let formData = req.body;
+
+  // TODO: Add data validation before attempting verification? Or is that unnecessary.
+  // Would be good practice for security.
+  let username = formData.username;
+  let password = formData.password;
+
+  // Check if the login details are valid and create a session or reject the login attempt.
+  if (databaseHandler.verifyLogin(username, password)) {
+    // TODO: Create login session.
+  } else {
+    // TODO: Reject login, go back to login page and show warning.
+  }
 });
 
 // Agenda page - Extra span-elements are used for the printed version
