@@ -14,60 +14,19 @@
   <body>
 
     <!-- NAVIGATION PARTIAL -->
-    <%- include ('../partials/navbar.ejs'); %>
-
-    <!-- HEADER -->
-    <!-- <header class="page-content">
-      <div class="page-header">
-        <h1 class="page-title">Handleidingen</h1>
-      </div>
-    </header> -->
-
-    <div class="manuals-container">
-
-      <div class="manuals-index">
-        <!-- Manual for chore tasks -->
-        <div class="manuals-link">
-          <div>
-            <a href="">Corvee taken</a>
-          </div>
-          <div class="link-symbol">
-            >
-          </div>
-        </div>
-        
-        <!-- Manual for dishwasher -->
-        <div class="manuals-link">
-          <div>
-            <a href="">Schoonmaak instructies</a>
-          </div>
-          <div class="link-symbol">
-            >
-          </div>
-        </div>
-        
-        <!-- Cleaning instructions -->
-        <div class="manuals-link active">
-          <div>
-            <a href="">Handleiding vaatwasser</a>
-          </div>
-          <div class="link-symbol">
-            >
-          </div>
-        </div>
-      </div>
-      
-      <div class="manuals-content">
-        <H2>Handleiding vaatwasser</H2><br>
-        - Pak een vaatwasblokje uit de doos, deze hoef je niet uit te pakken.<br><br>
-        - Doe het blokje in het vakje in de binnenkant van de vaatwasser deur en doe de deur omhoog.<br><br>
-        - Druk op de aanknop. Deze bevindt zich aan de rand van de vaatwasser deur.<br><br>
-        - Doe de vaatwasser dicht.<br><br>
-        - Druk op de programma knop aan de voorkant van de vaatwasser tot dat er een lampje komt bij het programma: 30 minuten- 60 graden.<br><br>
-        - Druk op start.
-      </div>
-    
+    <div class="manuals-index">
+      <%- include ('../partials/navbar.ejs'); %>
     </div>
-    
+
+    <!-- MANUALS NAVIGATION PARTIAL -->
+    <div class="manuals-container">
+      <%- include ('../partials/navbar-manuals.ejs'); %>
+        
+      <!-- MANUALS CONTENT PARTIAL -->
+      <div class="manuals-content">
+        <%- include ('../partials/manuals/vaatwasser.ejs'); %>
+      </div>
+    </div>
+
   </body>
 </html>

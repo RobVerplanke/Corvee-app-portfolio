@@ -1,5 +1,6 @@
 .manuals-container{
   width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: row;
   font-family: var(--font-quicksand-reg);
@@ -41,12 +42,15 @@
   display: block;
 }
 
-/* Move navigation to the top when app is viewed on small screen */
-@media (max-width: 1024px) {
+/* When app is viewed on smaller resolution */
+@media (max-width: 960px) {
+
+  /* Move navigation to the top */
   .manuals-container {
     flex-direction: column;
   }
 
+  /* Hide arrows next to each link */
   .link-symbol{
     display: none;
   }
