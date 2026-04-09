@@ -173,7 +173,19 @@ app.post('/dashboard/save', async (req, res) => {
 
 // Instructions manual page
 app.get('/manuals', (req, res) => {
-  res.render('pages/manuals', { activePage: 'manuals'});
+  res.render('pages/manuals', { activePage: 'manuals', activeManual: 'tasks'});
+});
+
+app.get('/manuals/tasks', (req, res) => {
+  res.render('pages/manuals', { activePage: 'manuals', activeManual: 'tasks'});
+});
+
+app.get('/manuals/dishwasher', (req, res) => {
+  res.render('pages/manuals', { activePage: 'manuals', activeManual: 'dishwasher'});
+});
+
+app.get('/manuals/cleaning', (req, res) => {
+  res.render('pages/manuals', { activePage: 'manuals', activeManual: 'cleaning'});
 });
 
 app.listen(port, () => {

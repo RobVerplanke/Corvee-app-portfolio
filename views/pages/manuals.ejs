@@ -20,9 +20,9 @@
 
       <!-- MANUALS NAVIGATION PARTIAL -->
       <%- include ('../partials/navbar-manuals.ejs'); %>
-      
+
       <!-- MANUALS CONTENT PARTIAL -->
-      <%- include ('../partials/manuals/vaatwasser.ejs'); %>
+      <%- include (`../partials/manuals/${activeManual}.ejs`); %>
 
     </div>
 

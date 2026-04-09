@@ -1,8 +1,8 @@
 <div class="manuals-index">
   <!-- Manual for chore tasks -->
-  <div class="manuals-link">
-    <div>
-      <a href="">Corvee taken</a>
+  <div class="manuals-link <%= activeManual === 'tasks' ? 'active' : '' %>">
+    <div class="manuals-link">
+      <a href="/manuals/tasks">Corvee taken</a>
     </div>
     <div class="link-symbol">
       >
@@ -10,22 +10,23 @@
   </div>
 
   <!-- Manual for dishwasher -->
-  <div class="manuals-link">
-    <div>
-      <a href="">Schoonmaak instructies</a>
+  <div class="manuals-link <%= activeManual === 'dishwasher' ? 'active' : '' %>">
+    <div class="manuals-link">
+      <a href="/manuals/dishwasher">Handleiding vaatwasser</a>
+    </div>
+    <div class="link-symbol">
+      >
+    </div>
+  </div>
+  
+  <!-- Cleaning instructions -->
+  <div class="manuals-link <%= activeManual === 'cleaning' ? 'active' : '' %>">
+    <div class="manuals-link">
+      <a href="/manuals/cleaning">Schoonmaak instructies</a>
     </div>
     <div class="link-symbol">
       >
     </div>
   </div>
 
-  <!-- Cleaning instructions -->
-  <div class="manuals-link active">
-    <div>
-      <a href="">Handleiding vaatwasser</a>
-    </div>
-    <div class="link-symbol">
-      >
-    </div>
-  </div>
 </div>
