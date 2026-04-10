@@ -1,13 +1,11 @@
 .manuals-container{
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: row;
   font-family: var(--font-quicksand-reg);
 }
 
 .manuals-index{
-  height: 100vh;
-
   flex: 1;
   width: 100%;
   padding-top: 20px;
@@ -15,12 +13,10 @@
 }
 
 .manuals-content{
-  height: 100vh;
-
+  flex: 3;
   display: flex;
   flex-direction: column;
   align-items: start;
-  flex: 3;
   padding: 20px 20px 20px 20px ;
   background-color: var(--card);
 }
@@ -66,7 +62,7 @@
 }
 
 .manuals-help{
-  border: 2px solid var(--text);
+  border: 2px solid black;
   padding: 15px;
   margin-top: 40px;
 }

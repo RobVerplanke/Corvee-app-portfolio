@@ -140,3 +140,14 @@ body::after {
   height: 16px;
   fill: white;
 }
+
+/* LIST ITEMS */
+
+.manuals-list {
+  padding-left: 20px;
+}
+
+.manuals-list li {
+  margin: 5px 0;
+  list-style-type: disc;
+}
