@@ -156,12 +156,8 @@ class DatabaseHandler {
 
     // Set the query options depending on the changedData.
     let queryOptions = {};
-    if (changedData['morning'] != undefined && changedData['morning'] != '') {
-      queryOptions.morningId = changedData.morning;
-    } 
-    if (changedData['afternoon'] != undefined && changedData['afternoon'] != '') {
-      queryOptions.afternoonId = changedData.afternoon;
-    }
+    queryOptions.morningId = changedData.morning == '' ? null : changedData.morning;
+    queryOptions.afternoonId = changedData.afternoon == '' ? null : changedData.afternoon;
     return this.models.Schedule.update(queryOptions, { where: { date: date }});
   }
   
