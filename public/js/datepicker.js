@@ -25,6 +25,20 @@ function onDateChanged(e) {
   if (url.searchParams.has('date') && url.searchParams.get('date') == e.target.value) {
     return;
   }
+  // Warn if a volunteer was changed if it's the dashboard page.
+  if (url.pathname.includes('dashboard') && window.volunteerChanged) {
+    // If the confirm is rejected, ignore changing url and reset datepicker. Else proceed to change the page.
+    if (!confirm("Er zijn onopgeslagen wijzigingen, weet u zeker dat u wilt doorgaan?")) {
+      e.target.value = url.searchParams.has('date') ? url.searchParams.get('date') : getToday();
+      return;
+    }
+  }
+  // It should be safe to change the date.
   url.searchParams.set('date', e.target.value);
   window.location.href = url;
+}
+
+function onVolunteerChanged(e) {
+  // Set a flag when a volunteer has been changed to a value different from its initial value.
+  window.volunteerChanged = true;
 }
