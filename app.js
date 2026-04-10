@@ -49,50 +49,8 @@ function isLoggedIn(req, res, next) {
   }
 }
 
-// Login page
-app.get('/', (req, res) => {
-  res.render('pages/index');
-  // TODO: show agenda? Redirect or move it here?
-});
-
-app.get('/login', (req, res) => {
-  // If already logged in, redirect to the dashboard for admin use.
-  if (req.session.isLoggedIn) {
-    res.redirect('/dashboard');
-  } else {
-    // If not logged in, show login and any error if present.
-    res.render('pages/login', { loginError: req.session.loginError });
-  }
-})
-
-app.post('/login', (req, res) => {
-  // Retrieve the posted data for authentication. Only password for now.
-  const password = req.body.password;
-
-  // Check if the login details are valid and create a session or reject the login attempt.
-  if (password == PASSWORD) {
-    // Create login session and redirect to the admin view
-    req.session.isLoggedIn = true;
-    res.redirect('/dashboard');
-  } else {
-    // Reject login, go back to login page and show warning
-    req.session.loginError = true;
-    res.redirect('/login');
-  }
-});
-
-// Logout and return to agenda.
-app.get('/logout', (req, res) => {
-  req.session.destroy((err) => {
-    if (err) {
-      console.log(err);
-    }
-    res.redirect('/agenda');
-  });
-});
-
 // Agenda page - Extra span-elements are used for the printed version
-app.get('/agenda', async (req, res) => {
+app.get('/', async (req, res) => {
   let requestedDate = null;
 
   // Create a RegExp to test the date for validity. If invalid, use today.
@@ -134,6 +92,43 @@ app.get('/agenda', async (req, res) => {
   
   // activePage - function that highlights the corresponding navigation button of the active page
   res.render('pages/agenda', { activePage: 'agenda', helper: helper, data: data });
+});
+
+
+app.get('/login', (req, res) => {
+  // If already logged in, redirect to the dashboard for admin use.
+  if (req.session.isLoggedIn) {
+    res.redirect('/dashboard');
+  } else {
+    // If not logged in, show login and any error if present.
+    res.render('pages/login', { loginError: req.session.loginError });
+  }
+})
+
+app.post('/login', (req, res) => {
+  // Retrieve the posted data for authentication. Only password for now.
+  const password = req.body.password;
+
+  // Check if the login details are valid and create a session or reject the login attempt.
+  if (password == PASSWORD) {
+    // Create login session and redirect to the admin view
+    req.session.isLoggedIn = true;
+    res.redirect('/dashboard');
+  } else {
+    // Reject login, go back to login page and show warning
+    req.session.loginError = true;
+    res.redirect('/login');
+  }
+});
+
+// Logout and return to agenda.
+app.get('/logout', (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      console.log(err);
+    }
+    res.redirect('/');
+  });
 });
 
 // Admin dashboard page
