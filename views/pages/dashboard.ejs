@@ -12,8 +12,6 @@
     <title>Corveerooster</title>
     
     <script src="../js/datepicker.js"></script>
-    
-
   </head>
 
   <body>
@@ -21,7 +19,7 @@
     <!-- NAVIGATION PARTIAL -->
     <%- include ('../partials/navbar.ejs'); %>
 
-    <!-- CONFIRM MESSAGE AFTER ADD NEW VOLUNTEER -->
+    <!-- Confirm message after succesfully adding/editting a volunteer or changing the agenda -->
     <% if (success) { %>
       <div class="alert" id="flash">Vrijwilliger succesvol toegevoegd!</div>
     <% } %>
@@ -34,6 +32,13 @@
       <div class="alert" id="flash">Agenda succesvol aangepast!</div>
     <% } %>
     
+    <!-- Confirm message disapears after cetrain amount of time -->
+    <script>
+      setTimeout(() => {
+        document.getElementById('flash')?.remove();
+      }, 3000);
+    </script>
+
     <!-- HEADER -->
     <header class="page-content">
       <div class="page-header">
@@ -41,13 +46,6 @@
       </div>
       <h1 class="page-title"><%- data.currentMonthName %></h1>
     </header>
-
-    <!-- Confirm message disapears after cetrain amount of time -->
-    <script>
-      setTimeout(() => {
-        document.getElementById('flash')?.remove();
-      }, 3000);
-    </script>
 
     <!-- TOOLBAR WITH OPTIONS -->
     <%- include ('../partials/toolbar.ejs'); %>
@@ -89,7 +87,7 @@
                     <td><span class="badge badge-ochtend">Ochtend</span><span class="dagdeel-print">Ochtend</span></td>
                     <td class="td-naam">
                       <select name="<%= helper.toLocalDateString(day.date) %>[morning]" id="volunteer-select-<%= index %>-morning" class="select-name" onchange="onVolunteerChanged()">
-                        <option value="">-- Selecteer vrijwilliger --</option>
+                        <option value="">-</option>
                         <% data.volunteers.forEach(volunteer => { %>
                           <option value="<%= volunteer.id %>" <%= day.morning && day.morning.id === volunteer.id ? 'selected' : '' %>>
                             <%= volunteer.name %>
@@ -104,7 +102,7 @@
                     <td><span class="badge badge-middag">Middag</span><span class="dagdeel-print">Middag</span></td>
                     <td class="td-naam td-naam-middag">
                       <select name="<%= helper.toLocalDateString(day.date) %>[afternoon]" id="volunteer-select-<%= index %>-afternoon" class="select-name" onchange="onVolunteerChanged()">
-                        <option value="">-- Selecteer vrijwilliger --</option>
+                        <option value="">-</option>
                         <% data.volunteers.forEach(volunteer => { %>
                           <option value="<%= volunteer.id %>" <%= day.afternoon && day.afternoon.id === volunteer.id ? 'selected' : '' %>>
                             <%= volunteer.name %>
