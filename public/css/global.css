@@ -27,6 +27,8 @@
   font-style: normal;
 }
 
+h1, h2, h3, h4 {margin: 0;}
+
 /* === LAYOUT === */
 html, body {
   min-height: 100%;
@@ -114,7 +116,7 @@ body::after {
 .btn-secondary:hover { background: var(--accent-light); }
 
 /* === PRINT BUTTON === */
-.btn-print {
+.btn-print, .btn-add-volunteer {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -123,14 +125,22 @@ body::after {
   width: 80px;
   height: 32px;
   margin: 0 auto 48px auto;
-
   background: var(--accent);
   color: white;
   border-radius: 4px;
-  animation: fadeUp 0.4s ease both;
 }
 
-.btn-print:hover { 
+.btn-add-volunteer {
+  height: px;
+  width: 80px;
+  padding: 0 16px;
+  margin: 0;
+  background: var(--accent);
+  color: white;
+  border-radius: 4px;
+}
+
+.btn-print:hover, .btn-add-volunteer:hover { 
   cursor: pointer;
   background: var(--accent-hover); 
 }
@@ -150,4 +160,10 @@ body::after {
 .manuals-list li {
   margin: 5px 0;
   list-style-type: disc;
+}
+
+.arrow {
+  margin: 10px;
+  display: inline-block;
+  transform: rotate(90deg);
 }

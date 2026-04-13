@@ -10,13 +10,29 @@
     <link rel="stylesheet" href="../css/navbar.css">
     <link rel="stylesheet" href="../css/print-agenda.css">
     <title>Corveerooster</title>
+    
     <script src="../js/datepicker.js"></script>
+    
+
   </head>
 
   <body>
 
     <!-- NAVIGATION PARTIAL -->
     <%- include ('../partials/navbar.ejs'); %>
+
+    <!-- CONFIRM MESSAGE AFTER ADD NEW VOLUNTEER -->
+    <% if (success) { %>
+      <div class="alert" id="flash">Vrijwilliger succesvol toegevoegd!</div>
+    <% } %>
+
+    <% if (removed) { %>
+      <div class="alert" id="flash">Vrijwilliger succesvol verwijderd!</div>
+    <% } %>
+
+    <% if (edited) { %>
+      <div class="alert" id="flash">Agenda succesvol aangepast!</div>
+    <% } %>
     
     <!-- HEADER -->
     <header class="page-content">
@@ -25,12 +41,16 @@
       </div>
       <h1 class="page-title"><%- data.currentMonthName %></h1>
     </header>
-    
-    <!-- Date -->
-    <div class="date-picker">
-      <div class="date-picker-label"><h3>Selecteer periode</h3></div>
-      <input type="date" id="datepicker" onchange="onDateChanged(event);">
-    </div>
+
+    <!-- Confirm message disapears after cetrain amount of time -->
+    <script>
+      setTimeout(() => {
+        document.getElementById('flash')?.remove();
+      }, 3000);
+    </script>
+
+    <!-- TOOLBAR WITH OPTIONS -->
+    <%- include ('../partials/toolbar.ejs'); %>
 
     <!-- Send selected names to the database after submit -->
     <form id="dashboard-form" action="/dashboard/save" method="POST">
