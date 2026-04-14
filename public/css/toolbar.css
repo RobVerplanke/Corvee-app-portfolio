@@ -63,10 +63,10 @@
 
 @media (max-width: 500px) {
   .toolbar {
-  display: flex;
-  flex-direction: column;
-  align-items: left;
-  margin-left: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    margin-left: 24px;
   }
 
   .toolbar-dropdown {

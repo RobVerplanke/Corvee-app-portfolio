@@ -9,6 +9,7 @@
   flex: 1;
   width: 100%;
   padding-top: 20px;
+    border-right: solid 1px var(--border);
 }
 
 .manuals-content{
@@ -58,6 +59,8 @@
 
   .manuals-index{
     flex: none;
+    border-bottom: solid 1px var(--border);
+    border-right: none;
 }
 
   /* Hide arrows next to each link */
