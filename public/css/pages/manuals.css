@@ -9,7 +9,12 @@
   flex: 1;
   width: 100%;
   padding-top: 20px;
-    border-right: solid 1px var(--border);
+  border-right: solid 1px var(--border);
+}
+
+.manuals-index a{
+  display: block;
+  text-decoration: none;
 }
 
 .manuals-content{
