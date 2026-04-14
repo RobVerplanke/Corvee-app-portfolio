@@ -64,6 +64,15 @@
   color: var(--text);
 }
 
+#dropdown-date {
+  align-items: center;
+  gap: 10px;
+}
+
+#dropdown-date.open {
+  display: flex;
+}
+
 @media (max-width: 500px) {
   .toolbar {
     display: flex;

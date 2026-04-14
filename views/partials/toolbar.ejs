@@ -2,8 +2,9 @@
   <div class="toolbar-item">
     <button class="toolbar-btn" data-target="dropdown-date">Selecteer periode</button>
     <div class="toolbar-dropdown" id="dropdown-date">
-      <input type="date" id="datepicker" onchange="onDateChanged(event);">
-    </div>
+  <input type="date" id="datepicker">
+  <button class="btn-add-volunteer" onclick="onDateChanged({target: document.getElementById('datepicker')})">Bevestig</button>
+</div>
   </div>
 
   <div class="toolbar-item">
@@ -30,5 +31,4 @@
     </form>
   </div>
 </div>
-
 </div>
