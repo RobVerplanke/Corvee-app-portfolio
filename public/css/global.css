@@ -35,15 +35,16 @@ html, body {
   overflow-x: hidden;
 }
 
+body {
+  font-family: var(--font-alphapipe-reg);
+  background-color: var(--bg);
+}
+
 .header-content {
   display: flex;
   align-items: center;
 }
 
-body {
-  font-family: var(--font-alphapipe-reg);
-  background-color: var(--bg);
-}
 
 .page-content {
   position: relative;
@@ -96,7 +97,7 @@ body::after {
   background: radial-gradient(circle, rgba(70, 150, 190, 0.25) 0%, transparent 70%);
 }
 
-/* === BUTTONS === */
+/* === ELEMENTS === */
 .btn:active { transform: scale(0.98); }
 
 .btn-primary {
@@ -152,7 +153,6 @@ body::after {
 }
 
 /* LIST ITEMS */
-
 .manuals-list {
   padding-left: 20px;
 }

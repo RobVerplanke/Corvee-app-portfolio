@@ -1,0 +1,76 @@
+.toolbar {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 4rem;
+}
+
+.toolbar-item {
+  position: relative;
+}
+
+.toolbar-btn {
+  padding: 0.5rem 1rem;
+  background-color: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.toolbar-btn:hover {
+  background-color: var(--accent-hover);
+}
+
+.toolbar-dropdown {
+  font-family: var(--font-quicksand-reg);
+  color: var(--text);
+  display: none;
+  position: absolute;
+  color: var(--text);
+  top: calc(100% + 0.5rem);
+  left: 0;
+  border-radius: 6px;
+  z-index: 100;
+}
+
+.toolbar-dropdown.open {
+  display: block;
+}
+
+.toolbar-dropdown input {
+  padding: 11px 14px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-family: var(--font-quicksand-reg);
+  font-size: 14px;
+  color: var(--text);
+  cursor: pointer;
+  outline: none;
+  box-shadow: var(--shadow);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+#add-volunteer, #delete-volunteer {
+  width: 275px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+@media (max-width: 500px) {
+  .toolbar {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  margin-left: 24px;
+  }
+
+  .toolbar-dropdown {
+    position: static;
+    padding-top: 10px;
+  }
+}
