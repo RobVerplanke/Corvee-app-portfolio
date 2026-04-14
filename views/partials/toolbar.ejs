@@ -21,7 +21,7 @@
   <div class="toolbar-dropdown" id="dropdown-delete">
     <form id="delete-volunteer" action="/dashboard/delete" method="POST">
       <select class="select-name" name="volunteerId">
-        <option value="">-- Selecteer vrijwilliger --</option>
+        <option value="">-- Selecteer naam --</option>
         <% data.volunteers.forEach(volunteer => { %>
           <option value="<%= volunteer.id %>"><%= volunteer.name %></option>
         <% }) %>

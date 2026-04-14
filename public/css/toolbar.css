@@ -40,25 +40,28 @@
 }
 
 .toolbar-dropdown input {
-  padding: 11px 14px;
+  padding: 8px 14px;
   background: var(--card);
+  color: var(--text);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   font-family: var(--font-quicksand-reg);
   font-size: 14px;
-  color: var(--text);
-  cursor: pointer;
   outline: none;
   box-shadow: var(--shadow);
   transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 #add-volunteer, #delete-volunteer {
-  width: 275px;
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 275px;
   gap: 10px;
+}
+
+#add-volunteer input {
+  color: var(--text);
 }
 
 @media (max-width: 500px) {
