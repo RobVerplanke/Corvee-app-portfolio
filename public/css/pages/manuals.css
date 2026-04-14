@@ -6,10 +6,12 @@
 }
 
 .manuals-index{
+  color: var(--text);
   flex: 1;
   width: 100%;
   padding-top: 20px;
   border-right: solid 1px var(--border);
+  background-color: inherit;
 }
 
 .manuals-index a{
@@ -22,8 +24,11 @@
   display: flex;
   flex-direction: column;
   align-items: start;
+  color: var(--text);
   padding: 40px 40px 40px 40px;
   background-color: var(--accent-light);
+  
+  /* background-color: var(--accent-light); */
 }
 
 .manuals-subtitle{
@@ -37,17 +42,18 @@
   align-items: center;
   width: 100%;
   font-weight: 700;
-  color: var(--text);
+  color: inherit;
   padding: 8px 10px 8px 16px;
 }
 
 .manuals-link:hover{
-  background-color: var(--accent-light);
+  color: var(--text);
+  background-color: var(--bg);
 }
 
 .active {
-  background-color: var(--accent-light);
-  border-radius: 3px;
+  color: var(--card);
+  background-color: var(--accent-hover);
 }
 
 .link-symbol{
