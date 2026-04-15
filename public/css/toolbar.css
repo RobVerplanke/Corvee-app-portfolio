@@ -66,7 +66,7 @@
   border: 1px solid var(--border);
   border-radius: var(--radius);
   font-family: var(--font-quicksand-reg);
-  font-size: 14px;
+  font-size: 15px;
   outline: none;
   box-shadow: var(--shadow);
   transition: border-color 0.2s, box-shadow 0.2s;
@@ -76,7 +76,7 @@
   display: flex;
   flex-direction: row;
   justify-content: left;
-  gap: 18px;
+  gap: 1rem;
 }
 
 #add-volunteer input {
@@ -85,7 +85,7 @@
 
 #dropdown-date {
   align-items: center;
-  gap: 18px;
+  gap: 1rem;
 }
 
 #dropdown-date.open {
@@ -95,32 +95,42 @@
 .toolbar-group-volunteers,
 .toolbar-group-agenda {
   font-family: var(--font-quicksand-reg);
-  border: 1px solid rgb(0, 0, 0, 0.2);
-  border-radius: 8px;
-  padding: 12px 16px;
-  margin: 2rem;
+  background: var(--accent-light);
+  border: 1px solid rgba(28, 50, 105, 0.15);
+  border-radius: 12px;
+  padding: 30px 0 0 20px;
+  margin: 0 auto 1.5rem auto;
+  max-width: 1000px;
+  width: calc(100% - 4rem);
+  box-shadow: var(--shadow);
+}
+
+.toolbar-group-volunteers legend,
+.toolbar-group-agenda legend {
+  font-family: var(--font-quicksand-bold);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  padding: 0 8px;
 }
 
 .toolbar-group-volunteers{
   height: auto;
+  padding: 20px 0 0 32px;
 }
 
 .toolbar-group-agenda{
   height: 100%;
-}
-
-.toolbar-group-volunteers legend, .toolbar-group-agenda legend {
-  font-size: 16px;
-  font-weight: 500;
-  color: var(--text);
-  padding: 0 6px;
+  padding: 20px 32px 0 32px;
 }
 
 @media (max-width: 700px) {
   .toolbar {
     display: flex;
     flex-direction: column;
-    margin-left: 24px;
+    /* margin-left: 24px; */
   }
 
   .toolbar-dropdown {

@@ -53,8 +53,8 @@ summary {
   background-color: red;
 }
 
-.select-name, .overview-names {
-  min-width: 0;
+.select-name, .overview-names, .remove-name {
+  /* min-width: 190px; */
   padding: 8px 14px;
   background: var(--input-bg);
   border: 1px solid var(--border);
@@ -73,6 +73,10 @@ summary {
   padding-right: 36px;
 }
 
-.overview-names{
+.overview-names {
+  min-width: 190px;
+}
+
+.remove-name{
   min-width: 190px;
 }
