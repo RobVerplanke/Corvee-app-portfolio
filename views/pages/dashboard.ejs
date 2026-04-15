@@ -21,6 +21,11 @@
     <!-- NAVIGATION PARTIAL -->
     <%- include ('../partials/navbar.ejs'); %>
 
+    <!-- Error message after adding/editting a volunteer failed -->
+    <% if (error) { %>
+      <div class="alert-error" id="flash">Naam moet minimaal 3 tekens bevatten</div>
+    <% } %>
+
     <!-- Confirm message after succesfully adding/editting a volunteer or changing the agenda -->
     <% if (success) { %>
       <div class="alert" id="flash">Vrijwilliger succesvol toegevoegd!</div>
@@ -39,6 +44,7 @@
       setTimeout(() => {
         document.getElementById('flash')?.remove();
       }, 3000);
+      history.replaceState(null, '', window.location.pathname);
     </script>
 
     <!-- HEADER -->

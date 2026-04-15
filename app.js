@@ -180,7 +180,7 @@ app.get('/dashboard', isLoggedIn, async (req, res) => {
   }
   
   // activePage - function that highlights the corresponding navigation button of the active page
-  res.render('pages/dashboard', { activePage: 'dashboard', helper: helper, data: data, success: req.query.success, removed: req.query.removed, edited: req.query.edited });
+  res.render('pages/dashboard', { activePage: 'dashboard', helper: helper, data: data, success: req.query.success, removed: req.query.removed, edited: req.query.edited, error: req.query.error });
 });
 
 // Admin dashboard page - Save new schedule from form
@@ -201,8 +201,13 @@ app.post('/dashboard/add', isLoggedIn, (req, res) => {
   const formData = req.body;
   const newVolunteer = formData.newVolunteer;
 
-  databaseHandler.addVolunteer(newVolunteer);
-  res.redirect('/dashboard?success=true');
+  if (newVolunteer.length < 3 ) { 
+    res.redirect('/dashboard?error=true'); 
+  } else {
+    databaseHandler.addVolunteer(newVolunteer);
+    res.redirect('/dashboard?success=true');
+  }
+
 });
 
 // Admin dashboard page - Remove existing volunteer

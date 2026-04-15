@@ -38,7 +38,8 @@ summary {
   box-shadow: var(--shadow);
 }
 
-.alert {
+.alert, .alert-error {
+  font-family: var(--font-quicksand-reg);
   position: absolute;
   width: 100%;
   display: flex;
@@ -46,6 +47,10 @@ summary {
   color: white;
   padding: 5px;
   background-color: green;
+}
+
+.alert-error {
+  background-color: red;
 }
 
 .select-name {
