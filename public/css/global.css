@@ -117,7 +117,7 @@ body::after {
 .btn-secondary:hover { background: var(--accent-light); }
 
 /* === PRINT BUTTON === */
-.btn-print, .btn-add-volunteer {
+.btn-print {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -131,7 +131,7 @@ body::after {
   border-radius: 4px;
 }
 
-.btn-add-volunteer {
+/* .btn-add-volunteer {
   height: px;
   width: 80px;
   padding: 0 16px;
@@ -139,7 +139,7 @@ body::after {
   background: var(--accent);
   color: white;
   border-radius: 4px;
-}
+} */
 
 .btn-print:hover, .btn-add-volunteer:hover { 
   cursor: pointer;

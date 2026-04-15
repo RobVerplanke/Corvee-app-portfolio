@@ -1,0 +1,29 @@
+
+<div class="toolbar">
+
+  <div class="toolbar-item">
+    <button class="toolbar-btn" data-target="dropdown-volunteer">Vrijwilliger toevoegen</button>
+    <div class="toolbar-dropdown" id="dropdown-volunteer">
+      <form id="add-volunteer" action="/dashboard/add" method="POST">
+        <input name="newVolunteer" type="text" placeholder="Voer naam in...">
+        <button type="submit" class="toolbar-btn-submit">Opslaan</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="toolbar-item">
+    <button class="toolbar-btn" data-target="dropdown-delete">Vrijwilliger verwijderen</button>
+    <div class="toolbar-dropdown" id="dropdown-delete">
+      <form id="delete-volunteer" action="/dashboard/delete" method="POST">
+        <select class="select-name" name="volunteerId">
+          <option value="">-- Selecteer naam --</option>
+          <% data.volunteers.forEach(volunteer => { %>
+            <option value="<%= volunteer.id %>"><%= volunteer.name %></option>
+          <% }) %>
+        </select>
+        <button type="submit" class="toolbar-btn-submit">Verwijderen</button>
+      </form>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,16 @@
+
+  <div class="toolbar">
+
+    <div class="toolbar-item">
+      <button class="toolbar-btn" data-target="dropdown-date">Selecteer periode</button>
+      <div class="toolbar-dropdown" id="dropdown-date">
+        <input type="date" id="datepicker">
+        <button class="toolbar-btn-submit" onclick="onDateChanged({target: document.getElementById('datepicker')})">Bevestigen</button>
+      </div>
+    </div>
+
+    <div class="toolbar-item">
+      <button form="dashboard-form" class="toolbar-btn" type="submit">Wijzigingen opslaan</button>
+    </div>
+
+  </div>

@@ -1,3 +1,7 @@
+.weeks-grid {
+  padding: 0 0;
+}
+
 .volunteer-form-container {
   display: flex;
   justify-self: center;
@@ -9,7 +13,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
 }
 
 .add-volunteer input::placeholder{
@@ -46,8 +49,8 @@ summary {
 }
 
 .select-name {
-  width: 100%;
-  padding: 8px 14px;
+  min-width: 190px;
+  padding: 8px 14px; 
   background: var(--input-bg);
   border: 1px solid var(--border);
   border-radius: var(--radius);
@@ -63,40 +66,4 @@ summary {
   background-position: right 12px center;
   background-size: 16px;
   padding-right: 36px;
-  transition: border-color 0.2s, box-shadow 0.2s;
-}
-
-.btn-submit-name{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  gap: 5px;
-  width: 80px;
-  height: 32px;
-  margin: 0 auto 48px auto;
-  background: var(--accent);
-  color: white;
-  border-radius: 4px;
-  animation: fadeUp 0.4s ease both;
-}
-
-.btn-submit-name:hover { 
-  cursor: pointer;
-  background: var(--accent-hover); 
-}
-
-.btn-submit-name svg {
-  width: 16px;
-  height: 16px;
-  fill: white;
-}
-
-.select-name:focus {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(44,95,74,0.1);
-}
-
-.select-name:hover {
-  border-color: var(--accent);
 }

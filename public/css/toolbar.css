@@ -1,6 +1,6 @@
 .toolbar {
   display: flex;
-  justify-content: center;
+  justify-content: start;
   gap: 1rem;
   margin-bottom: 4rem;
 }
@@ -10,6 +10,7 @@
 }
 
 .toolbar-btn {
+  min-width: 180px;
   padding: 0.5rem 1rem;
   background-color: var(--accent);
   color: white;
@@ -23,11 +24,29 @@
   background-color: var(--accent-hover);
 }
 
-.toolbar-dropdown {
-  font-family: var(--font-quicksand-reg);
+.toolbar-btn-submit {
+  background: var(--input-bg);
+  border: 1px solid var(--border);
   color: var(--text);
+  border-radius: 6px;
+  padding: 6px 14px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.toolbar-btn-submit:hover {
+  background-color: var(--card);
+  color: var(--text);
+}
+
+.toolbar-btn-submit:active {
+  transform: scale(0.97);
+}
+
+.toolbar-dropdown {
   display: none;
   position: absolute;
+  font-family: var(--font-quicksand-reg);
   color: var(--text);
   top: calc(100% + 0.5rem);
   left: 0;
@@ -40,6 +59,7 @@
 }
 
 .toolbar-dropdown input {
+  min-width: 180px;
   padding: 8px 14px;
   background: var(--card);
   color: var(--text);
@@ -54,10 +74,10 @@
 
 #add-volunteer, #delete-volunteer {
   display: flex;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
-  width: 275px;
-  gap: 10px;
+  gap: 18px;
 }
 
 #add-volunteer input {
@@ -66,11 +86,35 @@
 
 #dropdown-date {
   align-items: center;
-  gap: 10px;
+  gap: 18px;
 }
 
 #dropdown-date.open {
   display: flex;
+}
+
+.toolbar-group-volunteers,
+.toolbar-group-agenda {
+  font-family: var(--font-quicksand-reg);
+  border: 1px solid rgb(0, 0, 0, 0.2);
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin: 2rem;
+}
+
+.toolbar-group-volunteers{
+  height: 120px;
+}
+
+.toolbar-group-agenda{
+  height: 100%;
+}
+
+.toolbar-group-volunteers legend, .toolbar-group-agenda legend {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--text);
+  padding: 0 6px;
 }
 
 @media (max-width: 500px) {
