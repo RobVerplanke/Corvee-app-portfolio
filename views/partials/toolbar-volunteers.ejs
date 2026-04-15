@@ -5,7 +5,7 @@
     <button class="toolbar-btn" data-target="dropdown-overview">Overzicht vrijwilligers</button>
     <div class="toolbar-dropdown" id="dropdown-overview">
       <form id="overview-volunteers">
-        <select class="select-name" name="volunteerId">
+        <select class="overview-names" name="volunteerId">
           <% data.volunteers.forEach(volunteer => { %>
             <option value="<%= volunteer.id %>"><%= volunteer.name %></option>
           <% }) %>

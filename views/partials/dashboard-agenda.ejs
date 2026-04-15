@@ -1,0 +1,69 @@
+<form id="dashboard-form" action="/dashboard/save" method="POST">
+
+  <!-- MAIN -->
+  <main class="weeks-grid">
+    
+    <!-- Create a table for each week -->
+    <% data.schedules.forEach((schedule, index) => { %>
+    
+      <div class="week-block">
+        <h2 class="week-title">
+          Week <%= data.weekNumbers[index] %>
+        </h2>
+        <div class="table-wrapper">
+
+          <table class="table-agenda">
+            <colgroup>
+              <col class="col-datum">
+              <col class="col-dagdeel">
+              <col class="col-naam">
+            </colgroup>
+
+            <thead>
+              <tr><th>Datum</th><th>Dagdeel</th><th>Naam</th></tr>
+            </thead>
+
+            <tbody>
+
+              <!-- Create rows for each day - Extra span-elements are used for the printed version -->
+              <% schedule.forEach((day, index) => { %>
+                
+              <!-- Morning rows -->
+                <tr>
+                  <td class="td-dag" rowspan="2"><%= helper.getNameOfDay(day.date) %><span class="datum"><%= helper.formatDate(day.date) %></span></td>
+                  <td><span class="badge badge-ochtend">Ochtend</span><span class="dagdeel-print">Ochtend</span></td>
+                  <td class="td-naam">
+                    <select name="<%= helper.toLocalDateString(day.date) %>[morning]" id="volunteer-select-<%= index %>-morning" class="select-name" onchange="onVolunteerChanged()">
+                      <option value="">-</option>
+                      <% data.volunteers.forEach(volunteer => { %>
+                        <option value="<%= volunteer.id %>" <%= day.morning && day.morning.id === volunteer.id ? 'selected' : '' %>>
+                          <%= volunteer.name %>
+                        </option>
+                      <% }) %>
+                    </select>
+                  </td>
+                </tr>
+
+                <!-- Afternoon rows -->
+                <tr>
+                  <td><span class="badge badge-middag">Middag</span><span class="dagdeel-print">Middag</span></td>
+                  <td class="td-naam td-naam-middag">
+                    <select name="<%= helper.toLocalDateString(day.date) %>[afternoon]" id="volunteer-select-<%= index %>-afternoon" class="select-name" onchange="onVolunteerChanged()">
+                      <option value="">-</option>
+                      <% data.volunteers.forEach(volunteer => { %>
+                        <option value="<%= volunteer.id %>" <%= day.afternoon && day.afternoon.id === volunteer.id ? 'selected' : '' %>>
+                          <%= volunteer.name %>
+                        </option>
+                      <% }) %>
+                    </select>
+                  </td>
+                </tr>
+              <% }) %>
+
+            </tbody>
+          </table>
+        </div> <!-- table-wrapper -->
+      </div> <!-- week-block -->
+    <% }) %>
+  </main>
+</form>

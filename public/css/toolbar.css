@@ -48,7 +48,7 @@
   position: absolute;
   font-family: var(--font-quicksand-reg);
   color: var(--text);
-  top: calc(100% + 0.5rem);
+  top: calc(100% + 0.8rem);
   left: 0;
   border-radius: 6px;
   z-index: 100;
