@@ -10,7 +10,7 @@
 }
 
 .toolbar-btn {
-  min-width: 180px;
+  min-width: 190px;
   padding: 0.5rem 1rem;
   background-color: var(--accent);
   color: white;
@@ -59,7 +59,7 @@
 }
 
 .toolbar-dropdown input {
-  min-width: 180px;
+  min-width: 190px;
   padding: 8px 14px;
   background: var(--card);
   color: var(--text);
