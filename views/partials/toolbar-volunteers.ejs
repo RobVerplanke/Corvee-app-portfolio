@@ -1,6 +1,19 @@
 
 <div class="toolbar">
 
+    <div class="toolbar-item">
+    <button class="toolbar-btn" data-target="dropdown-overview">Overzicht vrijwilligers</button>
+    <div class="toolbar-dropdown" id="dropdown-overview">
+      <form id="overview-volunteers">
+        <select class="select-name" name="volunteerId">
+          <% data.volunteers.forEach(volunteer => { %>
+            <option value="<%= volunteer.id %>"><%= volunteer.name %></option>
+          <% }) %>
+        </select>
+      </form>
+    </div>
+  </div>
+
   <div class="toolbar-item">
     <button class="toolbar-btn" data-target="dropdown-volunteer">Vrijwilliger toevoegen</button>
     <div class="toolbar-dropdown" id="dropdown-volunteer">
