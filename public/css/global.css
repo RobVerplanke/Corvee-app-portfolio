@@ -27,8 +27,6 @@
   font-style: normal;
 }
 
-h1, h2, h3, h4 {margin: 0;}
-
 /* === LAYOUT === */
 html, body {
   min-height: 100%;
@@ -36,6 +34,7 @@ html, body {
 }
 
 body {
+  position: relative;
   font-family: var(--font-alphapipe-reg);
   background-color: var(--bg);
 }
@@ -44,7 +43,6 @@ body {
   display: flex;
   align-items: center;
 }
-
 
 .page-content {
   position: relative;
@@ -72,7 +70,6 @@ body {
 }
 
 /* === DECORATIVE BACKGROUND === */
-
 .bg-effects {
   position: fixed;
   inset: 0;
@@ -84,38 +81,14 @@ body {
 }
 
 /* Zorg dat content erboven zit */
-body > *:not(.bg-effects) {
+body > *:not(.bg-effects):not(.flash-message) {
   position: relative;
   z-index: 1;
 }
 
-/* 
-body::before,
-body::after {
-  content: '';
-  position: fixed;
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: -1;
-}
-
-body::before {
-  top: -200px;
-  right: -200px;
-  width: 600px;
-  height: 600px;
-  background: radial-gradient(circle, rgba(100, 181, 210, 0.45) 0%, transparent 70%);
-}
-
-body::after {
-  bottom: -200px;
-  left: -200px;
-  width: 500px;
-  height: 500px;
-  background: radial-gradient(circle, rgba(70, 150, 190, 0.25) 0%, transparent 70%);
-} */
-
 /* === ELEMENTS === */
+h1, h2, h3, h4 {margin: 0;}
+
 .btn:active { transform: scale(0.98); }
 
 .btn-primary {
@@ -148,16 +121,6 @@ body::after {
   color: white;
   border-radius: 4px;
 }
-
-/* .btn-add-volunteer {
-  height: px;
-  width: 80px;
-  padding: 0 16px;
-  margin: 0;
-  background: var(--accent);
-  color: white;
-  border-radius: 4px;
-} */
 
 .btn-print:hover, .btn-add-volunteer:hover { 
   cursor: pointer;

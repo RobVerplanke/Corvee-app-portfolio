@@ -39,14 +39,16 @@ summary {
 }
 
 .alert, .alert-error {
-  font-family: var(--font-quicksand-reg);
-  position: absolute;
-  width: 100%;
+  position: fixed;
   display: flex;
   justify-content: center;
-  color: white;
+  top: 64px;
+  width: 100%;
   padding: 5px;
+  color: white;
+  font-family: var(--font-quicksand-reg);
   background-color: green;
+  z-index: 9;
 }
 
 .alert-error {
@@ -54,7 +56,6 @@ summary {
 }
 
 .select-name, .overview-names, .remove-name {
-  /* min-width: 190px; */
   padding: 8px 14px;
   background: var(--input-bg);
   border: 1px solid var(--border);
