@@ -178,7 +178,8 @@ class DatabaseHandler {
    * @returns {Promise<Model>} - The promise made by sequelize with the newly created object on success.
    */
   async addVolunteer(name) {
-    return this.models.Volunteer.create({ name: name });
+    let volunteerName = name.toLowerCase();
+    return this.models.Volunteer.create({ name: volunteerName });
   }
 
   /**

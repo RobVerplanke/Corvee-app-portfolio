@@ -204,7 +204,11 @@ app.post('/dashboard/add', isLoggedIn, (req, res) => {
   if (newVolunteer.length < 3 ) { 
     res.redirect('/dashboard?error=true'); 
   } else {
-    databaseHandler.addVolunteer(newVolunteer);
+    databaseHandler.addVolunteer(newVolunteer).catch((err) => {
+      if (err.toString().includes("Unique")) {
+        // TODO: Handle error, volunteer already exists
+      }
+    });
     res.redirect('/dashboard?success=true');
   }
 

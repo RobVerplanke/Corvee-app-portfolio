@@ -17,31 +17,31 @@ await sequelize.query('DELETE FROM sqlite_sequence');
 
 const testVolunteers = [
   {
-    name: "Harry"
+    name: "harry"
   },
   {
-    name: "Corrie"
+    name: "corrie"
   },
   {
-    name: "Jan"
+    name: "jan"
   },
   { 
-    name: "Annie"
+    name: "annie"
   },
   {
-    name: "Truus"
+    name: "truus"
   },
   {
-    name: "Henk"
+    name: "henk"
   },
   {
-    name: "Jan"
+    name: "bert"
   },
   {
-    name: "Miep"
+    name: "miep"
   },
   {
-    name: "Edje",
+    name: "edje",
   }
 ]
 
