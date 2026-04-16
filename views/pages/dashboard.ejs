@@ -18,12 +18,14 @@
 
   <body>
 
+    <div class="bg-effects" aria-hidden="true"></div>
+
     <!-- NAVIGATION PARTIAL -->
     <%- include ('../partials/navbar.ejs'); %>
 
     <!-- Error message after adding/editting a volunteer failed -->
     <% if (error) { %>
-      <div class="alert-error" id="flash">Naam moet minimaal 3 tekens bevatten</div>
+      <div class="alert-error" id="flash">Naam moet minimaal 3 tekens bevatten!</div>
     <% } %>
 
     <!-- Confirm message after succesfully adding/editting a volunteer or changing the agenda -->

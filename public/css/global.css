@@ -72,6 +72,24 @@ body {
 }
 
 /* === DECORATIVE BACKGROUND === */
+
+.bg-effects {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at top right, rgba(100, 181, 210, 0.45) 0%, transparent 40%),
+    radial-gradient(circle at bottom left, rgba(70, 150, 190, 0.25) 0%, transparent 35%);
+}
+
+/* Zorg dat content erboven zit */
+body > *:not(.bg-effects) {
+  position: relative;
+  z-index: 1;
+}
+
+/* 
 body::before,
 body::after {
   content: '';
@@ -95,7 +113,7 @@ body::after {
   width: 500px;
   height: 500px;
   background: radial-gradient(circle, rgba(70, 150, 190, 0.25) 0%, transparent 70%);
-}
+} */
 
 /* === ELEMENTS === */
 .btn:active { transform: scale(0.98); }
