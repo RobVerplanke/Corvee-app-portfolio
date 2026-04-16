@@ -109,6 +109,11 @@ function getAutoFilledSchedule(schedules, weekNumbers, DAYS_PER_WEEK) {
   });
 }
 
+// Make first letter in names uppercase
+function capitalizeFirstLetter(val) {
+    return String(val).charAt(0).toUpperCase() + String(val).slice(1);
+}
+
 export {
-  getWeekNumber, getMondayFromWeekNumber, getNameOfDay, formatDate, getMostCommonMonth, getAutoFilledSchedule
+  getWeekNumber, getMondayFromWeekNumber, getNameOfDay, formatDate, getMostCommonMonth, getAutoFilledSchedule, capitalizeFirstLetter
 }

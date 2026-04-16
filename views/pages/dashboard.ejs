@@ -25,20 +25,20 @@
 
     <!-- Error message after adding/editting a volunteer failed -->
     <% if (error) { %>
-      <div class="alert-error" id="flash">Naam moet minimaal 3 tekens bevatten!</div>
+      <div class="flash-message alert-error" id="flash">Naam moet minimaal 3 tekens bevatten!</div>
     <% } %>
 
     <!-- Confirm message after succesfully adding/editting a volunteer or changing the agenda -->
     <% if (success) { %>
-      <div class="alert" id="flash">Vrijwilliger succesvol toegevoegd!</div>
+      <div class="flash-message alert" id="flash">Vrijwilliger succesvol toegevoegd!</div>
     <% } %>
 
     <% if (removed) { %>
-      <div class="alert" id="flash">Vrijwilliger succesvol verwijderd!</div>
+      <div class="flash-message alert" id="flash">Vrijwilliger succesvol verwijderd!</div>
     <% } %>
 
     <% if (edited) { %>
-      <div class="alert" id="flash">Agenda succesvol aangepast!</div>
+      <div class="flash-message alert" id="flash">Agenda succesvol aangepast!</div>
     <% } %>
     
     <!-- Confirm message disapears after cetrain amount of time

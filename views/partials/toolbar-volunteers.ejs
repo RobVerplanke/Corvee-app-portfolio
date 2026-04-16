@@ -7,7 +7,7 @@
       <form id="overview-volunteers">
         <select class="overview-names" name="volunteerId">
           <% data.volunteers.forEach(volunteer => { %>
-            <option value="<%= volunteer.id %>"><%= volunteer.name %></option>
+            <option value="<%= volunteer.id %>"><%= helper.capitalizeFirstLetter(volunteer.name) %></option>
           <% }) %>
         </select>
       </form>
@@ -31,7 +31,7 @@
         <select class="remove-name" name="volunteerId">
           <option value="">-- Selecteer naam --</option>
           <% data.volunteers.forEach(volunteer => { %>
-            <option value="<%= volunteer.id %>"><%= volunteer.name %></option>
+            <option value="<%= volunteer.id %>"><%= helper.capitalizeFirstLetter(volunteer.name) %></option>
           <% }) %>
         </select>
         <button type="submit" class="toolbar-btn-submit">Verwijder</button>

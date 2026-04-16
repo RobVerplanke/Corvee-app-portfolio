@@ -1,4 +1,4 @@
-import { getWeekNumber, getNameOfDay, formatDate, getMostCommonMonth, getAutoFilledSchedule } from './helpers.js';
+import { getWeekNumber, getNameOfDay, formatDate, getMostCommonMonth, getAutoFilledSchedule, capitalizeFirstLetter } from './helpers.js';
 import express from 'express';
 import session from 'express-session';
 import path from 'path';
@@ -81,6 +81,7 @@ app.get('/', async (req, res) => {
     getWeekNumber: getWeekNumber,
     getNameOfDay: getNameOfDay,
     formatDate: formatDate,
+    capitalizeFirstLetter: capitalizeFirstLetter,
   }
 
   // Data that needs to be displayd
@@ -165,6 +166,7 @@ app.get('/dashboard', isLoggedIn, async (req, res) => {
     getWeekNumber: getWeekNumber,
     getNameOfDay: getNameOfDay,
     formatDate: formatDate,
+    capitalizeFirstLetter: capitalizeFirstLetter,
     toLocalDateString: (date) => { 
       // Use local time instead of UTC-time. This fixes shifting of time when a new schedule is added, which resulted in different days having the same date.
       return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;

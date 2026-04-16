@@ -37,7 +37,7 @@
                       <option value="">-</option>
                       <% data.volunteers.forEach(volunteer => { %>
                         <option value="<%= volunteer.id %>" <%= day.morning && day.morning.id === volunteer.id ? 'selected' : '' %>>
-                          <%= volunteer.name %>
+                          <%= helper.capitalizeFirstLetter(volunteer.name) %>
                         </option>
                       <% }) %>
                     </select>
@@ -52,7 +52,7 @@
                       <option value="">-</option>
                       <% data.volunteers.forEach(volunteer => { %>
                         <option value="<%= volunteer.id %>" <%= day.afternoon && day.afternoon.id === volunteer.id ? 'selected' : '' %>>
-                          <%= volunteer.name %>
+                          <%= helper.capitalizeFirstLetter(volunteer.name) %>
                         </option>
                       <% }) %>
                     </select>
