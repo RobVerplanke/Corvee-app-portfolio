@@ -105,7 +105,6 @@ app.get('/', async (req, res) => {
   res.render('pages/agenda', { activePage: 'agenda', helper: helper, data: data });
 });
 
-
 app.get('/login', (req, res) => {
   // If already logged in, redirect to the dashboard for admin use.
   if (req.session.isLoggedIn) {
@@ -258,6 +257,11 @@ app.get('/manuals/dishwasher', (req, res) => {
 
 app.get('/manuals/cleaning', (req, res) => {
   res.render('pages/manuals', { activePage: 'manuals', activeManual: 'cleaning'});
+});
+
+// Eror page
+app.use('/{*splat}', (req, res) => {
+  res.render('pages/errorpage');
 });
 
 app.listen(port, () => {
