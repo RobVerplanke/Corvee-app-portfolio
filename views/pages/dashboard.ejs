@@ -18,27 +18,28 @@
 
   <body>
 
+    <!-- A div specially for background color -->
     <div class="bg-effects" aria-hidden="true"></div>
-
+    
     <!-- NAVIGATION PARTIAL -->
     <%- include ('../partials/navbar.ejs'); %>
 
     <!-- Error message after adding/editting a volunteer failed -->
-    <% if (error) { %>
-      <div class="flash-message alert-error" id="flash">Naam moet minimaal 3 tekens bevatten!</div>
+    <% if (alerts.error) { %>
+      <div class="flash-message alert-error" id="flash">Toevoegen mislukt! Geef een geldige naam op (2 - 20 karakters).</div>
     <% } %>
 
-    <!-- Confirm message after succesfully adding/editting a volunteer or changing the agenda -->
-    <% if (success) { %>
+    <!-- Confirm messages after succesfully add, edit, remove a volunteer or changing the agenda -->
+    <% if (alerts.success) { %>
       <div class="flash-message alert" id="flash">Vrijwilliger succesvol toegevoegd!</div>
     <% } %>
 
-    <% if (removed) { %>
+    <% if (alerts.removed) { %>
       <div class="flash-message alert" id="flash">Vrijwilliger succesvol verwijderd!</div>
     <% } %>
 
-    <% if (edited) { %>
-      <div class="flash-message alert" id="flash">Agenda succesvol aangepast!</div>
+    <% if (alerts.edited) { %>
+      <div class="flash-message alert" id="flash">Agenda succesvol opgeslagen!</div>
     <% } %>
     
     <!-- Confirm message disapears after cetrain amount of time
@@ -46,7 +47,7 @@
     <script>
       setTimeout(() => {
         document.getElementById('flash')?.remove();
-      }, 3000);
+      }, 5000);
       history.replaceState(null, '', window.location.pathname);
     </script>
 

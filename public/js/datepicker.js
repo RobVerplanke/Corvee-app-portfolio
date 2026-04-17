@@ -59,6 +59,11 @@ function onDateChanged(e) {
 }
 
 function onVolunteerChanged(e) {
+  console.log('on change called!');
   // Set a flag when a volunteer has been changed to a value different from its initial value.
   window.volunteerChanged = true;
+
+  // Disable save buttons to prevent losing changes in the agenda
+  document.getElementById('add-volunteer-btn').disabled = true; // Disable "Add volunteer"-button
+  document.getElementById('delete-volunteer-btn').disabled = true; // Disable "Remove volunteer"-button
 }

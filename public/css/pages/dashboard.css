@@ -1,3 +1,7 @@
+body {
+  position: relative;
+}
+
 .weeks-grid {
   padding: 0 0;
 }
@@ -39,16 +43,20 @@ summary {
 }
 
 .alert, .alert-error {
-  position: fixed;
+  position: absolute;
   display: flex;
   justify-content: center;
-  top: 64px;
   width: 100%;
+  height: 32px; /* vaste hoogte, altijd gereserveerd */
   padding: 5px;
   color: white;
   font-family: var(--font-quicksand-reg);
-  background-color: green;
+  background-color: transparent;
   z-index: 9;
+}
+
+.alert {
+  background-color: green;
 }
 
 .alert-error {

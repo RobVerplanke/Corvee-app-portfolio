@@ -75,7 +75,8 @@
 #add-volunteer, #delete-volunteer, #overview-volunteers {
   display: flex;
   flex-direction: row;
-  justify-content: left;
+  /* justify-content: left; */
+  align-items: center;
   gap: 1rem;
 }
 

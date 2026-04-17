@@ -30,6 +30,9 @@
 /* === LAYOUT === */
 html, body {
   min-height: 100%;
+}
+
+.page-wrapper {
   overflow-x: hidden;
 }
 
@@ -91,6 +94,11 @@ h1, h2, h3, h4 {margin: 0;}
 
 .btn:active { transform: scale(0.98); }
 
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .btn-primary {
   background: var(--accent);
   color: white;
@@ -147,4 +155,30 @@ h1, h2, h3, h4 {margin: 0;}
   margin: 10px;
   display: inline-block;
   transform: rotate(90deg);
+}
+
+.tooltip-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip {
+  display: none;
+  position: absolute;
+  left: 75%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  white-space: nowrap;
+  font-size: 0.85rem;
+}
+
+.tooltip-wrapper:hover .tooltip {
+  display: none;
+}
+
+.tooltip-wrapper:has(button:disabled):hover .tooltip {
+  display: block;
 }

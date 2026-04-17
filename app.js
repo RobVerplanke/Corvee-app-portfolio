@@ -1,4 +1,11 @@
-import { getWeekNumber, getNameOfDay, formatDate, getMostCommonMonth, getAutoFilledSchedule, capitalizeFirstLetter } from './helpers.js';
+import { getWeekNumber,
+  getNameOfDay,
+  formatDate,
+  getMostCommonMonth,
+  getAutoFilledSchedule,
+  capitalizeFirstLetter,
+  isValidName
+} from './helpers.js';
 import express from 'express';
 import session from 'express-session';
 import path from 'path';
@@ -180,9 +187,17 @@ app.get('/dashboard', isLoggedIn, async (req, res) => {
     weekNumbers: weekNumbers,
     volunteers: volunteers
   }
+
+  // Alert messages
+  const alerts = {
+    success: req.query.success,
+    removed: req.query.removed,
+    edited: req.query.edited,
+    error: req.query.error     
+  }
   
   // activePage - function that highlights the corresponding navigation button of the active page
-  res.render('pages/dashboard', { activePage: 'dashboard', helper: helper, data: data, success: req.query.success, removed: req.query.removed, edited: req.query.edited, error: req.query.error });
+  res.render('pages/dashboard', { activePage: 'dashboard', helper: helper, data: data, alerts: alerts});
 });
 
 // Admin dashboard page - Save new schedule from form
@@ -198,12 +213,12 @@ app.post('/dashboard/save', isLoggedIn, async (req, res) => {
   res.redirect('/dashboard?edited=true');
 });
 
-// Admin dashboard page - Add new volunteer
+// Admin dashboard page - Add new volunteer after name validation
 app.post('/dashboard/add', isLoggedIn, (req, res) => {
   const formData = req.body;
   const newVolunteer = formData.newVolunteer;
 
-  if (newVolunteer.length < 3 ) { 
+  if (!isValidName(newVolunteer)) { 
     res.redirect('/dashboard?error=true'); 
   } else {
     databaseHandler.addVolunteer(newVolunteer).catch((err) => {
@@ -213,7 +228,6 @@ app.post('/dashboard/add', isLoggedIn, (req, res) => {
     });
     res.redirect('/dashboard?success=true');
   }
-
 });
 
 // Admin dashboard page - Remove existing volunteer

@@ -18,8 +18,18 @@
     <button class="toolbar-btn" data-target="dropdown-volunteer">Vrijwilliger toevoegen</button>
     <div class="toolbar-dropdown" id="dropdown-volunteer">
       <form id="add-volunteer" action="/dashboard/add" method="POST">
+        
+        <!-- Hidden field to keep track if there are unsaved changes in the agenda editor -->
+        <input type="hidden" name="volunteerChanged" id="volunteerChanged" value="false">
+
         <input name="newVolunteer" type="text" placeholder="Voer naam in...">
-        <button type="submit" class="toolbar-btn-submit">Opslaan</button>
+
+        <!-- Use a wrapper to show a tooltip message pon the disabled button -->
+        <div class="tooltip-wrapper">
+          <button type="submit" class="toolbar-btn-submit" id="add-volunteer-btn">Opslaan</button>
+          <span class="tooltip">Sla eerst wijzigingen in de agenda op!</span>
+        </div>
+
       </form>
     </div>
   </div>
@@ -28,13 +38,23 @@
     <button class="toolbar-btn" data-target="dropdown-delete">Vrijwilliger verwijderen</button>
     <div class="toolbar-dropdown" id="dropdown-delete">
       <form id="delete-volunteer" action="/dashboard/delete" method="POST">
+
+        <!-- Hidden field to keep track if there are unsaved changes in the agenda editor -->
+        <input type="hidden" name="volunteerChanged" id="volunteerChanged" value="false">
+
         <select class="remove-name" name="volunteerId">
           <option value="">-- Selecteer naam --</option>
           <% data.volunteers.forEach(volunteer => { %>
             <option value="<%= volunteer.id %>"><%= helper.capitalizeFirstLetter(volunteer.name) %></option>
           <% }) %>
         </select>
-        <button type="submit" class="toolbar-btn-submit">Verwijder</button>
+
+        <!-- Use a wrapper to show a tooltip message pon the disabled button -->
+        <div class="tooltip-wrapper">
+          <button type="submit" class="toolbar-btn-submit" id="delete-volunteer-btn">Verwijder</button>
+          <span class="tooltip">Sla eerst wijzigingen in de agenda op!</span>
+        </div>
+
       </form>
     </div>
   </div>

@@ -114,6 +114,19 @@ function capitalizeFirstLetter(val) {
     return String(val).charAt(0).toUpperCase() + String(val).slice(1);
 }
 
+// Validate the given name
+function isValidName(name) {
+  const regex = /^[A-Za-z]{2,20}(?:[ -][A-Za-z]+)*$/;
+  return regex.test(name);
+}
+
 export {
-  getWeekNumber, getMondayFromWeekNumber, getNameOfDay, formatDate, getMostCommonMonth, getAutoFilledSchedule, capitalizeFirstLetter
+  getWeekNumber,
+  getMondayFromWeekNumber,
+  getNameOfDay,
+  formatDate,
+  getMostCommonMonth,
+  getAutoFilledSchedule,
+  capitalizeFirstLetter,
+  isValidName
 }
