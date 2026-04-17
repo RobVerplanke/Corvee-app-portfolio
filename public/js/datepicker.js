@@ -3,16 +3,6 @@ let url = new URL(window.location.href);
 // Update the date on the datepicker if provided by the URL, else use today.
 // And add event listeners on toolbar dropdown buttons
 window.onload = function() {
-  if (url.searchParams.has('date')) {
-    let date = url.searchParams.get('date');
-    // Check if date is valid.
-    if (/^20[0-9]{2}-[0-1][0-9]-[0-3][0-9]\b/.test(date)) {
-      document.getElementById("datepicker").value = date;          
-    }
-  } else {
-    document.getElementById("datepicker").value = getToday();
-  }
-  
   document.querySelectorAll('.toolbar-btn').forEach(btn => {
   btn.addEventListener('click', (e) => {
     e.stopPropagation();

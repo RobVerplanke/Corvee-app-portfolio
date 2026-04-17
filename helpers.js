@@ -49,6 +49,14 @@ function getNameOfDay(date) {
   return date === '' ? '' : DAY_NAMES[date.getDay()];
 }
 
+function getTodayForDatepicker() {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, '0');
+  const day = String(today.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
 // Adjust the long date notation to a more readable format
 function formatDate(date) {
 
@@ -128,5 +136,6 @@ export {
   getMostCommonMonth,
   getAutoFilledSchedule,
   capitalizeFirstLetter,
-  isValidName
+  isValidName,
+  getTodayForDatepicker
 }

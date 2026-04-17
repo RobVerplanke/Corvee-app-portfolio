@@ -4,7 +4,8 @@ import { getWeekNumber,
   getMostCommonMonth,
   getAutoFilledSchedule,
   capitalizeFirstLetter,
-  isValidName
+  isValidName,
+  getTodayForDatepicker,
 } from './helpers.js';
 import express from 'express';
 import session from 'express-session';
@@ -13,6 +14,7 @@ import { fileURLToPath } from 'url';
 import Sequelize from 'sequelize';
 import Sqlite3 from '@vscode/sqlite3';
 import DatabaseHandler from './databaseHandler.js';
+import { request } from 'http';
 
 const MONTHS = ['Januari', 'Februari', 'Maart', 'April', 'Mei', 'Juni', 'Juli', 'Augustus', 'September', 'Oktober', 'November', 'December'];
 const SCHEDULES_PER_MONTH = 4; // Amount of schedules displayed per month
@@ -95,7 +97,8 @@ app.get('/', async (req, res) => {
   const data = {
     schedules: autoFilledSchedule,
     weekNumbers: weekNumbers,
-    mostCommonMonth: mostCommonMonth
+    mostCommonMonth: mostCommonMonth,
+    requestedDate: req.query.date || getTodayForDatepicker(),
   }
   
   // activePage - function that highlights the corresponding navigation button of the active page
@@ -184,6 +187,7 @@ app.get('/dashboard', isLoggedIn, async (req, res) => {
   const data = {
     schedules: autoFilledSchedule,
     currentMonthName: mostCommonMonth,
+    requestedDate: req.query.date || getTodayForDatepicker(),
     weekNumbers: weekNumbers,
     volunteers: volunteers
   }
