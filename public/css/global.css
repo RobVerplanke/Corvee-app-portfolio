@@ -2,28 +2,28 @@
 @font-face {
   font-family: 'AlphaPipe';
   src: url('/fonts/BCAlphapipeTEST-Regular.otf') format('opentype');
-  font-weight: 400;
+  font-weight: var(--font-weight-normal);
   font-style: normal;
 }
 
 @font-face {
   font-family: 'AlphaPipeSemiBold';
   src: url('/fonts/BCAlphapipeTEST-SemiBold.otf') format('opentype');
-  font-weight: 400;
+  font-weight: var(--font-weight-normal);
   font-style: normal;
 }
 
 @font-face {
   font-family: 'QuicksandBold';
   src: url('/fonts/Quicksand-Bold.otf') format('opentype');
-  font-weight: 400;
+  font-weight: var(--font-weight-normal);
   font-style: normal;
 }
 
 @font-face {
   font-family: 'QuicksandRegular';
   src: url('/fonts/Quicksand-Regular.otf') format('opentype');
-  font-weight: 400;
+  font-weight: var(--font-weight-normal);
   font-style: normal;
 }
 
@@ -32,19 +32,10 @@ html, body {
   min-height: 100%;
 }
 
-.page-wrapper {
-  overflow-x: hidden;
-}
-
 body {
   position: relative;
   font-family: var(--font-alphapipe-reg);
   background-color: var(--bg);
-}
-
-.header-content {
-  display: flex;
-  align-items: center;
 }
 
 .page-content {
@@ -59,8 +50,8 @@ body {
 }
 
 .page-label {
-  font-size: 14px;
-  font-weight: 500;
+  font-size: var(--font-default-size);
+  font-weight: var(--font-weight-medium);
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--accent);
@@ -68,7 +59,7 @@ body {
 
 .page-title {
   font-family: var(--font-quicksand-bold);
-  font-size: 36px;
+  font-size: var(--font-title-large);
   color: var(--text);
 }
 
@@ -83,7 +74,7 @@ body {
     radial-gradient(circle at bottom left, rgba(70, 150, 190, 0.25) 0%, transparent 35%);
 }
 
-/* Zorg dat content erboven zit */
+/* Fixes background on other browsers */
 body > *:not(.bg-effects):not(.flash-message) {
   position: relative;
   z-index: 1;
@@ -92,6 +83,22 @@ body > *:not(.bg-effects):not(.flash-message) {
 /* === ELEMENTS === */
 h1, h2, h3, h4 {margin: 0;}
 
+.manuals-list {
+  padding-left: 20px;
+}
+
+.manuals-list li {
+  margin: 5px 0;
+  list-style-type: disc;
+}
+
+.arrow {
+  margin: 10px;
+  display: inline-block;
+  transform: rotate(90deg);
+}
+
+/* ERRORPAGE BUTTONS */
 .btn-primary {
   background: var(--accent);
   color: white;
@@ -108,44 +115,3 @@ h1, h2, h3, h4 {margin: 0;}
 
 .btn-secondary:hover { background: var(--accent-light); }
 
-/* === PRINT BUTTON === */
-.btn-print {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  gap: 5px;
-  width: 80px;
-  height: 32px;
-  margin: 0 auto 48px auto;
-  background: var(--accent);
-  color: white;
-  border-radius: 4px;
-}
-
-.btn-print:hover, .btn-add-volunteer:hover { 
-  cursor: pointer;
-  background: var(--accent-hover); 
-}
-
-.btn-print svg {
-  width: 16px;
-  height: 16px;
-  fill: white;
-}
-
-/* LIST ITEMS */
-.manuals-list {
-  padding-left: 20px;
-}
-
-.manuals-list li {
-  margin: 5px 0;
-  list-style-type: disc;
-}
-
-.arrow {
-  margin: 10px;
-  display: inline-block;
-  transform: rotate(90deg);
-}

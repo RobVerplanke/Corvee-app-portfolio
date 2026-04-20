@@ -11,7 +11,7 @@
 .error-card {
   background: var(--bg-surface, #ffffff);
   border: 0.5px solid var(--border, rgba(0, 0, 0, 0.12));
-  border-radius: 16px;
+  border-radius: var(--radius);
   padding: 3rem 2.5rem;
   max-width: 480px;
   width: 100%;
@@ -33,24 +33,24 @@
   display: inline-block;
   background: #fef2f2;
   color: #b91c1c;
-  font-size: 12px;
-  font-weight: 500;
+  font-size: var(--font-default-size);
+  font-weight: var(--font-weight-medium);
   padding: 4px 12px;
-  border-radius: 8px;
+  border-radius: var(--radius);
   letter-spacing: 0.04em;
   margin-bottom: 1rem;
 }
 
 .error-card h1 {
-  font-size: 22px;
-  font-weight: 500;
+  font-size: var(--font-title-normal);
+  font-weight: var(--font-weight-medium);
   color: var(--text-primary, #111);
   margin-bottom: 0.75rem;
   line-height: 1.3;
 }
 
 .error-subtitle {
-  font-size: 15px;
+  font-size: var(--font-default-size);
   color: var(--text-secondary, #666);
   line-height: 1.6;
   margin-bottom: 2rem;
@@ -63,14 +63,15 @@
   flex-wrap: wrap;
 }
 
+/* Buttons on errorpage */
 .btn-primary {
   background: var(--text);
   color: var(--bg-surface, #fff);
   border: none;
-  border-radius: 8px;
+  border-radius: var(--radius);
   padding: 10px 20px;
-  font-size: 14px;
-  font-weight: 500;
+  font-size: var(--font-default-size);
+  font-weight: var(--font-weight-medium);
   cursor: pointer;
   transition: opacity 0.15s;
 }
@@ -83,9 +84,9 @@
   background: transparent;
   color: var(--text-secondary, #666);
   border: 0.5px solid var(--border, rgba(0, 0, 0, 0.2));
-  border-radius: 8px;
+  border-radius: var(--radius);
   padding: 10px 20px;
-  font-size: 14px;
+  font-size: var(--font-default-size);
   cursor: pointer;
   transition: background 0.15s;
 }

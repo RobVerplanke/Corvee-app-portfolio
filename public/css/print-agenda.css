@@ -3,12 +3,37 @@
   display: none !important;
 }
 
+/* === PRINT BUTTON === */
+.btn-print {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  gap: 5px;
+  width: 80px;
+  height: 32px;
+  margin: 0 auto 48px auto;
+  background: var(--accent);
+  color: white;
+  border-radius: 4px;
+}
+
+.btn-print:hover, .btn-add-volunteer:hover { 
+  cursor: pointer;
+  background: var(--accent-hover); 
+}
+
+.btn-print svg {
+  width: 16px;
+  height: 16px;
+  fill: white;
+}
+
 /* === KEYFRAMES === */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(16px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-
 
 /* === PAGINA INSTELLINGEN === */
 @page {
@@ -30,14 +55,14 @@
 
   .dagdeel-print {
     display: inline !important;
-    font-size: 14px;
+    font-size: var(--font-default-size);
   }
 
   .td-naam-middag, 
   .td-dag,
   .datum {
     display: table-cell !important;
-    font-size: 14px;
+    font-size: var(--font-default-size);
   }
 
   * {
@@ -47,7 +72,7 @@
 
   body {
     background: white;
-    font-size: 14px;
+    font-size: var(--font-default-size);
   }
 
   /* === HEADER === */
@@ -57,7 +82,7 @@
   }
 
   .page-title {
-    font-size: 16px;
+    font-size: var(--font-default-size);
     margin-bottom: 6px;
   }
 
@@ -77,7 +102,7 @@
   }
 
   .week-title {
-    font-size: 12px;
+    font-size: var(--font-default-size);
     margin-bottom: 3px;
     margin-left: 0;
   }
@@ -103,7 +128,7 @@
 
   .table-agenda td {
     padding: 4px 8px;
-    font-size: 14px;
+    font-size: var(--font-default-size);
   }
 
   /* === VERBERG BADGES === */
@@ -125,10 +150,4 @@
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
   }
-
-  /* === VERBERG DAGDEEL KOLOM === */
-  /* .table-agenda thead th:nth-child(2),
-  .table-agenda tbody td:nth-child(2) {
-    display: none;
-  } */
 }

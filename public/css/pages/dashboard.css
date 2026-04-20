@@ -20,7 +20,7 @@ body {
 }
 
 .add-volunteer input::placeholder{
-  color: rgb(180, 180, 180);
+  color: var(--text-muted);
 }
 
 summary {
@@ -36,7 +36,7 @@ summary {
   border: 1px solid var(--border);
   border-radius: var(--radius);
   font-family: var(--font-quicksand-reg);
-  font-size: 14px;
+  font-size: var(--font-default-size);
   color: var(--text);
   outline: none;
   box-shadow: var(--shadow);
@@ -47,29 +47,30 @@ summary {
   display: flex;
   justify-content: center;
   width: 100%;
-  height: 32px; /* vaste hoogte, altijd gereserveerd */
+  height: 32px;
   padding: 5px;
-  color: white;
+  color: var(--message-text-color);
   font-family: var(--font-quicksand-reg);
   background-color: transparent;
   z-index: 9;
 }
 
 .alert {
-  background-color: green;
+  background-color: var(--message-confirm-color);
 }
 
 .alert-error {
-  background-color: red;
+  background-color: var(--message-error-color);
 }
 
 .select-name, .overview-names, .remove-name {
+  width: var(--toolbar-button-width);
   padding: 8px 14px;
   background: var(--input-bg);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   font-family: var(--font-quicksand-reg);
-  font-size: 14px;
+  font-size: var(--font-default-size);
   color: var(--text);
   cursor: pointer;
   outline: none;
@@ -79,13 +80,5 @@ summary {
   background-repeat: no-repeat;
   background-position: right 12px center;
   background-size: 16px;
-  padding-right: 36px;
-}
-
-.overview-names {
-  min-width: 150px;
-}
-
-.remove-name{
-  max-width: 150px;
+  padding-right: 36px; 
 }

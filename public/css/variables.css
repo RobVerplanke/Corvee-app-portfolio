@@ -5,14 +5,17 @@
     --text: #1C3269;
     --text-muted: #888;
     --badge-bg: #d38e0d;
-    --nav-bg: #424242;
     --accent: #1C3269;
     --accent-hover: #36529b;
     --accent-light: #E8F5F9;
-    --border: #b4b3ae;
     --input-bg: #faf9f7;
-    --danger: #c0392b;
-    --danger-light: rgba(192, 57, 43, 0.08);
+    
+    --message-error-color: red;
+    --message-confirm-color: green;
+    --message-text-color: white;
+    
+    --border: #b4b3ae;
+    --dashboard-border-color: rgba(28, 50, 105, 0.15);
 
     /* Effects */
     --shadow: 0 4px 40px rgba(0,0,0,0.08);
@@ -20,8 +23,17 @@
 
     /* Navigation */
     --nav-height: 64px;
-
+    --toolbar-button-width: 130px;
+    
     /* Fonts */
+    --font-default-size: 14px;
+    --font-title-normal: 24px;
+    --font-title-large: 32px;
+
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-bold: 700;
+
     --font-alphapipe-reg: 'AlphaPipe', serif;
     --font-quicksand-reg: 'QuickSandRegular', serif;
     --font-quicksand-bold: 'QuicksandBold', serif;

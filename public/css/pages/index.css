@@ -36,8 +36,8 @@
 }
 
 .login-label {
-  font-size: 11px;
-  font-weight: 500;
+  font-size: var(--font-default-size);
+  font-weight: var(--font-weight-medium);
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--accent);
@@ -46,8 +46,8 @@
 }
 
 .login-title {
-  font-size: 32px;
-  font-weight: 400;
+  font-size: var(--font-title-large);
+  font-weight: var(--font-weight-normal);
   color: var(--text);
   line-height: 1.2;
 }
@@ -67,8 +67,8 @@
 }
 
 label {
-  font-size: 13px;
-  font-weight: 500;
+  font-size: var(--font-default-size);
+  font-weight: var(--font-weight-medium);
   color: var(--text);
 }
 
@@ -77,9 +77,9 @@ input {
   padding: 12px 14px;
   background: var(--input-bg);
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-radius: var(--radius);
   font-family: 'DM Sans', sans-serif;
-  font-size: 14px;
+  font-size: var(--font-default-size);
   color: var(--text);
   transition: border-color 0.2s, box-shadow 0.2s;
   outline: none;
@@ -102,10 +102,10 @@ input:focus {
   background: var(--accent);
   color: #fff;
   font-family: var(--font-form-input);
-  font-size: 14px;
-  font-weight: 500;
+  font-size: var(--font-default-size);
+  font-weight: var(--font-weight-medium);
   border: none;
-  border-radius: 8px;
+  border-radius: var(--radius);
   cursor: pointer;
   letter-spacing: 0.03em;
   transition: background 0.2s, transform 0.1s;
@@ -117,13 +117,4 @@ input:focus {
 
 .btn-login:active {
   transform: scale(0.99);
-}
-
-/* === FOOTER === */
-.login-footer {
-  font-family: var(--font-quicksand-bold);
-  margin-top: 24px;
-  text-align: center;
-  font-size: 12px;
-  color: var(--text-muted);
 }

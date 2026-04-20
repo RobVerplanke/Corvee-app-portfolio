@@ -40,7 +40,7 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
   color: inherit;
   padding: 8px 10px 8px 16px;
 }

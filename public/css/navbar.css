@@ -41,7 +41,7 @@
   align-items: center;
   gap: 4px;
   padding: 8px 16px;
-  border-radius: 8px;
+  border-radius: var(--radius);
   cursor: pointer;
   transition: background 0.15s;
   color: var(--text-muted);
@@ -66,8 +66,8 @@
 }
 
 .nav-label {
-  font-size: 12px;
-  font-weight: 500;
+  font-size: var(--font-default-size);
+  font-weight: var(--font-weight-medium);
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
@@ -82,18 +82,7 @@
   margin-left: 30px;
 }
 
-.nav-item.logout:hover {
-  background: rgba(180, 50, 50, 0.08);
-  color: #b43232;
-}
-
-@media (max-width: 500px) {
-  .navbar {
-    padding: 0 6px;
-  }
-}
-
-/* Hide logo when screen gets to small */
+/* Adjust layout when screen gets smaller */
 @media (max-width: 500px) {
   .navbar-spacer {
     display: none;
@@ -102,7 +91,7 @@
     display: none;
   }
   .navbar {
-    padding-left: 20px;
+    padding: 0 6px;
   }
   .navbar-logout {
     margin-left: 30px;

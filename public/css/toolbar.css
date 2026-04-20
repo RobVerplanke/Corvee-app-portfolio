@@ -13,14 +13,14 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  min-width: 150px;
-  padding: 0.5rem 1rem;
+  min-width: var(--toolbar-button-width);
+  padding: 0.4rem 0.6rem;
   background-color: var(--accent);
   color: white;
   border: none;
-  border-radius: 6px;
+  border-radius: var(--radius);
   cursor: pointer;
-  font-size: 1rem;
+  font-size: var(--font-default-size);
 }
 
 .toolbar-btn:hover {
@@ -31,19 +31,15 @@
   background: var(--input-bg);
   border: 1px solid var(--border);
   color: var(--text);
-  border-radius: 6px;
+  border-radius: var(--radius);
   padding: 6px 14px;
-  font-size: 13px;
+  font-size: var(--font-default-size);
   cursor: pointer;
 }
 
 .toolbar-btn-submit:hover {
   background-color: var(--card);
   color: var(--text);
-}
-
-.toolbar-btn-submit:active {
-  transform: scale(0.97);
 }
 
 .toolbar-dropdown {
@@ -53,7 +49,7 @@
   color: var(--text);
   top: calc(100% + 0.8rem);
   left: 0;
-  border-radius: 6px;
+  border-radius: var(--radius);
   z-index: 100;
 }
 
@@ -62,14 +58,14 @@
 }
 
 .toolbar-dropdown input {
-  max-width: 150px;
+  max-width: var(--toolbar-button-width);
   padding: 8px 14px;
   background: var(--card);
   color: var(--text);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   font-family: var(--font-quicksand-reg);
-  font-size: 15px;
+  font-size: var(--font-default-size);
   outline: none;
   box-shadow: var(--shadow);
   transition: border-color 0.2s, box-shadow 0.2s;
@@ -78,7 +74,6 @@
 #add-volunteer, #delete-volunteer, #overview-volunteers {
   display: flex;
   flex-direction: row;
-  /* justify-content: left; */
   align-items: center;
   gap: 1rem;
 }
@@ -100,8 +95,8 @@
 .toolbar-group-agenda {
   font-family: var(--font-quicksand-reg);
   background: var(--accent-light);
-  border: 1px solid rgba(28, 50, 105, 0.15);
-  border-radius: 12px;
+  border: 1px solid var(--dashboard-border-color);
+  border-radius: var(--radius);
   padding: 30px 0 0 20px;
   margin: 0 auto 1.5rem auto;
   max-width: 1000px;
@@ -112,8 +107,8 @@
 .toolbar-group-volunteers legend,
 .toolbar-group-agenda legend {
   font-family: var(--font-quicksand-bold);
-  font-size: 14px;
-  font-weight: 500;
+  font-size: var(--font-default-size);
+  font-weight: var(--font-weight-medium);
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--accent);
@@ -134,7 +129,6 @@
   .toolbar {
     display: flex;
     flex-direction: column;
-    /* margin-left: 24px; */
   }
 
   .toolbar-dropdown {
