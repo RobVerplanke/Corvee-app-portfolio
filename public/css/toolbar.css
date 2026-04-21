@@ -13,7 +13,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  min-width: var(--toolbar-button-width);
+  width: var(--toolbar-button-width);
   padding: 0.4rem 0.6rem;
   background-color: var(--accent);
   color: white;
@@ -21,6 +21,11 @@
   border-radius: var(--radius);
   cursor: pointer;
   font-size: var(--font-default-size);
+}
+
+#agenda-print-btn{
+  justify-self: center;
+  margin-bottom: 40px;
 }
 
 .toolbar-btn:hover {

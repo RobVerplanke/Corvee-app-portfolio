@@ -5,13 +5,8 @@
 
 /* === PRINT BUTTON === */
 .btn-print {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  gap: 5px;
-  margin: 0 auto 48px auto;
-  min-width: var(--toolbar-button-width);
+  gap: 8px;
+  width: var(--toolbar-button-width);
   padding: 0.4rem 0.6rem;
   background-color: var(--accent);
   color: white;
