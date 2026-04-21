@@ -41,18 +41,18 @@
   "buttonLabels": {
     "confirmButtons": {
       "save": "Opslaan",
-      "delete": "Verwijder"
+      "delete": "Verwijder",
+      "confirm": "Bevestig"
     },
     "manuals": {
       "tasks": "Corvee taken",
       "dishwasher": "Handleiding vaatwasser",
-      "cleaning": "Schonmaak instructies"
+      "cleaning": "Schoonmaak instructies"
     },
     "print": "Printen",
     "calendar": "Kalender",
     "overview": "Overzicht",
     "add": "Toevoegen",
-    "delete": "Verwijderen",
-    "confirm": "Bevestig"
+    "delete": "Verwijderen"
   }
 }
