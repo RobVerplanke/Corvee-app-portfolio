@@ -99,21 +99,20 @@
 .toolbar-group-volunteers,
 .toolbar-group-agenda {
   font-family: var(--font-quicksand-reg);
-  background: var(--accent-light);
-  border: 1px solid var(--dashboard-border-color);
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border-radius: var(--radius);
-  padding: 30px 0 0 20px;
   margin: 0 auto 1.5rem auto;
   max-width: 1000px;
   width: calc(100% - 4rem);
-  box-shadow: var(--shadow);
 }
 
 .toolbar-group-volunteers legend,
 .toolbar-group-agenda legend {
   font-family: var(--font-quicksand-bold);
   font-size: var(--font-default-size);
-  font-weight: var(--font-weight-medium);
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--accent);
