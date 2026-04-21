@@ -15,6 +15,7 @@ import Sequelize from 'sequelize';
 import Sqlite3 from '@vscode/sqlite3';
 import DatabaseHandler from './databaseHandler.js';
 import { request } from 'http';
+import { readFileSync } from 'fs';
 
 const MONTHS = ['Januari', 'Februari', 'Maart', 'April', 'Mei', 'Juni', 'Juli', 'Augustus', 'September', 'Oktober', 'November', 'December'];
 const SCHEDULES_PER_MONTH = 4; // Amount of schedules displayed per month
@@ -32,6 +33,8 @@ const sequelize = new Sequelize({
   logging: false,
 });
 const databaseHandler = new DatabaseHandler(sequelize);
+const t = JSON.parse(readFileSync('./locales/nl.json', 'utf-8'));
+
 // Synchronize the database so the tables exist in the database
 await databaseHandler.sync();
 
@@ -45,6 +48,11 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
 }));
+// Use local JSON-file as text content storage
+app.use((req, res, next) => {
+  res.locals.t = t;
+  next();
+});
 
 // Set the view engine to ejs and build an absolute path to the views folder
 app.set('view engine', 'ejs');

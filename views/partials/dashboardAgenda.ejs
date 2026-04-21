@@ -8,7 +8,7 @@
     
       <div class="week-block">
         <h2 class="week-title">
-          Week <%= data.weekNumbers[index] %>
+          <%= t.common.week %> <%= data.weekNumbers[index] %>
         </h2>
         <div class="table-wrapper">
 
@@ -20,7 +20,8 @@
             </colgroup>
 
             <thead>
-              <tr><th>Datum</th><th>Dagdeel</th><th>Naam</th></tr>
+              <tr><th><%= t.table.head.date %></th><th><%= t.table.head.partOfDay %></th><th><%= t.table.head.name %></th></tr>
+
             </thead>
 
             <tbody>
@@ -31,7 +32,7 @@
               <!-- Morning rows -->
                 <tr>
                   <td class="td-dag" rowspan="2"><%= helper.getNameOfDay(day.date) %><span class="datum"><%= helper.formatDate(day.date) %></span></td>
-                  <td><span class="badge badge-ochtend">Ochtend</span><span class="dagdeel-print">Ochtend</span></td>
+                  <td><span class="badge badge-ochtend"><%= t.common.morning %></span><span class="dagdeel-print"><%= t.common.morning %></span></td>
                   <td class="td-naam">
                     <select name="<%= helper.toLocalDateString(day.date) %>[morning]" id="volunteer-select-<%= index %>-morning" class="select-name" onchange="onVolunteerChanged()">
                       <option value="">-</option>
@@ -46,7 +47,7 @@
 
                 <!-- Afternoon rows -->
                 <tr>
-                  <td><span class="badge badge-middag">Middag</span><span class="dagdeel-print">Middag</span></td>
+                  <td><span class="badge badge-middag"><%= t.common.afternoon %></span><span class="dagdeel-print"><%= t.common.afternoon %></span></td>
                   <td class="td-naam td-naam-middag">
                     <select name="<%= helper.toLocalDateString(day.date) %>[afternoon]" id="volunteer-select-<%= index %>-afternoon" class="select-name" onchange="onVolunteerChanged()">
                       <option value="">-</option>

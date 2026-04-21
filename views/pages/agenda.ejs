@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="../css/toolbar.css">
     <title>Corveerooster</title>
     <script src="../js/datepicker.js"></script>
-
   </head>
 
   <body>
@@ -24,8 +23,12 @@
     <!-- HEADER -->
     <header class="page-content">
       <div class="page-header">
-        <p class="page-label">Corvee dienst</p>
+        
+        <!-- Page title -->
+        <p class="page-label"><%= t.common.pageTitle %></p>
       </div>
+      
+      <!-- Name of the month -->
       <h1 class="page-title"><%- data.mostCommonMonth %></h1>
     </header>
     
@@ -34,14 +37,17 @@
       
       <!-- Create a table for each week -->
       <% data.schedules.forEach((schedule, index) => { %>
-      
         <div class="week-block">
+
+          <!-- Display corresponding week number above each table -->
           <h2 class="week-title">
-            Week <%= data.weekNumbers[index] %>
+            <%= t.common.week %> <%= data.weekNumbers[index] %>
           </h2>
           <div class="table-wrapper">
 
+            <!-- Agenda tables -->
             <table class="table-agenda">
+
               <colgroup>
                 <col class="col-datum">
                 <col class="col-dagdeel">
@@ -49,36 +55,35 @@
               </colgroup>
 
               <thead>
-                <tr><th>Datum</th><th>Dagdeel</th><th>Naam</th></tr>
+                <tr><th><%= t.table.head.date %></th><th><%= t.table.head.partOfDay %></th><th><%= t.table.head.name %></th></tr>
               </thead>
 
+              <!-- Create rows for each day - Extra span-elements are used for the printed version -->
               <tbody>
-                <!-- Create rows for each day - Extra span-elements are used for the printed version -->
                 <% schedule.forEach(day => { %>
                   <tr>
                     <td class="td-dag" rowspan="2"><%= helper.getNameOfDay(day.date) %><span class="datum"><%= helper.formatDate(day.date) %></span></td>
-                    <td><span class="badge badge-ochtend">Ochtend</span><span class="dagdeel-print">Ochtend</span></td>
+                    <td><span class="badge badge-ochtend"><%= t.common.morning %></span><span class="dagdeel-print"><%= t.common.morning %></span></td>
                     <td class="td-naam"><%= day.morning ? helper.capitalizeFirstLetter(day.morning.name) : '-' %></td>
                   </tr>
                   <tr>
-                    <td><span class="badge badge-middag">Middag</span><span class="dagdeel-print">Middag</span></td>
+                    <td><span class="badge badge-middag"><%= t.common.afternoon %></span><span class="dagdeel-print"><%= t.common.afternoon %></span></td>
                     <td class="td-naam td-naam-middag"><%= day.afternoon ? helper.capitalizeFirstLetter(day.afternoon.name) : '-' %></td>
                   </tr>
                 <% }) %>
               </tbody>
-              
+
             </table>
           </div> <!-- table-wrapper -->
         </div> <!-- week-block -->
       <% }) %>
-
     </main>
 
     <!-- Print button -->
-       <button class="toolbar-btn" id="agenda-print-btn" onclick="window.print()">
-         <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M640-640v-120H320v120h-80v-200h480v200h-80Zm-480 80h640-640Zm560 100q17 0 28.5-11.5T760-500q0-17-11.5-28.5T720-540q-17 0-28.5 11.5T680-500q0 17 11.5 28.5T720-460Zm-80 260v-160H320v160h320Zm80 80H240v-160H80v-240q0-51 35-85.5t85-34.5h560q51 0 85.5 34.5T880-520v240H720v160Zm80-240v-160q0-17-11.5-28.5T760-560H200q-17 0-28.5 11.5T160-520v160h80v-80h480v80h80Z"/></svg>
-         Printen
-        </button>
+    <button class="toolbar-btn" id="agenda-print-btn" onclick="window.print()">
+      <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M640-640v-120H320v120h-80v-200h480v200h-80Zm-480 80h640-640Zm560 100q17 0 28.5-11.5T760-500q0-17-11.5-28.5T720-540q-17 0-28.5 11.5T680-500q0 17 11.5 28.5T720-460Zm-80 260v-160H320v160h320Zm80 80H240v-160H80v-240q0-51 35-85.5t85-34.5h560q51 0 85.5 34.5T880-520v240H720v160Zm80-240v-160q0-17-11.5-28.5T760-560H200q-17 0-28.5 11.5T160-520v160h80v-80h480v80h80Z"/></svg>
+      <%= t.buttonLabels.print %>
+    </button>
 
   </body>
 </html>

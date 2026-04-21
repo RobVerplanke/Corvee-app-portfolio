@@ -1,0 +1,58 @@
+{
+  "table": {
+    "head": {
+      "date": "Datum",
+      "partOfDay": "Dagdeel",
+      "name": "Naam"
+    }
+  },
+  "dashboard": {
+    "alerts": {
+      "error": "Toevoegen mislukt! Geef een geldige naam op (2 - 20 karakters).",
+      "succes": "Vrijwilliger succesvol toegevoegd!",
+      "removed": "Vrijwilliger succesvol verwijderd!",
+      "edited": "Agenda succesvol opgeslagen!",
+      "warning": "Let op: Er zijn niet-opgeslagen wijzigingen in de agenda, toch doorgaan?"
+    },
+    "toolbar": {
+      "volunteers": {
+        "legend": "Vrijwilligersbeheer"
+      },
+      "agenda": {
+        "legend": "Agendabeheer"
+      }
+    },
+    "common": {
+      "placeholderName": "Naam..."
+    }
+  },
+  "navbar": {
+    "agenda": "Agenda",
+    "manuals": "Handleidingen",
+    "admin": "Beheer",
+    "logout": "Uitloggen"
+  },
+  "common": {
+    "pageTitle": "Corvee dienst",
+    "week": "Week",
+    "morning": "Ochtend",
+    "afternoon": "Middag"
+  },
+  "buttonLabels": {
+    "confirmButtons": {
+      "save": "Opslaan",
+      "delete": "Verwijder"
+    },
+    "manuals": {
+      "tasks": "Corvee taken",
+      "dishwasher": "Handleiding vaatwasser",
+      "cleaning": "Schonmaak instructies"
+    },
+    "print": "Printen",
+    "calendar": "Kalender",
+    "overview": "Overzicht",
+    "add": "Toevoegen",
+    "delete": "Verwijderen",
+    "confirm": "Bevestig"
+  }
+}

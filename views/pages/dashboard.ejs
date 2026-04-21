@@ -26,26 +26,24 @@
     <!-- NAVIGATION PARTIAL -->
     <%- include ('../partials/navbar.ejs'); %>
 
-    <!-- Error message after adding/editting a volunteer failed -->
+    <!-- Alert messages shown while adding, editing, removing a volunteer or changing the agenda -->
     <% if (alerts.error) { %>
-      <div class="flash-message alert-error" id="flash">Toevoegen mislukt! Geef een geldige naam op (2 - 20 karakters).</div>
+      <div class="flash-message alert-error" id="flash"><%= t.dashboard.alerts.error %></div>
     <% } %>
 
-    <!-- Confirm messages after succesfully add, edit, remove a volunteer or changing the agenda -->
     <% if (alerts.success) { %>
-      <div class="flash-message alert" id="flash">Vrijwilliger succesvol toegevoegd!</div>
+      <div class="flash-message alert" id="flash"><%= t.dashboard.alerts.succes %></div>
     <% } %>
 
     <% if (alerts.removed) { %>
-      <div class="flash-message alert" id="flash">Vrijwilliger succesvol verwijderd!</div>
+      <div class="flash-message alert" id="flash"><%= t.dashboard.alerts.removed %></div>
     <% } %>
 
     <% if (alerts.edited) { %>
-      <div class="flash-message alert" id="flash">Agenda succesvol opgeslagen!</div>
+      <div class="flash-message alert" id="flash"><%= t.dashboard.alerts.edited %></div>
     <% } %>
     
-    <!-- Confirm message disapears after cetrain amount of time
-         and empty url params to prevent repeating messages -->
+    <!-- Alert messages disapears after cetrain amount of time and empty the url params to prevent repeating alerts -->
     <script>
       setTimeout(() => {
         document.getElementById('flash')?.remove();
@@ -56,20 +54,20 @@
     <!-- HEADER -->
     <header class="page-content">
       <div class="page-header">
-        <p class="page-label">Corvee dienst</p>
+        <p class="page-label"><%= t.common.pageTitle %></p>
       </div>
       <h1 class="page-title"><%- data.currentMonthName %></h1>
     </header>
 
     <!-- Toolbar with volunteer options -->
     <fieldset class="toolbar-group-volunteers">
-      <legend>Vrijwilligersbeheer</legend>
+      <legend><%= t.dashboard.toolbar.volunteers.legend %></legend>
       <%- include ('../partials/toolbarVolunteers.ejs'); %>
     </fieldset>
 
     <!-- Toolbar with agenda options and an editable agenda -->
     <fieldset class="toolbar-group-agenda">
-      <legend>Agendabeheer</legend>
+      <legend><%= t.dashboard.toolbar.agenda.legend %></legend>
       <%- include ('../partials/toolbarAgenda.ejs'); %>
 
       <!-- Send selected names to the database after submit -->
