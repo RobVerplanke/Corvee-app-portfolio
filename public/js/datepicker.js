@@ -38,7 +38,7 @@ function onDateChanged(e) {
   // Warn if a volunteer was changed if it's the dashboard page.
   if (url.pathname.includes('dashboard') && window.volunteerChanged) {
     // If the confirm is rejected, ignore changing url and reset datepicker. Else proceed to change the page.
-    if (!confirm("Er zijn onopgeslagen wijzigingen, weet u zeker dat u wilt doorgaan?")) {
+    if (!confirm("Let op: wijzigingen in de agenda zullen hierbij verloren gaan! Toch doorgaan?")) {
       e.target.value = url.searchParams.has('date') ? url.searchParams.get('date') : getToday();
       return;
     }
