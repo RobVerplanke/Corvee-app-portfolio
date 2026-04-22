@@ -70,9 +70,10 @@ body {
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  background:
-    radial-gradient(circle at top right, rgba(100, 181, 210, 0.8) 0%, transparent 60%),
-    radial-gradient(circle at bottom left, rgba(70, 150, 190, 0.6) 0%, transparent 55%);
+   background:
+    radial-gradient(circle at 80% 10%, rgba(100, 181, 210, 0.9) 0%, transparent 55%),
+    radial-gradient(circle at 20% 90%, rgba(70, 150, 190, 0.7) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(85, 165, 200, 0.4) 0%, transparent 60%);
 }
 
 /* Fixes background on other browsers */
