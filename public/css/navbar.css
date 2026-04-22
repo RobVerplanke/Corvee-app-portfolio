@@ -5,7 +5,7 @@
   top: 0;
   z-index: 100;
   height: var(--nav-height);
-  width: 100%;
+  width: 100vw;
   background: var(--card);
   border-bottom: 1px solid var(--border);
   box-shadow: 0 2px 16px rgba(0,0,0,0.05);
@@ -83,17 +83,29 @@
 }
 
 /* Adjust layout when screen gets smaller */
-@media (max-width: 500px) {
+@media (max-width: 600px) {
   .navbar-spacer {
     display: none;
   }
   .navbar-spacer img {
     display: none;
   }
+}
+
+@media (max-width: 500px) {
   .navbar {
     padding: 0 6px;
   }
+  .nav-label {
+    font-size: 12px;
+  }
+  .navbar-nav {
+    gap: 5px;
+  }
+  .nav-item {
+    padding: 4px 8px;
+  }
   .navbar-logout {
-    margin-left: 30px;
+    margin: 0 8px 0 8px;
 }
 }

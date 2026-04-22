@@ -116,3 +116,9 @@
   from { opacity: 0; transform: translateY(16px); }
   to   { opacity: 1; transform: translateY(0); }
 }
+
+@media (max-width: 600px) {
+  .table-agenda td {
+    padding: 4px;
+  }
+}

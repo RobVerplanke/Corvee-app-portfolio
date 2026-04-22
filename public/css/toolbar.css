@@ -98,15 +98,16 @@
 
 .toolbar-group-volunteers,
 .toolbar-group-agenda {
-  font-family: var(--font-quicksand-reg);
-  background: rgba(255, 255, 255, 0.15);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-radius: var(--radius);
-  margin: 0 auto 1.5rem auto;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   max-width: 1000px;
-  width: calc(100% - 4rem);
+  margin: 0 auto 32px auto;
+  padding: 20px 32px 0 32px;
+  font-family: var(--font-quicksand-reg);
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: var(--radius);
 }
 
 .toolbar-group-volunteers legend,
@@ -119,17 +120,7 @@
   padding: 0 8px;
 }
 
-.toolbar-group-volunteers{
-  height: auto;
-  padding: 20px 0 0 32px;
-}
-
-.toolbar-group-agenda{
-  height: 100%;
-  padding: 20px 32px 0 32px;
-}
-
-@media (max-width: 700px) {
+@media (max-width: 600px) {
   .toolbar {
     display: flex;
     flex-direction: column;
@@ -138,5 +129,11 @@
   .toolbar-dropdown {
     position: static;
     padding-top: 10px;
+  }
+
+  .toolbar-group-agenda,
+  .toolbar-group-volunteers{
+    height: 100%;
+    padding: 20px 0 0 10px;
   }
 }

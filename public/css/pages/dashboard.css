@@ -82,3 +82,9 @@ summary {
   background-size: 16px;
   padding-right: 36px; 
 }
+
+@media (max-width: 600px) {
+.select-name {
+  max-width: 80px;
+}
+}
