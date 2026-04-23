@@ -36,7 +36,7 @@
                   <td class="td-naam">
                     <select name="<%= helper.toLocalDateString(day.date) %>[morning]" id="volunteer-select-<%= index %>-morning" class="select-name" onchange="onVolunteerChanged()">
                       <option value="">-</option>
-                      <% data.volunteers.forEach(volunteer => { %>
+                      <% data.volunteers.slice().sort((a, b) => a.name.localeCompare(b.name)).forEach(volunteer => { %>
                         <option value="<%= volunteer.id %>" <%= day.morning && day.morning.id === volunteer.id ? 'selected' : '' %>>
                           <%= helper.capitalizeFirstLetter(volunteer.name) %>
                         </option>
@@ -51,7 +51,7 @@
                   <td class="td-naam td-naam-middag">
                     <select name="<%= helper.toLocalDateString(day.date) %>[afternoon]" id="volunteer-select-<%= index %>-afternoon" class="select-name" onchange="onVolunteerChanged()">
                       <option value="">-</option>
-                      <% data.volunteers.forEach(volunteer => { %>
+                      <% data.volunteers.slice().sort((a, b) => a.name.localeCompare(b.name)).forEach(volunteer => { %>
                         <option value="<%= volunteer.id %>" <%= day.afternoon && day.afternoon.id === volunteer.id ? 'selected' : '' %>>
                           <%= helper.capitalizeFirstLetter(volunteer.name) %>
                         </option>
