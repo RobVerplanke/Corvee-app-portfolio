@@ -9,7 +9,7 @@
   position: relative;
 }
 
-.toolbar-btn {
+.toolbar-btn, .print-btn {
   display: flex;
   align-items: center;
   gap: 8px;
