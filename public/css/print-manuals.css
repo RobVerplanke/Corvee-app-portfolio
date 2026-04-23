@@ -1,0 +1,41 @@
+
+/* === PAGINA INSTELLINGEN === */
+@page {
+  size: A4 portrait;
+  margin: 1cm;
+}
+
+/* Styling for the printed version of the schedules */
+@media print {
+  .navbar,
+  #agenda-print-btn,
+  .page-label, 
+  .manuals-index {
+    display: none !important;
+  }
+
+  .manuals-content {
+    padding: 5px 5px 5px 5px;
+    line-height: 1.3;
+  }
+
+  .manuals-subtitle{
+    margin: 5px;
+  }
+
+  body {
+    background: white;
+    font-size: var(--font-default-size);
+  }
+
+  /* === HEADER === */
+  header.page-content {
+    padding: 0;
+    margin-bottom: 6px;
+  }
+
+  .page-title {
+    font-size: var(--font-default-size);
+    margin-bottom: 6px;
+  }
+}

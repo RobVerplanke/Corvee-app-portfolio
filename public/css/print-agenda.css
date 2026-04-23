@@ -47,6 +47,10 @@
     display: none !important;
   }
 
+  .agenda-spacer {
+    display: none;
+  }
+
   .badge {
     display: none;
   }

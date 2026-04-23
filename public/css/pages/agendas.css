@@ -111,6 +111,10 @@
   color: var(--accent);
 }
 
+.agenda-spacer {
+  margin-bottom: 40px;
+}
+
 /* === KEYFRAMES === */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(16px); }
