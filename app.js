@@ -53,6 +53,11 @@ app.use((req, res, next) => {
   res.locals.t = t;
   next();
 });
+// Make login-status globally available
+app.use((req, res, next) => {
+  res.locals.session = req.session;
+  next();
+});
 
 // Set the view engine to ejs and build an absolute path to the views folder
 app.set('view engine', 'ejs');
@@ -196,7 +201,7 @@ app.get('/dashboard', isLoggedIn, async (req, res) => {
     currentMonthName: mostCommonMonth,
     requestedDate: req.query.date || getTodayForDatepicker(),
     weekNumbers: weekNumbers,
-    volunteers: volunteers
+    volunteers: volunteers,
   }
 
   // Alert messages
