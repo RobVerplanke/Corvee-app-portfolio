@@ -42,7 +42,8 @@
 /* Styling for the printed version of the schedules */
 @media print {
   .navbar,
-  #agenda-print-btn,
+  .toolbar-btn,
+  .print-btn,
   .page-label {
     display: none !important;
   }

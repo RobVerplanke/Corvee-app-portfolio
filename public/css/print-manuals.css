@@ -8,15 +8,22 @@
 /* Styling for the printed version of the schedules */
 @media print {
   .navbar,
-  #agenda-print-btn,
+  .toolbar-btn,
   .page-label, 
   .manuals-index {
     display: none !important;
   }
 
   .manuals-content {
+    color: black;
     padding: 5px 5px 5px 5px;
     line-height: 1.3;
+  }
+
+  .manuals-help{
+    border: 2px solid black;
+    padding: 15px;
+    margin-top: 40px;
   }
 
   .manuals-subtitle{
