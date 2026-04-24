@@ -272,6 +272,53 @@ app.get('/manuals/cleaning', (req, res) => {
   res.render('pages/manuals', { activePage: 'manuals', activeManual: 'cleaning'});
 });
 
+// A clean agenda view to display on an external monitor
+app.get('/monitor', async (req, res) => {
+  let requestedDate = null;
+
+  // Create a RegExp to test the date for validity. If invalid, use today.
+  const re = /^20[0-9]{2}-[0-1][0-9]-[0-3][0-9]\b/;
+  if (!re.test(req.query.date)) {
+    requestedDate = new Date();
+  } else {
+    requestedDate = new Date(req.query.date);
+  }
+  let schedules = [];
+  let weekNumbers = [];
+  let currentWeekNumber = getWeekNumber(requestedDate); // Get current week number
+ 
+  // Get a fixed amount of schedules for the upcoming weeks (defined in SCHEDULES_PER_MONTH constant) of the current month
+  for (let i=0; i<SCHEDULES_PER_MONTH; i++) {
+    schedules.push(await databaseHandler.getScheduleForWeek(currentWeekNumber+i));
+    weekNumbers.push(currentWeekNumber+i);
+  }
+
+  // When the schedule is missing data for one or more days, add placeholder content for the missing days
+  let autoFilledSchedule = getAutoFilledSchedule(schedules, weekNumbers, DAYS_PER_WEEK)
+
+  // Determine what is the most common month name in the schedules so it can be uses as page title
+  let mostCommonMonth = MONTHS[getMostCommonMonth(schedules)];
+
+  // Functions and data which are needed to display titles and dates in the agenda view
+  const helper = {
+    getWeekNumber: getWeekNumber,
+    getNameOfDay: getNameOfDay,
+    formatDate: formatDate,
+    capitalizeFirstLetter: capitalizeFirstLetter,
+  }
+
+  // Data that needs to be displayd
+  const data = {
+    schedules: autoFilledSchedule,
+    weekNumbers: weekNumbers,
+    mostCommonMonth: mostCommonMonth,
+    requestedDate: req.query.date || getTodayForDatepicker(),
+  }
+  
+  // activePage - function that highlights the corresponding navigation button of the active page
+  res.render('pages/monitor', { activePage: 'agenda', helper: helper, data: data });
+});
+
 // Eror page
 app.use('/{*splat}', (req, res) => {
   res.render('pages/errorpage');

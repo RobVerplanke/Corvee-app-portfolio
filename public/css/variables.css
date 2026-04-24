@@ -29,6 +29,8 @@
     --font-default-size: 14px;
     --font-title-normal: 24px;
     --font-title-large: 32px;
+    --font-title-xlarge: 48px;
+    --font-monitor: 16px;
 
     --font-weight-normal: 400;
     --font-weight-medium: 500;

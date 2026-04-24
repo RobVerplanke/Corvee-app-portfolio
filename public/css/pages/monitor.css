@@ -1,0 +1,128 @@
+.page-content {
+  padding: 20px 0;
+}
+
+.page-label{
+  font-size: var(--font-title-normal);
+}
+
+.page-title{
+  font-size: var(--font-title-xlarge);
+}
+
+/* === WEEKS GRID === */
+.weeks-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px;
+  margin: 0 auto 20px auto;
+  padding: 0 30px;
+  max-width: 1600px;
+  font-family: var(--font-quicksand-bold);
+}
+
+.week-block {
+  min-width: 0;
+}
+
+.week-title {
+  font-family: var(--font-quicksand-reg);
+  font-size: var(--font-title-normal);
+  color: var(--text);
+  margin-bottom: 12px;
+  margin-left: 8px;
+  animation: fadeUp 0.4s ease both;
+}
+
+.week-title h2 {
+  padding-left: 10px;
+}
+
+/* === TABLE === */
+.table-wrapper {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  animation: fadeUp 0.4s ease both;
+}
+
+.table-agenda {
+  border-collapse: collapse;
+  font-size: var(--font-monitor);
+  width: 100%;
+  table-layout: fixed;
+}
+
+.table-agenda thead tr {
+  background: var(--accent);
+}
+
+.table-agenda thead th {
+  width: 100%; 
+  padding: 4px 10px;
+  text-align: left;
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.85);
+}
+
+.table-agenda tbody tr {
+  border-bottom: 1px solid var(--border);
+  transition: background 0.15s;
+}
+
+.table-agenda tbody tr:last-child {
+  border-bottom: none;
+}
+
+.table-agenda td {
+  font-family: var(--font-quicksand-reg);
+  padding: 0 15px;
+  vertical-align: middle;
+}
+
+.col-datum  { width: 35%; }
+.col-dagdeel { width: 25%; }
+.col-naam   { width: 40%; }
+
+.td-dag {
+  max-width: 200px;
+  font-weight: var(--font-weight-bold);
+  white-space: nowrap;
+  color: var(--text);
+  border-right: 1px solid var(--border);
+}
+
+.td-naam {
+  color: var(--text);
+  font-weight: var(--font-weight-bold);
+}
+
+.td-dag .datum {
+  display: block;
+  color: var(--text-muted);
+  font-weight: var(--font-weight-bold);
+  margin-top: 1px;
+}
+
+/* === PART OF DAY BADGE === */
+.badge {
+  display: inline-block;
+  padding: 3px 10px;
+  margin: 5px 0;
+  border-radius: var(--radius);
+  font-weight: var(--font-weight-bold);
+}
+
+.badge-ochtend {
+  background: rgba(255, 193, 90, 0.15);
+  color: var(--badge-bg);
+}
+
+.badge-middag {
+  background: rgba(44, 95, 74, 0.1);
+  color: var(--accent);
+}

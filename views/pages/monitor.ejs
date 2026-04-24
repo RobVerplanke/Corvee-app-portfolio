@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/pages/monitor.css">
+    <link rel="stylesheet" href="../css/print-agenda.css">
+    <link rel="stylesheet" href="../css/toolbar.css">
+    <title>Corveerooster</title>
+    <script src="../js/datepicker.js"></script>
+  </head>
+
+  <body>
+    <div class="bg-effects" aria-hidden="true"></div>
+
+    <!-- HEADER -->
+    <header class="page-content">
+      <div class="page-header">
+        
+        <!-- Page title -->
+        <p class="page-label"><%= t.common.pageTitle %></p>
+      </div>
+      
+      <!-- Name of the month -->
+      <h1 class="page-title"><%- data.mostCommonMonth %></h1>
+    </header>
+    
+    <!-- MAIN -->
+    <main class="weeks-grid">
+      
+      <!-- Create a table for each week -->
+      <% data.schedules.forEach((schedule, index) => { %>
+        <div class="week-block">
+
+          <!-- Display corresponding week number above each table -->
+          <h2 class="week-title">
+            <%= t.common.week %> <%= data.weekNumbers[index] %>
+          </h2>
+          <div class="table-wrapper">
+
+            <!-- Agenda tables -->
+            <table class="table-agenda">
+
+              <colgroup>
+                <col class="col-datum">
+                <col class="col-dagdeel">
+                <col class="col-naam">
+              </colgroup>
+
+              <thead>
+                <tr><th><%= t.table.head.date %></th><th><%= t.table.head.partOfDay %></th><th><%= t.table.head.name %></th></tr>
+              </thead>
+
+              <!-- Create rows for each day - Extra span-elements are used for the printed version -->
+              <tbody>
+                <% schedule.forEach(day => { %>
+                  <tr>
+                    <td class="td-dag" rowspan="2"><%= helper.getNameOfDay(day.date) %><span class="datum"><%= helper.formatDate(day.date) %></span></td>
+                    <td><span class="badge badge-ochtend"><%= t.common.morning %></span><span class="dagdeel-print"><%= t.common.morning %></span></td>
+                    <td class="td-naam"><%= day.morning ? helper.capitalizeFirstLetter(day.morning.name) : '-' %></td>
+                  </tr>
+                  <tr>
+                    <td><span class="badge badge-middag"><%= t.common.afternoon %></span><span class="dagdeel-print"><%= t.common.afternoon %></span></td>
+                    <td class="td-naam td-naam-middag"><%= day.afternoon ? helper.capitalizeFirstLetter(day.afternoon.name) : '-' %></td>
+                  </tr>
+                <% }) %>
+              </tbody>
+
+            </table>
+          </div> <!-- table-wrapper -->
+        </div> <!-- week-block -->
+      <% }) %>
+    </main>
+  </body>
+</html>
