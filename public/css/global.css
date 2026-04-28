@@ -28,6 +28,11 @@
 }
 
 /* === LAYOUT === */
+
+html{
+  overflow-y: scroll;
+}
+
 html, body {
   min-height: 100%;
   min-width: 100%;
@@ -57,7 +62,7 @@ footer {
   align-items: center;
   margin: 0 auto;
   max-width: 1000px;
-  padding: 48px 24px 36px;
+  padding: 56px 24px 36px;
 }
 
 .page-label {
