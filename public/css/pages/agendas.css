@@ -57,8 +57,11 @@
 }
 
 .table-agenda tbody tr {
-  border-bottom: 1px solid var(--border);
   transition: background 0.15s;
+}
+
+.table-agenda tbody td {
+  border-bottom: 1px solid var(--border);
 }
 
 .table-agenda tbody tr:last-child {
