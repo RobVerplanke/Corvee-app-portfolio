@@ -92,6 +92,10 @@
   margin-top: 2px;
 }
 
+.highlight-today{
+  background-color: var(--accent-highlight);
+}
+
 /* === PART OF DAY BADGE === */
 .badge {
   display: inline-block;

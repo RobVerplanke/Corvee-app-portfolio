@@ -10,6 +10,10 @@
   font-size: var(--font-title-xlarge);
 }
 
+.highlight-today{
+  background-color: var(--accent-highlight);
+}
+
 /* === WEEKS GRID === */
 .weeks-grid {
   display: grid;

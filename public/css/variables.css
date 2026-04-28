@@ -8,6 +8,7 @@
     --accent: #1C3269;
     --accent-hover: #36529b;
     --accent-light: #E8F5F9;
+    --accent-highlight: rgba(100, 181, 210, 0.20);
     --input-bg: #faf9f7;
     
     --message-error-color: red;

@@ -61,15 +61,21 @@
               <!-- Create rows for each day - Extra span-elements are used for the printed version -->
               <tbody>
                 <% schedule.forEach(day => { %>
-                  <tr>
+                
+                  <!-- Hightlight the current day -->
+                  <% const isToday = new Date(day.date).toDateString() === new Date().toDateString(); %>
+                  
+                  <tr class="<%= isToday ? 'highlight-today' : '' %>">
                     <td class="td-dag" rowspan="2"><%= helper.getNameOfDay(day.date) %><span class="datum"><%= helper.formatDate(day.date) %></span></td>
                     <td><span class="badge badge-ochtend"><%= t.common.morning %></span><span class="dagdeel-print"><%= t.common.morning %></span></td>
                     <td class="td-naam"><%= day.morning ? helper.capitalizeFirstLetter(day.morning.name) : '-' %></td>
                   </tr>
-                  <tr>
+
+                  <tr class="<%= isToday ? 'highlight-today' : '' %>">
                     <td><span class="badge badge-middag"><%= t.common.afternoon %></span><span class="dagdeel-print"><%= t.common.afternoon %></span></td>
                     <td class="td-naam td-naam-middag"><%= day.afternoon ? helper.capitalizeFirstLetter(day.afternoon.name) : '-' %></td>
                   </tr>
+
                 <% }) %>
               </tbody>
 

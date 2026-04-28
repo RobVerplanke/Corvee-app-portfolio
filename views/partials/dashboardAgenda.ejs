@@ -28,9 +28,13 @@
 
               <!-- Create rows for each day - Extra span-elements are used for the printed version -->
               <% schedule.forEach((day, index) => { %>
-                
+              
+              <!-- Hightlight the current day -->
+              <% const isToday = new Date(day.date).toDateString() === new Date().toDateString(); %>
+                  
+              <tr class="<%= isToday ? 'highlight-today' : '' %>">
               <!-- Morning rows -->
-                <tr>
+                <tr class="<%= isToday ? 'highlight-today' : '' %>">
                   <td class="td-dag" rowspan="2"><%= helper.getNameOfDay(day.date) %><span class="datum"><%= helper.formatDate(day.date) %></span></td>
                   <td><span class="badge badge-ochtend"><%= t.common.morning %></span><span class="dagdeel-print"><%= t.common.morning %></span></td>
                   <td class="td-naam">
@@ -46,7 +50,7 @@
                 </tr>
 
                 <!-- Afternoon rows -->
-                <tr>
+                <tr class="<%= isToday ? 'highlight-today' : '' %>">
                   <td><span class="badge badge-middag"><%= t.common.afternoon %></span><span class="dagdeel-print"><%= t.common.afternoon %></span></td>
                   <td class="td-naam td-naam-middag">
                     <select name="<%= helper.toLocalDateString(day.date) %>[afternoon]" id="volunteer-select-<%= index %>-afternoon" class="select-name" onchange="onVolunteerChanged()">
