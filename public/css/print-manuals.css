@@ -14,6 +14,12 @@
     display: none !important;
   }
 
+  #manual-logo{
+    display: block;
+    padding-bottom: 20px;
+    max-width: 150px;
+  }
+
   .manuals-content {
     color: black;
     padding: 5px 5px 5px 5px;

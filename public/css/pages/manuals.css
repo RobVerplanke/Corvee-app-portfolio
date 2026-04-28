@@ -1,3 +1,7 @@
+#manual-logo{
+  display: none;
+}
+
 .manuals-container{
   min-height: 100vh;
   display: flex;
