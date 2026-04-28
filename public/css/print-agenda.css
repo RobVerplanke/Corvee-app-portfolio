@@ -42,6 +42,7 @@
 /* Styling for the printed version of the schedules */
 @media print {
   .navbar,
+  footer,
   .toolbar-btn,
   .print-btn,
   .page-label {
