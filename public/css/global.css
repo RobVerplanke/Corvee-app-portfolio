@@ -34,8 +34,8 @@ html{
 }
 
 html, body {
-  min-height: 100%;
-  max-width: 100%;
+  min-height: 100vh;
+  max-width: 100vw;
   overflow-x: hidden;
 }
 
