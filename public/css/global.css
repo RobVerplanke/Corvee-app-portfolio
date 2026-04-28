@@ -39,6 +39,16 @@ body {
   background-color: var(--bg);
 }
 
+footer {
+  font-family: 'QuicksandRegular';
+  font-size: var(--font-subtext);
+  color: var(--text);
+  display: flex;
+  justify-content: center;
+  width: 100vw;
+  padding: 8px 0;
+}
+
 .page-content {
   position: relative;
   z-index: 1;
