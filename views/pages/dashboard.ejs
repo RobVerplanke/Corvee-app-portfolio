@@ -31,6 +31,10 @@
       <div class="flash-message alert-error" id="flash"><%= t.dashboard.alerts.error %></div>
     <% } %>
 
+    <% if (alerts.errorDouble) { %>
+      <div class="flash-message alert-error" id="flash"><%= t.dashboard.alerts.errorDouble %></div>
+    <% } %>
+
     <% if (alerts.success) { %>
       <div class="flash-message alert" id="flash"><%= t.dashboard.alerts.succes %></div>
     <% } %>

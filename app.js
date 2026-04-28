@@ -209,7 +209,8 @@ app.get('/dashboard', isLoggedIn, async (req, res) => {
     success: req.query.success,
     removed: req.query.removed,
     edited: req.query.edited,
-    error: req.query.error     
+    error: req.query.error    ,
+    errorDouble: req.query.errorDouble
   }
   
   // activePage - function that highlights the corresponding navigation button of the active page
@@ -230,19 +231,23 @@ app.post('/dashboard/save', isLoggedIn, async (req, res) => {
 });
 
 // Admin dashboard page - Add new volunteer after name validation
-app.post('/dashboard/add', isLoggedIn, (req, res) => {
+app.post('/dashboard/add', isLoggedIn, async (req, res) => {
   const formData = req.body;
   const newVolunteer = formData.newVolunteer;
 
-  if (!isValidName(newVolunteer)) { 
+  if (!isValidName(newVolunteer)) { // Regex validation
     res.redirect('/dashboard?error=true'); 
   } else {
-    databaseHandler.addVolunteer(newVolunteer).catch((err) => {
-      if (err.toString().includes("Unique")) {
-        // TODO: Handle error, volunteer already exists
+    try {
+      await databaseHandler.addVolunteer(newVolunteer);
+      res.redirect('/dashboard?success=true');
+    } catch (err) {
+      if (err.name === 'SequelizeUniqueConstraintError') {
+        res.redirect('/dashboard?errorDouble=true');
+      } else {
+        res.redirect('/dashboard?error=true');
       }
-    });
-    res.redirect('/dashboard?success=true');
+    }
   }
 });
 

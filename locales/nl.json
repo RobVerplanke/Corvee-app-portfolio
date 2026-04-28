@@ -9,6 +9,7 @@
   "dashboard": {
     "alerts": {
       "error": "Toevoegen mislukt! Geef een geldige naam op (2 - 20 karakters).",
+      "errorDouble": "Toevoegen mislukt! Deze naam bestaat al.",
       "succes": "Vrijwilliger succesvol toegevoegd!",
       "removed": "Vrijwilliger succesvol verwijderd!",
       "edited": "Agenda succesvol opgeslagen!",
