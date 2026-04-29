@@ -119,6 +119,13 @@
   padding: 0 8px;
 }
 
+@media (max-width: 1000px) {
+  .toolbar-group-agenda,
+  .toolbar-group-volunteers {
+    border-radius: 0;
+  }
+}
+
 @media (max-width: 600px) {
   .toolbar {
     display: flex;
@@ -134,7 +141,6 @@
   .toolbar-group-volunteers{
     align-items: center;
     min-width: 320px;
-    height: 100%;
     padding: 20px 10px 0 10px;
   }
 
