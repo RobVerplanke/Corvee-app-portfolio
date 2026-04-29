@@ -129,6 +129,10 @@
 }
 
 @media (max-width: 600px) {
+  .table-wrapper {
+    min-width: 320px;
+  }
+
   .table-agenda td {
     padding: 8px;
   }

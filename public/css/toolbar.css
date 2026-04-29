@@ -132,7 +132,24 @@
 
   .toolbar-group-agenda,
   .toolbar-group-volunteers{
+    align-items: center;
+    min-width: 320px;
     height: 100%;
-    padding: 20px 0 0 10px;
+    padding: 20px 10px 0 10px;
+  }
+
+  #add-volunteer, #delete-volunteer {
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .toolbar-btn-submit {
+    width: 100%;
+  }
+
+  #dropdown-date {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
   }
 }
