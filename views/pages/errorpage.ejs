@@ -1,26 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/variables.css">
-    <link rel="stylesheet" href="../css/reset.css">
-    <link rel="stylesheet" href="../css/pages/errorpage.css">
-  <title>Error pagina</title>
-</head>
-<body>
+  
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="stylesheet" href="../css/variables.css">
+      <link rel="stylesheet" href="../css/reset.css">
+      <link rel="stylesheet" href="../css/pages/errorpage.css">
+    <title>Error pagina</title>
+  </head>
 
-  <div class="error-container">
-  <div class="error-card">
-    <h1 class="error-badge">404</h1>
-    <h1>Pagina niet gevonden</h1>
-    <p class="error-subtitle">De pagina die je zoekt bestaat niet of is verplaatst. Controleer de URL of ga terug naar de homepage.</p>
-    <div class="error-actions">
-      <button class="btn-primary" onclick="history.back()">← Ga terug</button>
-      <button class="btn-secondary" onclick="window.location.href='/'">Homepage</button>
+  <body>
+    <div class="error-container">
+      <div class="error-card">
+        <h1 class="error-badge">404</h1>
+        <h1><%= t.errorPage.title %></h1>
+        <p class="error-subtitle"><%= t.errorPage.textContent %></p>
+       
+        <div class="error-actions">
+          <button class="btn-primary" onclick="history.back()"><%= t.errorPage.backButton %></button>
+          <button class="btn-secondary" onclick="window.location.href='/'"><%= t.errorPage.homeButton %></button>
+        </div>
+
+      </div>
     </div>
-  </div>
-</div>
+  </body>
 
-</body>
 </html>
