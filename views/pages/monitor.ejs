@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="../css/toolbar.css">
     <title>Corveerooster</title>
     <script src="../js/datepicker.js"></script>
+    <script src="../js/serverHelpers.js"></script>
   </head>
 
   <body>
@@ -18,9 +19,8 @@
 
     <!-- HEADER -->
     <header class="page-content">
+      <!-- Page title -->
       <div class="page-header">
-        
-        <!-- Page title -->
         <p class="page-label"><%= t.common.pageTitle %></p>
       </div>
       
@@ -39,9 +39,9 @@
           <h2 class="week-title">
             <%= t.common.week %> <%= data.weekNumbers[index] %>
           </h2>
-          <div class="table-wrapper">
 
-            <!-- Agenda tables -->
+          <!-- Agenda tables -->
+          <div class="table-wrapper">
             <table class="table-agenda">
 
               <colgroup>
@@ -50,6 +50,7 @@
                 <col class="col-naam">
               </colgroup>
 
+              <!-- Table headers with the labels 'datum', 'dagdeel' and 'naam' -->
               <thead>
                 <tr><th><%= t.table.head.date %></th><th><%= t.table.head.partOfDay %></th><th><%= t.table.head.name %></th></tr>
               </thead>
@@ -61,17 +62,18 @@
                   <!-- Hightlight the current day -->
                   <% const isToday = new Date(day.date).toDateString() === new Date().toDateString(); %>
                   
+                  <!-- Morning -->
                   <tr class="<%= isToday ? 'highlight-today' : '' %>">
                     <td class="td-dag" rowspan="2"><%= helper.getNameOfDay(day.date) %><span class="datum"><%= helper.formatDate(day.date) %></span></td>
                     <td><span class="badge badge-ochtend"><%= t.common.morning %></span><span class="dagdeel-print"><%= t.common.morning %></span></td>
                     <td class="td-naam"><%= day.morning ? helper.capitalizeFirstLetter(day.morning.name) : '-' %></td>
                   </tr>
 
+                  <!-- Afternoon -->
                   <tr class="<%= isToday ? 'highlight-today' : '' %>">
                     <td><span class="badge badge-middag"><%= t.common.afternoon %></span><span class="dagdeel-print"><%= t.common.afternoon %></span></td>
                     <td class="td-naam td-naam-middag"><%= day.afternoon ? helper.capitalizeFirstLetter(day.afternoon.name) : '-' %></td>
                   </tr>
-                  
                 <% }) %>
               </tbody>
 
@@ -79,6 +81,7 @@
           </div> <!-- table-wrapper -->
         </div> <!-- week-block -->
       <% }) %>
+
     </main>
   </body>
 </html>

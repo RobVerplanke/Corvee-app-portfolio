@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+  
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,77 +16,89 @@
     
     <script src="/js/datepicker.js" defer></script>
     <script src="/js/serverHelpers.js" defer></script>
+    
     <script>
+      // 'window.appTexts' is used in the 'DateChanged' function in 'datepicker.js'
+      // Server-side workaround which refers to the corresponding error message in case a new name is added but already exists
       window.appTexts = {
         warning: "<%= t.dashboard.alerts.warning %>"
       };
-      </script>
 
+      // Alert messages disapears after cetrain amount of time and empty the url params to prevent repeating alerts
+      const MESSAGE_TIMEOUT = 3000;
+      setTimeout(() => {
+        document.getElementById('flash')?.remove();
+      }, MESSAGE_TIMEOUT);
+      history.replaceState(null, '', window.location.pathname);
+    </script>
   </head>
 
   <body>
 
-    <!-- A div specially for background color -->
+    <!-- A div specially for the background gradient -->
     <div class="bg-effects" aria-hidden="true"></div>
     
     <!-- NAVIGATION PARTIAL -->
     <%- include ('../partials/navbar.ejs'); %>
 
-    <!-- Alert messages shown while adding, editing, removing a volunteer or changing the agenda -->
+    <!-- Alert messages -->
+    
+    <!-- Error: Name is not valid (only letters, between 2-20 characters) -->
     <% if (alerts.error) { %>
       <div class="flash-message alert-error" id="flash"><%= t.dashboard.alerts.error %></div>
     <% } %>
 
+    <!-- Error: Not allowed to save name that already exists -->
     <% if (alerts.errorDouble) { %>
       <div class="flash-message alert-error" id="flash"><%= t.dashboard.alerts.errorDouble %></div>
     <% } %>
 
+    <!-- Succesfully added new volunteer -->
     <% if (alerts.success) { %>
       <div class="flash-message alert" id="flash"><%= t.dashboard.alerts.succes %></div>
     <% } %>
 
+    <!-- Succesfully removed volunteer -->
     <% if (alerts.removed) { %>
       <div class="flash-message alert" id="flash"><%= t.dashboard.alerts.removed %></div>
     <% } %>
 
+    <!-- Succesfully saved changes in agenda -->
     <% if (alerts.edited) { %>
       <div class="flash-message alert" id="flash"><%= t.dashboard.alerts.edited %></div>
     <% } %>
     
-    <!-- Alert messages disapears after cetrain amount of time and empty the url params to prevent repeating alerts -->
-    <script>
-      setTimeout(() => {
-        document.getElementById('flash')?.remove();
-      }, 5000);
-      history.replaceState(null, '', window.location.pathname);
-    </script>
-
     <!-- HEADER -->
     <header class="page-content">
       <div class="page-header">
-        <p class="page-label"><%= t.common.pageTitle %></p>
+        <!-- Page title -->
+        <p class="page-label"><%= t.common.pageTitle %></p> 
       </div>
+      <!-- Current month, displayed under the page title -->
       <h1 class="page-title"><%- data.currentMonthName %></h1>
     </header>
 
     <!-- Toolbar with volunteer options -->
     <fieldset class="toolbar-group-volunteers">
+      <!-- Fieldset title -->
       <legend><%= t.dashboard.toolbar.volunteers.legend %></legend>
+      <!-- Volunteers toolbar options -->
       <%- include ('../partials/toolbarVolunteers.ejs'); %>
     </fieldset>
 
     <!-- Toolbar with agenda options and an editable agenda -->
     <fieldset class="toolbar-group-agenda">
+      <!-- Fieldset title -->
       <legend><%= t.dashboard.toolbar.agenda.legend %></legend>
+      <!-- Dashboard toolbar options -->
       <%- include ('../partials/toolbarAgenda.ejs'); %>
-
-      <!-- Send selected names to the database after submit -->
+      <!-- Editable agenda -->
       <%- include ('../partials/dashboardAgenda.ejs'); %>
-
     </fieldset>
+
   </body>
 
-  <!-- Footer -->
+  <!-- FOOTER PARTIAL -->
   <%- include ('../partials/footer.ejs') %>
   
 </html>
