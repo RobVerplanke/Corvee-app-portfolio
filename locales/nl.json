@@ -62,5 +62,12 @@
     "backButton": "← Ga terug",
     "homeButton": "Homepage"
   },
+  "loginPage": {
+    "title": "Welkom terug",
+    "subTitle": "Corvee dienst",
+    "password": "Wachtwoord",
+    "incorrectPassword": "Password incorrect.",
+    "loginButtonLabel": "Inloggen"
+  },
   "credits": "Ontwikkeld door Julia & Rob (2026)"
 }
