@@ -21,7 +21,7 @@ body{
 /* === WEEKS GRID === */
 .weeks-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 20px;
   column-gap: 100px;
   margin: 0 auto 20px auto;
@@ -32,6 +32,11 @@ body{
 
 .week-block {
   min-width: 0;
+}
+
+.week-block:nth-child(2),
+.week-block:nth-child(3) {
+  display: none;
 }
 
 .week-title {
