@@ -26,10 +26,11 @@ function getWeekNumber(date) {
 /**
   * Returns the first Monday as Date for the given ISO 8601 format week number. 
   *
-  * @param {int} weekNr - The week number to find the associated Monday for.
+  * @param {number} year - The year to find the associated Monday for.
+  * @param {number} weekNr - The week number to find the associated Monday for.
   */
-function getMondayFromWeekNumber(weekNr) {
-  let firstDay = new Date(new Date(Date.now()).getFullYear(), 0 , 1);
+function getMondayFromWeekNumber(year, weekNr) {
+  let firstDay = new Date(year, 0 , 1);
   if (firstDay.getDay() == 1) {
     // If 1st of Jan is Monday, the monday of given weekNr is a multiple of 7.
     firstDay.setDate(1 + (weekNr - 1) * 7);
@@ -97,9 +98,9 @@ function getMostCommonMonth (schedules) {
 }
 
 // Used in Dashboard view to automaticly add a date and a dropdown menu in case when that data is missing
-function getAutoFilledSchedule(schedules, weekNumbers, DAYS_PER_WEEK) {
+function getAutoFilledSchedule(schedules, year, weekNumbers, DAYS_PER_WEEK) {
   return schedules.map((schedule, index) => {
-    const monday = getMondayFromWeekNumber(weekNumbers[index]);
+    const monday = getMondayFromWeekNumber(year, weekNumbers[index]);
 
     // Check the schedule for missing days and replace it with data
     while (schedule.length < DAYS_PER_WEEK) {

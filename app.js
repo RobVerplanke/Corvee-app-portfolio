@@ -93,15 +93,16 @@ app.get('/', async (req, res) => {
   let schedules = [];
   let weekNumbers = [];
   let currentWeekNumber = getWeekNumber(requestedDate); // Get current week number
+  let year = requestedDate.getFullYear();
  
   // Get a fixed amount of schedules for the upcoming weeks (defined in SCHEDULES_PER_MONTH constant) of the current month
   for (let i=0; i<SCHEDULES_PER_MONTH; i++) {
-    schedules.push(await databaseHandler.getScheduleForWeek(currentWeekNumber+i));
+    schedules.push(await databaseHandler.getScheduleForWeek(year, currentWeekNumber+i));
     weekNumbers.push(currentWeekNumber+i);
   }
 
   // When the schedule is missing data for one or more days, add placeholder content for the missing days
-  let autoFilledSchedule = getAutoFilledSchedule(schedules, weekNumbers, DAYS_PER_WEEK)
+  let autoFilledSchedule = getAutoFilledSchedule(schedules, year, weekNumbers, DAYS_PER_WEEK)
 
   // Determine what is the most common month name in the schedules so it can be uses as page title
   let mostCommonMonth = MONTHS[getMostCommonMonth(schedules)];
@@ -177,16 +178,17 @@ app.get('/dashboard', isLoggedIn, async (req, res) => {
   let schedules = [];
   let weekNumbers = [];
   let currentWeekNumber = getWeekNumber(requestedDate); // Get current week number
+  let year = requestedDate.getFullYear();
   let volunteers = await databaseHandler.getVolunteers(); // Get all volunteer names
   
   // Get a fixed amount of schedules for the upcoming weeks (defined in SCHEDULES_PER_MONTH constant) of the current month
   for (let i=0; i<SCHEDULES_PER_MONTH; i++) {
-    schedules.push(await databaseHandler.getScheduleForWeek(currentWeekNumber+i));
+    schedules.push(await databaseHandler.getScheduleForWeek(year, currentWeekNumber+i));
     weekNumbers.push(currentWeekNumber+i); // Corresponding weeknumbers will be used as table titles
   }
 
   // When the schedule is missing data for one or more days, calculate dates for the missing days
-  let autoFilledSchedule = getAutoFilledSchedule(schedules, weekNumbers, DAYS_PER_WEEK);
+  let autoFilledSchedule = getAutoFilledSchedule(schedules, year, weekNumbers, DAYS_PER_WEEK);
 
   // Determine what is the most common month name in the schedules so it can be used as page title
   let mostCommonMonth = MONTHS[getMostCommonMonth(schedules)];
@@ -299,15 +301,16 @@ app.get('/monitor', async (req, res) => {
   let schedules = [];
   let weekNumbers = [];
   let currentWeekNumber = getWeekNumber(requestedDate); // Get current week number
+  let year = requestedDate.getFullYear();
  
   // Get a fixed amount of schedules for the upcoming weeks (defined in SCHEDULES_PER_MONTH constant) of the current month
   for (let i=0; i<SCHEDULES_PER_MONTH; i++) {
-    schedules.push(await databaseHandler.getScheduleForWeek(currentWeekNumber+i));
+    schedules.push(await databaseHandler.getScheduleForWeek(year, currentWeekNumber+i));
     weekNumbers.push(currentWeekNumber+i);
   }
 
   // When the schedule is missing data for one or more days, add placeholder content for the missing days
-  let autoFilledSchedule = getAutoFilledSchedule(schedules, weekNumbers, DAYS_PER_WEEK)
+  let autoFilledSchedule = getAutoFilledSchedule(schedules, year, weekNumbers, DAYS_PER_WEEK)
 
   // Determine what is the most common month name in the schedules so it can be uses as page title
   let mostCommonMonth = MONTHS[getMostCommonMonth(schedules)];

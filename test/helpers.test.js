@@ -8,9 +8,11 @@ const weekNrTests = [
 ];
 
 const mondayFromWeekNumberTests = [
-  { weekNr: 12, expected: new Date(2026, 2, 16)},
-  { weekNr: 16, expected: new Date(2026, 3, 13)},
-  { weekNr: 5, expected: new Date(2026, 0, 26)}
+  { year: 2026, weekNr: 12, expected: new Date(2026, 2, 16)},
+  { year: 2026, weekNr: 16, expected: new Date(2026, 3, 13)},
+  { year: 2026, weekNr: 5, expected: new Date(2026, 0, 26)},
+  { year: 2025, weekNr: 5, expected: new Date(2025, 0, 27)},
+  { year: 2029, weekNr: 5, expected: new Date(2029, 0, 29)},
 ]
 
 describe('Helper functions', function () {
@@ -23,9 +25,9 @@ describe('Helper functions', function () {
     });
   });
   describe('getMondayFromWeekNumber function', function () {
-    mondayFromWeekNumberTests.forEach(({weekNr, expected}) => {
+    mondayFromWeekNumberTests.forEach(({year, weekNr, expected}) => {
       it(`Correctly associates week number ${weekNr} with ${expected}`, function() {
-        const result = getMondayFromWeekNumber(weekNr);
+        const result = getMondayFromWeekNumber(year, weekNr);
         assert.strictEqual(result.valueOf(), expected.valueOf());
       })
     })

@@ -101,7 +101,7 @@ describe('DatabaseHandler', () => {
     describe(':getScheduleForWeek', () => {
       it('should return the schedule for a given week', async () => {
         const expectedResult = [testSchedule[2], testSchedule[3]];
-        const result = await databaseHandler.getScheduleForWeek(11);
+        const result = await databaseHandler.getScheduleForWeek(2026, 11);
 
         assert.equal(result.length, expectedResult.length);
 

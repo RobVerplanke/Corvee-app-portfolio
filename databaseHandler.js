@@ -79,13 +79,14 @@ class DatabaseHandler {
    * Retrieves the schedule for the requested week using the ISO 8601 format.
    * The result is specifically for display on the agenda page.
    * 
+   * @param {number} - The year for the requested week number.
    * @param {number} - The requested week number.
    *
    * @returns {module:databaseHandler.Day[]} week - The requested week data as an array of Day data.
    */
-  async getScheduleForWeek(weekNr) {
+  async getScheduleForWeek(year, weekNr) {
     // Get the start date from the weekNr.
-    const startDate = getMondayFromWeekNumber(weekNr);
+    const startDate = getMondayFromWeekNumber(year, weekNr);
 
     // Get the end date by adding 5 days to equal Saturday since timezones mess up things.
     const endDate = new Date(startDate.valueOf());
