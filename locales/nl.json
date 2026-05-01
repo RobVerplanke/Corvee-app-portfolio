@@ -1,4 +1,10 @@
 {
+  "databaseHandler": {
+    "updateScheduleEntry": {
+      "logContent": "Both afternoon or morning are undefined",
+      "error": "No schedule entries found for date: "
+    }
+  },
   "table": {
     "head": {
       "date": "Datum",
@@ -37,7 +43,8 @@
     "pageTitle": "Corvee dienst",
     "week": "Week",
     "morning": "Ochtend",
-    "afternoon": "Middag"
+    "afternoon": "Middag",
+    "months": ["Januari", "Februari", "Maart", "April", "Mei", "Juni", "Juli", "Augustus", "September", "Oktober", "November", "December"]
   },
   "buttonLabels": {
     "confirmButtons": {

@@ -5,6 +5,10 @@ import { getWeekNumber, getMondayFromWeekNumber } from './helpers.js'
 import userModel from './models/user.js';
 import volunteerModel from './models/volunteer.js';
 import scheduleModel from './models/schedule.js';
+import { readFileSync } from 'fs';
+
+// Get textual content from the JSON locales file
+const t = JSON.parse(readFileSync('./locales/nl.json', 'utf-8'));
 
 /**
  * @typedef module:databaseHandler.Day
@@ -138,7 +142,7 @@ class DatabaseHandler {
    */
   async updateScheduleEntry(date, changedData) {
     if (changedData.afternoon == undefined && changedData.morning == undefined) {
-      console.log("Both afternoon or morning are undefined");
+      console.log(t.databaseHandler.updateScheduleEntry.logContent);
       return null;
     }
 
@@ -151,7 +155,7 @@ class DatabaseHandler {
 
     if (scheduleEntry.length == 0) {
       // No entries found, throw error so caller can potentially add the record instead.
-      throw new Error("No schedule entries found for date: " + date.toDateString());
+      throw new Error(t.databaseHandler.updateScheduleEntry.error + date.toDateString());
     }
 
     // Set the query options depending on the changedData.

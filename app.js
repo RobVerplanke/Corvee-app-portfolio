@@ -17,7 +17,11 @@ import DatabaseHandler from './databaseHandler.js';
 import { request } from 'http';
 import { readFileSync } from 'fs';
 
-const MONTHS = ['Januari', 'Februari', 'Maart', 'April', 'Mei', 'Juni', 'Juli', 'Augustus', 'September', 'Oktober', 'November', 'December'];
+// Get month names from JSON locales file
+const t = JSON.parse(readFileSync('./locales/nl.json', 'utf-8'));
+
+// Truly constant values
+const MONTHS = t.common.months;
 const SCHEDULES_PER_MONTH = 4; // Amount of schedules displayed per month
 const DAYS_PER_WEEK = 5; // Working days
 const PASSWORD = '321';
@@ -33,26 +37,30 @@ const sequelize = new Sequelize({
   logging: false,
 });
 const databaseHandler = new DatabaseHandler(sequelize);
-const t = JSON.parse(readFileSync('./locales/nl.json', 'utf-8'));
+// const t = JSON.parse(readFileSync('./locales/nl.json', 'utf-8'));
 
 // Synchronize the database so the tables exist in the database
 await databaseHandler.sync();
 
 // Use static files for CSS-styling, scripts and assets (images)
 app.use(express.static(path.join(__dirname, 'public')));
+
 // Read form data (sent from dashboard) correctly
 app.use(express.urlencoded({ extended: true })); 
+
 // Setup session middleware
 app.use(session({
   secret: 'TEMP_SECRET_KEY',
   resave: false,
   saveUninitialized: false,
 }));
-// Use local JSON-file as text content storage
+
+// Use local JSON-file as textual content storage
 app.use((req, res, next) => {
   res.locals.t = t;
   next();
 });
+
 // Make login-status globally available
 app.use((req, res, next) => {
   res.locals.session = req.session;
