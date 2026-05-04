@@ -23,6 +23,7 @@
     "ejs": "^5.0.1",
     "express": "^5.2.1",
     "express-session": "^1.19.0",
+    "qrcode": "^1.5.4",
     "sequelize": "^6.37.8"
   },
   "devDependencies": {
