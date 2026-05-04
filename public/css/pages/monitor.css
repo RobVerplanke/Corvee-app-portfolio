@@ -1,20 +1,39 @@
-body{
-  padding-top: 40px;
-}
-
 .page-content {
-  padding: 20px 0;
+  display: grid;
+  grid-template-columns: 200px 1fr 200px;
+  align-items: center;
+  max-width: 1220px;
+  padding: 16px 0 0 0;
 }
 
-.page-label{
+.page-header {
+  grid-column: 2;
+  text-align: center;
+}
+
+.page-label {
   font-size: var(--font-title-normal);
 }
 
-.page-title{
+.page-title {
   font-size: var(--font-title-xlarge);
 }
 
-.highlight-today{
+.link {
+  grid-column: 3;
+  position: relative;
+  margin-top: 12px;
+}
+
+.link p {
+  position: absolute;
+  font-family: var(--font-quicksand-bold);
+  color: var(--text);
+  top: 120px;
+  left: 10px;
+}
+
+.highlight-today {
   background-color: var(--accent-highlight);
 }
 
@@ -74,13 +93,13 @@ body{
 }
 
 .table-agenda thead th {
-  width: 100%; 
+  width: 100%;
   padding: 4px 10px;
   text-align: left;
   font-weight: var(--font-weight-bold);
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.85);
+  color: rgba(255, 255, 255, 0.85);
 }
 
 .table-agenda tbody tr {
@@ -98,9 +117,15 @@ body{
   vertical-align: middle;
 }
 
-.col-datum  { width: 35%; }
-.col-dagdeel { width: 25%; }
-.col-naam   { width: 40%; }
+.col-datum {
+  width: 35%;
+}
+.col-dagdeel {
+  width: 25%;
+}
+.col-naam {
+  width: 40%;
+}
 
 .td-dag {
   max-width: 200px;

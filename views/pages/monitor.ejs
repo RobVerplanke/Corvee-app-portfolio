@@ -19,13 +19,23 @@
 
     <!-- HEADER -->
     <header class="page-content">
-      <!-- Page title -->
       <div class="page-header">
-        <p class="page-label"><%= t.common.pageTitle %></p>
+        <!-- Page title -->
+        <div>
+          <p class="page-label"><%= t.common.pageTitle %></p>
+        </div>
+
+        <!-- Name of the month -->
+         <div>
+           <h1 class="page-title"><%- data.mostCommonMonth %></h1>
+         </div>
       </div>
       
-      <!-- Name of the month -->
-      <h1 class="page-title"><%- data.mostCommonMonth %></h1>
+      <!-- QR-code -->
+      <div>
+        <%- include ('../partials/monitorAppLink.ejs'); %>
+      </div>
+
     </header>
     
     <!-- MAIN -->
