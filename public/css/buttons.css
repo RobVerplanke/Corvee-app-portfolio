@@ -96,6 +96,10 @@
   display: flex;
 }
 
+#datepicker {
+  font-size: 13px;
+}
+
 @media (max-width: 600px) {
   .toolbar-dropdown {
     position: static;
