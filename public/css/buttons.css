@@ -1,0 +1,120 @@
+.toolbar-item {
+  position: relative;
+}
+
+.toolbar-btn,
+.btn-print {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: var(--toolbar-button-width);
+  height: 36px;
+  padding: 6px 14px;
+  background-color: var(--accent);
+  color: white;
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-size: var(--font-default-size);
+}
+
+.btn-print svg {
+  width: 16px;
+  height: 16px;
+  fill: white;
+}
+
+.toolbar-btn:hover {
+  background-color: var(--accent-hover);
+}
+
+.toolbar-btn-submit {
+  background: var(--input-bg);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: var(--radius);
+  padding: 6px 14px;
+  font-size: var(--font-default-size);
+  cursor: pointer;
+}
+
+.toolbar-btn-submit:hover {
+  background-color: var(--card);
+  color: var(--text);
+}
+
+.toolbar-dropdown {
+  display: none;
+  position: absolute;
+  font-family: var(--font-quicksand-reg);
+  color: var(--text);
+  top: calc(100% + 0.8rem);
+  left: 0;
+  border-radius: var(--radius);
+  z-index: 100;
+}
+
+.toolbar-dropdown.open {
+  display: block;
+}
+
+.toolbar-dropdown input {
+  max-width: var(--toolbar-button-width);
+  padding: 8px 10px;
+  background: var(--card);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-family: var(--font-quicksand-reg);
+  font-size: var(--font-default-size);
+  outline: none;
+  box-shadow: var(--shadow);
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+
+#add-volunteer,
+#delete-volunteer,
+#overview-volunteers {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+}
+
+#add-volunteer input {
+  color: var(--text);
+}
+
+#dropdown-date {
+  align-items: center;
+  gap: 1rem;
+}
+
+#dropdown-date.open {
+  display: flex;
+}
+
+@media (max-width: 600px) {
+  .toolbar-dropdown {
+    position: static;
+    padding-top: 10px;
+  }
+
+  #add-volunteer,
+  #delete-volunteer {
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .toolbar-btn-submit {
+    width: 100%;
+  }
+
+  #dropdown-date {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+  }
+}

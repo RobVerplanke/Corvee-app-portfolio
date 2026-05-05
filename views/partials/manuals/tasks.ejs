@@ -124,12 +124,11 @@
       - Je mag je corveemoment ruilen met een andere deelnemer, spreek dit af met een andere deelnemer, en geef dit door aan de begeleiding.<br><br>
       - Ga naar de begeleiding als je een eigen uitdraai van dit overzicht wilt.
     </b>
-    
   </div>
-
-  <br>
-
+  
   <!-- Print button -->
-  <%- include ('../elements/btnPrint.ejs', {btnClass: 'toolbar-btn'}); %>
+  <div class="print-button-container">
+    <%- include ('../elements/btnPrint.ejs', {btnClass: 'btn-print', onClick: 'window.print()'}); %>
+  </div>
 
 </div>

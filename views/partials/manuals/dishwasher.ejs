@@ -12,9 +12,9 @@
     <li>Druk op start.</li>
   </ul>
 
-  <br>
-
   <!-- Print button -->
-  <%- include ('../elements/btnPrint.ejs', {btnClass: 'toolbar-btn'}); %>
+  <div class="print-button-container">
+    <%- include ('../elements/btnPrint.ejs', {btnClass: 'btn-print', onClick: 'window.print()'}); %>
+  </div>
 
 </div>

@@ -3,34 +3,16 @@
   display: none !important;
 }
 
-/* === PRINT BUTTON === */
-.btn-print {
-  gap: 8px;
-  width: var(--toolbar-button-width);
-  padding: 0.4rem 0.6rem;
-  background-color: var(--accent);
-  color: white;
-  border: none;
-  border-radius: var(--radius);
-  cursor: pointer;
-  font-size: var(--font-default-size);
-}
-
-.btn-print:hover, .btn-add-volunteer:hover { 
-  cursor: pointer;
-  background: var(--accent-hover); 
-}
-
-.btn-print svg {
-  width: 16px;
-  height: 16px;
-  fill: white;
-}
-
 /* === KEYFRAMES === */
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(16px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* === PAGINA INSTELLINGEN === */
@@ -44,8 +26,9 @@
   .navbar,
   footer,
   .toolbar-btn,
-  .print-btn,
-  .page-label {
+  .btn-print,
+  .page-label,
+  .print-button-container {
     display: none !important;
   }
 
@@ -62,7 +45,7 @@
     font-size: var(--font-default-size);
   }
 
-  .td-naam-middag, 
+  .td-naam-middag,
   .td-dag,
   .datum {
     display: table-cell !important;
@@ -141,15 +124,15 @@
   }
 
   /* === RIJKLEUREN PER DAG === */
-  .table-agenda tbody tr:nth-child(4n+1),
-  .table-agenda tbody tr:nth-child(4n+2) {
+  .table-agenda tbody tr:nth-child(4n + 1),
+  .table-agenda tbody tr:nth-child(4n + 2) {
     background: #dff0f7 !important;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
   }
 
-  .table-agenda tbody tr:nth-child(4n+3),
-  .table-agenda tbody tr:nth-child(4n+4) {
+  .table-agenda tbody tr:nth-child(4n + 3),
+  .table-agenda tbody tr:nth-child(4n + 4) {
     background: #ffffff !important;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;

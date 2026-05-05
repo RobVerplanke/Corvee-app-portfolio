@@ -1,15 +1,15 @@
-#manual-logo{
+#manual-logo {
   display: none;
 }
 
-.manuals-container{
+.manuals-container {
   min-height: 100vh;
   display: flex;
   flex-direction: row;
   font-family: var(--font-quicksand-reg);
 }
 
-.manuals-index{
+.manuals-index {
   color: var(--text);
   flex: 1;
   width: 100%;
@@ -17,12 +17,12 @@
   background-color: inherit;
 }
 
-.manuals-index a{
+.manuals-index a {
   display: block;
   text-decoration: none;
 }
 
-.manuals-content{
+.manuals-content {
   flex: 3;
   display: flex;
   flex-direction: column;
@@ -33,12 +33,17 @@
   background-color: var(--accent-light);
 }
 
-.manuals-subtitle{
+.manuals-subtitle {
   margin-top: 30px;
   margin-bottom: 10px;
 }
 
-.manuals-link{
+.manuals-list,
+.manuals-help {
+  margin-bottom: 20px;
+}
+
+.manuals-link {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -48,7 +53,7 @@
   padding: 8px 10px 8px 16px;
 }
 
-.manuals-link:hover{
+.manuals-link:hover {
   color: var(--text);
   background-color: var(--accent-light);
 }
@@ -58,31 +63,30 @@
   background-color: var(--accent-hover);
 }
 
-.link-symbol{
+.link-symbol {
   display: block;
 }
 
 /* When app is viewed on smaller resolution */
 @media (max-width: 960px) {
-
   /* Move navigation to the top */
   .manuals-container {
     flex-direction: column;
   }
 
-  .manuals-index{
+  .manuals-index {
     flex: none;
     border-bottom: solid 1px var(--border);
     border-right: none;
-}
+  }
 
   /* Hide arrows next to each link */
-  .link-symbol{
+  .link-symbol {
     display: none;
   }
 }
 
-.manuals-help{
+.manuals-help {
   border: 2px solid var(--accent-hover);
   padding: 15px;
   margin-top: 40px;
