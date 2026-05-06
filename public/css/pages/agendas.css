@@ -118,6 +118,22 @@
   color: var(--accent);
 }
 
+select.select-closed {
+  color: var(--message-error-color);
+}
+
+select.select-closed option {
+  color: var(--text);
+}
+
+select.select-closed option.select-closed {
+  color: var(--message-error-color);
+}
+
+select.select-closed optgroup {
+  color: var(--text);
+}
+
 .print-button-container {
   display: flex;
   justify-content: center;
