@@ -3,6 +3,7 @@
 }
 
 .toolbar-btn,
+.toolbar-single-btn,
 .btn-print {
   display: flex;
   align-items: center;
@@ -18,13 +19,15 @@
   font-size: var(--font-default-size);
 }
 
-.btn-print svg {
+.btn-print svg,
+.toolbar-single-btn svg {
   width: 16px;
   height: 16px;
   fill: white;
 }
 
-.toolbar-btn:hover {
+.toolbar-btn:hover,
+.toolbar-single-btn:hover {
   background-color: var(--accent-hover);
 }
 
