@@ -1,7 +1,7 @@
 /** @module databaseHandler **/ 
 import { Op } from 'sequelize';
 import crypto from 'crypto';
-import { getWeekNumber, getMondayFromWeekNumber } from './helpers.js'
+import { getMondayFromWeekNumber } from './helpers.js'
 import userModel from './models/user.js';
 import volunteerModel from './models/volunteer.js';
 import scheduleModel from './models/schedule.js';
@@ -87,17 +87,20 @@ class DatabaseHandler {
   async getScheduleForWeek(year, weekNr) {
     // Get the start date from the weekNr.
     const startDate = getMondayFromWeekNumber(year, weekNr);
+    const msStartDate = startDate.getTime();
 
-    // Get the end date by adding 5 days to equal Saturday since timezones mess up things.
-    const endDate = new Date(startDate.valueOf());
-    endDate.setDate(endDate.getDate() + 5);
+    // Get the end date by adding 4 days in ms.
+    const endDate = new Date(msStartDate + 1000 * 60 * 60 * 24 * 4);
     const retrievedSchedule = await this.models.Schedule.findAll({
       where: {
         date: {
           [Op.gte]: startDate,
           [Op.lte]: endDate,
         }
-      }
+      },
+      order: [
+        ['date', 'ASC']
+      ]
     });
     
     let week = [];
@@ -164,6 +167,49 @@ class DatabaseHandler {
     queryOptions.morningId = changedData.morning == '' ? null : changedData.morning;
     queryOptions.afternoonId = changedData.afternoon == '' ? null : changedData.afternoon;
     return this.models.Schedule.update(queryOptions, { where: { date: date }});
+  } 
+
+  /**
+   * Copies the four weeks before a given date to the date's week and forwards for easy repeating.
+   *
+   * @param {Date} date - The date to copy the last four weeks to.
+   * @param {boolean} overwrite - False by default, if set it'll overwrite existing entries.
+   *
+   * @returns {Promise<boolean>} - Whether or not the action was successful.
+   */
+  async copyPreviousScheduleSet(date, overwrite = false) {
+    // Prepare calculations in ms for readability.
+    const ONE_DAY = 1000 * 60 * 60 * 24;
+    const FOUR_WEEKS = ONE_DAY * 28;
+
+    // Get the date of four weeks back (so date - 28 days) in milliseconds to avoid Daylight savings.
+    const fourWeeksBack = new Date(date);
+    const msFourWeeksBack = fourWeeksBack.getTime() - FOUR_WEEKS;
+
+    // Get the day before the date to copy to.
+    const endDate = new Date(date);
+    const msEndDate = endDate.getTime() - ONE_DAY;
+
+    // Get the data to copy.
+    const schedule = await this.getScheduleForDateRange(new Date(msFourWeeksBack), new Date(msEndDate));
+    for (const entry in schedule) {
+      // Move each entry forwards by 28 days.
+      const newDate = new Date(schedule[entry].date);
+      const msNewDate = newDate.getTime() + FOUR_WEEKS;
+
+      // Add the new entry to the database.
+      await this.addScheduleEntry(new Date(msNewDate), { morning: schedule[entry].morningId, afternoon: schedule[entry].afternoonId }).catch((err) => {
+        console.log(err);
+        if (overwrite) {
+          // TODO: Handle overwriting failed attemps.
+        } else {
+          // Ignore failed attempt.
+        }
+      });
+    }
+
+    // TODO: Check how useful returning success actually is and when is it unsuccessful.
+    return true;
   }
   
   /**

@@ -1,6 +1,6 @@
 import assert from 'node:assert';
 import crypto from 'crypto';
-import Sequelize from 'sequelize';
+import { Op, Sequelize } from 'sequelize';
 import DatabaseHandler from '../databaseHandler.js';
 import Sqlite3 from '@vscode/sqlite3';
 Sqlite3.verbose();
@@ -18,6 +18,7 @@ const testIdMorning = 2;
 const testIdAfternoon = 3;
 const testName = 'Julia';
 const testDate = new Date('2026-03-03');
+const testCopyDate = new Date('2026-03-31');
 const testNewName = 'Koos';
 const testPassword = 'Password';
 const testSalt = 'salty';
@@ -39,6 +40,36 @@ let testSchedule = [
     date: new Date('2026-04-05'),
   },
 ];
+
+let testCopyResult = [
+  {
+    // The first date should equal the date to copy forwards to
+    date: testCopyDate,
+    morningId: testIdMorning,
+    afternoonId: testIdAfternoon
+  },
+  {
+    date: new Date('2026-04-01'),
+    morningId: testIdMorning,
+    afternoonId: testIdAfternoon
+  },
+  {
+    // 5th of April should still exist after copying due to being present before copying.
+    date: new Date('2026-04-05'),
+    morningId: testIdMorning,
+    afternoonId: testIdAfternoon
+  },
+  {
+    date: new Date('2026-04-06'),
+    morningId: testIdMorning,
+    afternoonId: testIdAfternoon
+  },
+  {
+    date: new Date('2026-04-07'),
+    morningId: testIdMorning,
+    afternoonId: testIdAfternoon
+  },
+]
 
 let testVolunteers = [
   {
@@ -69,9 +100,6 @@ describe('DatabaseHandler', () => {
 
   beforeEach(async () => {
     // Clean the used models before each test.
-//    await databaseHandler.models.Schedule.destroy({ truncate: true, restartIdentity: true });
-//    await databaseHandler.models.Volunteer.destroy({ truncate: true, restartIdentity:true });
-//    await databaseHandler.models.User.destroy({ truncate: true, restartIdentity: true });
     await sequelize.truncate();
     await sequelize.query('DELETE FROM sqlite_sequence');
 
@@ -130,6 +158,37 @@ describe('DatabaseHandler', () => {
 
         assert.equal(result[0].morningId, testId);
       });
+    });
+    
+    describe(':copyPreviousScheduleSet', () => {
+      it('should copy the previous four weeks forwards to the given date and onwards.', async () => {
+        // Prepare the end date for later checking, 28 days forward = 4 weeks
+        const endDate = new Date(testCopyDate);
+        const msEndDate = endDate.getTime() + (1000 * 60 * 60 * 24 * 28);
+        
+        // Call the function for testing and check the db for results
+        const callResult = await databaseHandler.copyPreviousScheduleSet(testCopyDate);
+        const dbResult = await databaseHandler.models.Schedule.findAll({ 
+          where: { 
+            date: {
+              [Op.gte]: testCopyDate,
+              [Op.lte]: new Date(msEndDate),
+            },
+          },
+          order: [
+            ['date', 'ASC']
+          ]
+        });
+        // Check if every entry matches the expected results
+        assert.equal(dbResult.length, testCopyResult.length);
+        for (const n in dbResult) {
+          assert.equal(dbResult[n].date.valueOf(), testCopyResult[n].date.valueOf());
+          assert.equal(dbResult[n].morningId, testCopyResult[n].morningId);
+          assert.equal(dbResult[n].afternoonId, testCopyResult[n].afternoonId);
+        }
+        // Check if the tested function also returns that it succeeded
+        assert.equal(callResult, true);
+      })
     });
   });
   
