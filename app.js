@@ -300,6 +300,13 @@ app.post("/dashboard/delete", isLoggedIn, (req, res) => {
   res.redirect("/dashboard?removed=true");
 });
 
+app.post("/dashboard/copy", async (req, res) => {
+  const copyDate = req.body.copyDate;
+
+  await databaseHandler.copyPreviousScheduleSet(new Date(parseInt(copyDate)));
+  res.redirect("/dashboard");
+})
+
 // Instructions manual page
 app.get("/manuals", (req, res) => {
   res.render("pages/manuals", { activePage: "manuals", activeManual: "tasks" });

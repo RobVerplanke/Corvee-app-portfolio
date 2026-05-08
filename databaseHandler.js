@@ -57,6 +57,21 @@ class DatabaseHandler {
   }
 
   /**
+   * Retrieves a specific schedule entry for the requested date.
+   *
+   * @param {Date} date - The date to retrieve the entry of, make sure this is 00:00 time!
+   *
+   * @returns {Promise<Model>} The promise made by sequelize which will resolve in the found entry.
+   */
+  async getScheduleEntry(date) {
+    return this.models.Schedule.findOne({
+      where: {
+        date: date
+      }
+    });
+  }
+
+  /**
    * Retrieves the schedule for the requested date range.
    *
    * @param {Date} startDate - The start of the data range (inclusive)
@@ -197,17 +212,39 @@ class DatabaseHandler {
       const newDate = new Date(schedule[entry].date);
       const msNewDate = newDate.getTime() + FOUR_WEEKS;
 
-      // Add the new entry to the database.
-      await this.addScheduleEntry(new Date(msNewDate), { morning: schedule[entry].morningId, afternoon: schedule[entry].afternoonId }).catch((err) => {
-        console.log(err);
-        if (overwrite) {
-          // TODO: Handle overwriting failed attemps.
-        } else {
-          // Ignore failed attempt.
-        }
-      });
-    }
+      // If overwrite, try updating each entry and if non-existent, add it.
+      if (overwrite) {
+        await this.updateScheduleEntry(new Date(msNewDate), { morning: schedule[entry].morningId, afternoon: schedule[entry].afternoonId }).catch(async (err) => {
+          await this.addScheduleEntry(new Date(msNewDate), { morning: schedule[entry].morningId, afternoon: schedule[entry].afternoonId });
+        });
+      }
+      // If not overwrite, get each entry, update empty fields and if non-existent, add it.
+      else {
+        const newEntry = await this.getScheduleEntry(new Date(msNewDate));
 
+        console.log(newEntry);
+        // If the entry exists, update information if empty only.
+        if (newEntry) {
+          // If neither morning or afternoon was filled in the previous data, ignore this entry.
+          if (!schedule[entry].morningId && !schedule[entry].afternoonId) {
+            continue;
+          }
+
+          // Only update empty entries.
+          let changedData = {};
+          if (!newEntry.morningId) {
+          changedData.morning = schedule[entry].morningId;
+          }
+          if (!newEntry.afternoonId) {
+            changedData.afternoon = schedule[entry].afternoonId;
+          }
+          await this.updateScheduleEntry(new Date(msNewDate), changedData);
+        } else {
+          // If it doesn't exist, add the entry.
+          await this.addScheduleEntry(new Date(msNewDate), { morning: schedule[entry].morningId, afternoon: schedule[entry].afternoonId });
+        }
+      }
+    }
     // TODO: Check how useful returning success actually is and when is it unsuccessful.
     return true;
   }

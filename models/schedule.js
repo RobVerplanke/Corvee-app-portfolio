@@ -5,6 +5,7 @@ export default (sequelize) => {
   {
     date: {
       type: DataTypes.DATE,
+      unique: true,
       allowNull: false,
     },
   },

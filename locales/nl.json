@@ -78,7 +78,8 @@
     "calendar": "Kalender",
     "overview": "Overzicht",
     "add": "Toevoegen",
-    "delete": "Verwijderen"
+    "delete": "Verwijderen",
+    "copy": "Kopieer oude"
   },
   "errorPage": {
     "title": "Pagina niet gevonden",
