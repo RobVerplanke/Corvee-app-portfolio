@@ -1,14 +1,14 @@
-/** @module databaseHandler **/ 
-import { Op } from 'sequelize';
-import crypto from 'crypto';
-import { getMondayFromWeekNumber } from './helpers.js'
-import userModel from './models/user.js';
-import volunteerModel from './models/volunteer.js';
-import scheduleModel from './models/schedule.js';
-import { readFileSync } from 'fs';
+/** @module databaseHandler **/
+import { Op } from "sequelize";
+import crypto from "crypto";
+import { getMondayFromWeekNumber } from "./helpers.js";
+import userModel from "./models/user.js";
+import volunteerModel from "./models/volunteer.js";
+import scheduleModel from "./models/schedule.js";
+import { readFileSync } from "fs";
 
 // Get textual content from the JSON locales file
-const t = JSON.parse(readFileSync('./locales/nl.json', 'utf-8'));
+const t = JSON.parse(readFileSync("./locales/nl.json", "utf-8"));
 
 /**
  * @typedef module:databaseHandler.Day
@@ -18,12 +18,12 @@ const t = JSON.parse(readFileSync('./locales/nl.json', 'utf-8'));
  * @property {Model} afternoon The instance of the volunteer for the afternoon shift.
  */
 
-/** 
+/**
  * Wraps around the sequelize instance to provide a layer between the app and the database.
  * @class DatabaseHandler
  * @type {Object}
  *
- * @param {Sequelize} sequelize - The instance of sequelize to wrap around. 
+ * @param {Sequelize} sequelize - The instance of sequelize to wrap around.
  * @property {Sequelize} sequelize The instance of sequelize passed in the constructor.
  * @property {Object} models An object containing the various registered models.
  * @property {Model} models.User The User model.
@@ -42,8 +42,8 @@ class DatabaseHandler {
     };
 
     // Set up relations.
-    this.models.Schedule.belongsTo(this.models.Volunteer, { as: 'morning'});
-    this.models.Schedule.belongsTo(this.models.Volunteer, { as: 'afternoon'});
+    this.models.Schedule.belongsTo(this.models.Volunteer, { as: "morning" });
+    this.models.Schedule.belongsTo(this.models.Volunteer, { as: "afternoon" });
   }
 
   /**
@@ -66,8 +66,8 @@ class DatabaseHandler {
   async getScheduleEntry(date) {
     return this.models.Schedule.findOne({
       where: {
-        date: date
-      }
+        date: date,
+      },
     });
   }
 
@@ -80,12 +80,12 @@ class DatabaseHandler {
    * @returns {Promise<Model[]>} The promise made by sequelize which will resolve to the found array of data.
    */
   async getScheduleForDateRange(startDate, endDate) {
-    return this.models.Schedule.findAll({ 
+    return this.models.Schedule.findAll({
       where: {
         date: {
           [Op.gte]: startDate,
           [Op.lte]: endDate,
-        }
+        },
       },
     });
   }
@@ -93,7 +93,7 @@ class DatabaseHandler {
   /**
    * Retrieves the schedule for the requested week using the ISO 8601 format.
    * The result is specifically for display on the agenda page.
-   * 
+   *
    * @param {number} - The year for the requested week number.
    * @param {number} - The requested week number.
    *
@@ -111,13 +111,11 @@ class DatabaseHandler {
         date: {
           [Op.gte]: startDate,
           [Op.lte]: endDate,
-        }
+        },
       },
-      order: [
-        ['date', 'ASC']
-      ]
+      order: [["date", "ASC"]],
     });
-    
+
     let week = [];
 
     for (var i = 0; i < retrievedSchedule.length; i++) {
@@ -142,10 +140,20 @@ class DatabaseHandler {
    * @returns {Promise<Model>} - The promise made by sequelize with the newly created object on success.
    */
   async addScheduleEntry(date, volunteerData) {
-    const morning = volunteerData.morning && volunteerData.morning != '' ? volunteerData.morning : null;
-    const afternoon = volunteerData.afternoon && volunteerData.afternoon != '' ? volunteerData.afternoon : null;
+    const morning =
+      volunteerData.morning && volunteerData.morning != ""
+        ? volunteerData.morning
+        : null;
+    const afternoon =
+      volunteerData.afternoon && volunteerData.afternoon != ""
+        ? volunteerData.afternoon
+        : null;
 
-    return this.models.Schedule.create({ date: date, morningId: morning, afternoonId: afternoon });
+    return this.models.Schedule.create({
+      date: date,
+      morningId: morning,
+      afternoonId: afternoon,
+    });
   }
 
   /**
@@ -160,7 +168,10 @@ class DatabaseHandler {
    * @throws Will throw an error when a schedule entry does not exist for the given date.
    */
   async updateScheduleEntry(date, changedData) {
-    if (changedData.afternoon == undefined && changedData.morning == undefined) {
+    if (
+      changedData.afternoon == undefined &&
+      changedData.morning == undefined
+    ) {
       console.log(t.databaseHandler.updateScheduleEntry.logContent);
       return null;
     }
@@ -168,21 +179,25 @@ class DatabaseHandler {
     // Find whether a record with the date already exists.
     const scheduleEntry = await this.models.Schedule.findAll({
       where: {
-        date: date
-      }
+        date: date,
+      },
     });
 
     if (scheduleEntry.length == 0) {
       // No entries found, throw error so caller can potentially add the record instead.
-      throw new Error(t.databaseHandler.updateScheduleEntry.error + date.toDateString());
+      throw new Error(
+        t.databaseHandler.updateScheduleEntry.error + date.toDateString(),
+      );
     }
 
     // Set the query options depending on the changedData.
     let queryOptions = {};
-    queryOptions.morningId = changedData.morning == '' ? null : changedData.morning;
-    queryOptions.afternoonId = changedData.afternoon == '' ? null : changedData.afternoon;
-    return this.models.Schedule.update(queryOptions, { where: { date: date }});
-  } 
+    queryOptions.morningId =
+      changedData.morning == "" ? null : changedData.morning;
+    queryOptions.afternoonId =
+      changedData.afternoon == "" ? null : changedData.afternoon;
+    return this.models.Schedule.update(queryOptions, { where: { date: date } });
+  }
 
   /**
    * Copies the four weeks before a given date to the date's week and forwards for easy repeating.
@@ -206,7 +221,10 @@ class DatabaseHandler {
     const msEndDate = endDate.getTime() - ONE_DAY;
 
     // Get the data to copy.
-    const schedule = await this.getScheduleForDateRange(new Date(msFourWeeksBack), new Date(msEndDate));
+    const schedule = await this.getScheduleForDateRange(
+      new Date(msFourWeeksBack),
+      new Date(msEndDate),
+    );
     for (const entry in schedule) {
       // Move each entry forwards by 28 days.
       const newDate = new Date(schedule[entry].date);
@@ -214,15 +232,20 @@ class DatabaseHandler {
 
       // If overwrite, try updating each entry and if non-existent, add it.
       if (overwrite) {
-        await this.updateScheduleEntry(new Date(msNewDate), { morning: schedule[entry].morningId, afternoon: schedule[entry].afternoonId }).catch(async (err) => {
-          await this.addScheduleEntry(new Date(msNewDate), { morning: schedule[entry].morningId, afternoon: schedule[entry].afternoonId });
+        await this.updateScheduleEntry(new Date(msNewDate), {
+          morning: schedule[entry].morningId,
+          afternoon: schedule[entry].afternoonId,
+        }).catch(async (err) => {
+          await this.addScheduleEntry(new Date(msNewDate), {
+            morning: schedule[entry].morningId,
+            afternoon: schedule[entry].afternoonId,
+          });
         });
       }
       // If not overwrite, get each entry, update empty fields and if non-existent, add it.
       else {
         const newEntry = await this.getScheduleEntry(new Date(msNewDate));
 
-        console.log(newEntry);
         // If the entry exists, update information if empty only.
         if (newEntry) {
           // If neither morning or afternoon was filled in the previous data, ignore this entry.
@@ -233,7 +256,7 @@ class DatabaseHandler {
           // Only update empty entries.
           let changedData = {};
           if (!newEntry.morningId) {
-          changedData.morning = schedule[entry].morningId;
+            changedData.morning = schedule[entry].morningId;
           }
           if (!newEntry.afternoonId) {
             changedData.afternoon = schedule[entry].afternoonId;
@@ -241,14 +264,17 @@ class DatabaseHandler {
           await this.updateScheduleEntry(new Date(msNewDate), changedData);
         } else {
           // If it doesn't exist, add the entry.
-          await this.addScheduleEntry(new Date(msNewDate), { morning: schedule[entry].morningId, afternoon: schedule[entry].afternoonId });
+          await this.addScheduleEntry(new Date(msNewDate), {
+            morning: schedule[entry].morningId,
+            afternoon: schedule[entry].afternoonId,
+          });
         }
       }
     }
     // TODO: Check how useful returning success actually is and when is it unsuccessful.
     return true;
   }
-  
+
   /**
    * Retrieves all volunteers in the database table.
    *
@@ -274,7 +300,7 @@ class DatabaseHandler {
    * Removes a volunteer.
    *
    * @param {number} id - The id of the volunteer to be removed.
-   * 
+   *
    * @returns {Promise<number>} - The promise made by sequelize with the number of affected rows as result.
    */
   async removeVolunteer(id) {
@@ -286,11 +312,14 @@ class DatabaseHandler {
    *
    * @param {number} id - The id of the volunteer to be renamed.
    * @param {string} new_name - The new name for the volunteer.
-   * 
+   *
    * @returns {Promise<number[]>} - The promise made by sequelize with the number of affected rows as result.
    */
   async updateVolunteer(id, new_name) {
-    return this.models.Volunteer.update({ name: new_name }, { where: { id: id }});
+    return this.models.Volunteer.update(
+      { name: new_name },
+      { where: { id: id } },
+    );
   }
 
   /**
@@ -303,7 +332,9 @@ class DatabaseHandler {
    */
   async verifyLogin(username, password) {
     // Find the details of the requested user.
-    const user = await this.models.User.findOne({ where: { username: username }});
+    const user = await this.models.User.findOne({
+      where: { username: username },
+    });
 
     // If user doesn't exist, login is invalid.
     if (user === null) {
@@ -311,8 +342,10 @@ class DatabaseHandler {
     }
 
     // Hash the given password with the found salt and compare it against the stored hash.
-    const hash = crypto.createHash('sha256');
-    const passwordHash = hash.update(password + user.passwordSalt).digest('base64');
+    const hash = crypto.createHash("sha256");
+    const passwordHash = hash
+      .update(password + user.passwordSalt)
+      .digest("base64");
 
     return user.passwordHash == passwordHash;
   }

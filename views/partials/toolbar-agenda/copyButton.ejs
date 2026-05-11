@@ -1,7 +1,20 @@
 <div class="toolbar-item">
-  <form onsubmit="return !window.volunteerChanged || confirm(`<%= t.dashboard.alerts.warning %>`)" id="copy-calendar" action="/dashboard/copy" method="POST">
-    <input type="hidden" name="copyDate" value="<%= data.schedules[0][0].date.getTime() %>">
-    <button type="submit">
+  <form
+    onsubmit="
+      return (
+        !window.volunteerChanged || confirm(`<%= t.dashboard.alerts.warning %>`)
+      );
+    "
+    id="copy-calendar"
+    action="/dashboard/copy"
+    method="POST"
+  >
+    <input
+      type="hidden"
+      name="copyDate"
+      value="<%= data.schedules[0][0].date.getTime() %>"
+    />
+    <button type="submit" class="toolbar-single-btn">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         height="24px"
@@ -10,9 +23,10 @@
         fill="#e3e3e3"
       >
         <path
-          d="M840-680v480q0 33-23.5 56.5T760-120H200q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h480l160 160Zm-80 34L646-760H200v560h560v-446ZM565-275q35-35 35-85t-35-85q-35-35-85-35t-85 35q-35 35-35 85t35 85q35 35 85 35t85-35ZM240-560h360v-160H240v160Zm-40-86v446-560 114Z"
+          d="M120-220v-80h80v80h-80Zm0-140v-80h80v80h-80Zm0-140v-80h80v80h-80ZM260-80v-80h80v80h-80Zm100-160q-33 0-56.5-23.5T280-320v-480q0-33 23.5-56.5T360-880h360q33 0 56.5 23.5T800-800v480q0 33-23.5 56.5T720-240H360Zm0-80h360v-480H360v480Zm40 240v-80h80v80h-80Zm-200 0q-33 0-56.5-23.5T120-160h80v80Zm340 0v-80h80q0 33-23.5 56.5T540-80ZM120-640q0-33 23.5-56.5T200-720v80h-80Zm420 80Z"
         />
       </svg>
+
       <%= t.buttonLabels.copy %>
     </button>
   </form>

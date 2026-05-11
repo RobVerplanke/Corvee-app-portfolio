@@ -13,13 +13,13 @@ body {
   font-family: var(--font-quicksand-reg);
 }
 
-.add-volunteer{
+.add-volunteer {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.add-volunteer input::placeholder{
+.add-volunteer input::placeholder {
   color: var(--text-muted);
 }
 
@@ -42,7 +42,8 @@ summary {
   box-shadow: var(--shadow);
 }
 
-.alert, .alert-error {
+.alert,
+.alert-error {
   position: absolute;
   display: flex;
   justify-content: center;
@@ -55,14 +56,16 @@ summary {
 }
 
 .alert {
-  background-color: var(--message-confirm-color);
+  background-color: var(--confirm-color);
 }
 
 .alert-error {
-  background-color: var(--message-error-color);
+  background-color: var(--error-color);
 }
 
-.select-name, .overview-names, .remove-name {
+.select-name,
+.overview-names,
+.remove-name {
   width: var(--toolbar-button-width);
   padding: 8px 14px;
   background: var(--input-bg);
@@ -79,11 +82,11 @@ summary {
   background-repeat: no-repeat;
   background-position: right 12px center;
   background-size: 16px;
-  padding-right: 36px; 
+  padding-right: 36px;
 }
 
 @media (max-width: 600px) {
-.select-name {
-  max-width: 80px;
-}
+  .select-name {
+    max-width: 80px;
+  }
 }

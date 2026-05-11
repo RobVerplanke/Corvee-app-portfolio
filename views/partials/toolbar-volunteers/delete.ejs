@@ -7,7 +7,7 @@
       <form onsubmit="return !window.volunteerChanged || confirm(`<%= t.dashboard.alerts.warning %>`)" id="delete-volunteer" action="/dashboard/delete" method="POST">
         <select class="remove-name" name="volunteerId">
           <option value=""><%= t.dashboard.common.select %></option>
-            <% data.volunteers.slice().sort((a, b) => a.name.localeCompare(b.name)).forEach(volunteer => { %>
+            <% data.volunteers.filter( volunteer => volunteer.name.toLowerCase() !== 'gesloten').slice().sort((a, b) => a.name.localeCompare(b.name)).forEach(volunteer => { %>
             <option value="<%= volunteer.id %>"><%= helper.capitalizeFirstLetter(volunteer.name) %></option>
           <% }) %>
         </select>

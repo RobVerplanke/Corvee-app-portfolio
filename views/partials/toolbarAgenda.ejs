@@ -3,11 +3,11 @@
   <!-- Calendar -->
   <%- include ('../partials/toolbar-agenda/calendar.ejs'); %>
   
-  <!-- Save changes on dashboard -->
-  <%- include ('../partials/toolbar-agenda/saveChanges.ejs'); %>
-  
   <!-- Copy last four weeks using button -->
   <%- include ('../partials/toolbar-agenda/copyButton.ejs'); %>
+
+  <!-- Save changes on dashboard -->
+  <%- include ('../partials/toolbar-agenda/saveChanges.ejs'); %>
 
   <!-- Print button which prints the agenda page-->
   <%- include ('./elements/btnPrint.ejs', {btnClass: 'btn-print', onClick: 'printPage()'}); %>

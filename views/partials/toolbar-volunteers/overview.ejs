@@ -10,7 +10,7 @@
   <div class="toolbar-dropdown" id="dropdown-overview">
     <form id="overview-volunteers">
       <select class="overview-names" name="volunteerId">
-        <% data.volunteers.slice().sort((a, b) => a.name.localeCompare(b.name)).forEach(volunteer => { %>
+        <% data.volunteers.filter(volunteer => volunteer.name.toLowerCase() !== 'gesloten').slice().sort((a, b) => a.name.localeCompare(b.name)).forEach(volunteer => { %>
           <option value="<%= volunteer.id %>"><%= helper.capitalizeFirstLetter(volunteer.name) %></option>
         <% }) %>
       </select>

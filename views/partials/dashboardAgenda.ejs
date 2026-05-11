@@ -5,7 +5,7 @@
     
     <!-- Create a table for each week -->
     <% data.schedules.forEach((schedule, index) => { %>
-    
+      
       <div class="week-block">
 
         <!-- 'Week' with the week number above each table -->
@@ -14,15 +14,17 @@
         </h2>
 
         <div class="table-wrapper">
+
+          <!-- Dashboard agenda -->
           <table class="table-agenda">
             
+            <!-- Table headers -->
             <colgroup>
               <col class="col-datum">
               <col class="col-dagdeel">
               <col class="col-naam">
             </colgroup>
 
-            <!-- Table headers with the labels 'datum', 'dagdeel' and 'naam' -->
             <thead>
               <tr><th><%= t.table.head.date %></th><th><%= t.table.head.partOfDay %></th><th><%= t.table.head.name %></th></tr>
             </thead>
@@ -30,7 +32,10 @@
             <tbody>
               <!-- Create rows for each day - Extra span-elements are used for the printed version -->
               <% schedule.forEach((day, index) => { %>
-              
+
+                <!-- Select "Gesloten" from names list  -->
+                <% const closedVolunteer = data.volunteers.find(volunteer => volunteer.name.toLowerCase() === 'gesloten'); %>
+                
                 <!-- Hightlight the current day conditionally -->
                 <% const isToday = new Date(day.date).toDateString() === new Date().toDateString(); %>
                 
@@ -39,15 +44,23 @@
                   <td class="td-dag" rowspan="2"><%= helper.getNameOfDay(day.date) %><span class="datum"><%= helper.formatDate(day.date) %></span></td>
                   <td><span class="badge badge-ochtend"><%= t.common.morning %></span><span class="dagdeel-print"><%= t.common.morning %></span></td>
                   <td class="td-naam">
+
+                    <!-- Selection inputfield -->
                     <select name="<%= helper.toLocalDateString(day.date) %>[morning]" id="volunteer-select-<%= index %>-morning" class="select-name" onchange="onVolunteerChanged(this)">
+
+                      <!-- Keep the empty ("-") and 'gesloten'-options seperate from volunteer names -->
                       <optgroup label= <%= t.dashboard.common.labelExtraOptions %> >
                         <option value="">-</option>
-                        <option value="dayOff" class="select-closed"><%= t.dashboard.common.dayOff %></option>
+                        <% if (closedVolunteer) { %>
+                          <option value="<%= closedVolunteer.id %>" <%= day.morning && day.morning.id === closedVolunteer.id ? 'selected' : '' %>>
+                            <%= helper.capitalizeFirstLetter(closedVolunteer.name) %>
+                          </option>
+                        <% } %>
                       </optgroup>
 
-                      <!-- Generate an options list with volunteer names -->
+                      <!-- Generate an options list with volunteer names only-->
                       <optgroup label= <%= t.dashboard.common.labelNames %> >
-                        <% data.volunteers.slice().sort((a, b) => a.name.localeCompare(b.name)).forEach(volunteer => { %>
+                        <% data.volunteers.filter(volunteer => volunteer.name.toLowerCase() !== 'gesloten').slice().sort((a, b) => a.name.localeCompare(b.name)).forEach(volunteer => { %>
                           <option value="<%= volunteer.id %>" <%= day.morning && day.morning.id === volunteer.id ? 'selected' : '' %>>
                             <%= helper.capitalizeFirstLetter(volunteer.name) %>
                           </option>
@@ -62,15 +75,23 @@
                 <tr class="<%= isToday ? 'highlight-today' : '' %>">
                   <td><span class="badge badge-middag"><%= t.common.afternoon %></span><span class="dagdeel-print"><%= t.common.afternoon %></span></td>
                   <td class="td-naam td-naam-middag">
+
+                    <!-- Selection inputfield -->
                     <select name="<%= helper.toLocalDateString(day.date) %>[afternoon]" id="volunteer-select-<%= index %>-afternoon" class="select-name" onchange="onVolunteerChanged(this)">
+                      
+                      <!-- Keep the empty ("-") and 'gesloten'-options seperate from volunteer names -->
                       <optgroup label= <%= t.dashboard.common.labelExtraOptions %> >
                         <option value="">-</option>
-                        <option value="dayOff" class="select-closed"><%= t.dashboard.common.dayOff %></option>
+                        <% if (closedVolunteer) { %>
+                        <option value="<%= closedVolunteer.id %>" <%= day.morning && day.morning.id === closedVolunteer.id ? 'selected' : '' %>>
+                          <%= helper.capitalizeFirstLetter(closedVolunteer.name) %>
+                        </option>
+                        <% } %>
                       </optgroup>
 
-                      <!-- Generate an options list with volunteer names -->
+                      <!-- Generate an options list with volunteer names only -->
                       <optgroup label= <%= t.dashboard.common.labelNames %> >
-                        <% data.volunteers.slice().sort((a, b) => a.name.localeCompare(b.name)).forEach(volunteer => { %>
+                         <% data.volunteers.filter(volunteer => volunteer.name.toLowerCase() !== 'gesloten').slice().sort((a, b) => a.name.localeCompare(b.name)).forEach(volunteer => { %>
                           <option value="<%= volunteer.id %>" <%= day.afternoon && day.afternoon.id === volunteer.id ? 'selected' : '' %>>
                             <%= helper.capitalizeFirstLetter(volunteer.name) %>
                           </option>

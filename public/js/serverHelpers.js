@@ -52,17 +52,7 @@ function onDateChanged(e) {
   window.location.href = url;
 }
 
-// Style the "day off"-option in selections on the dashboard page
-function setClassListDayOff(select) {
-  if (select.value === "dayOff") {
-    select.classList.add("select-closed");
-  } else {
-    select.classList.remove("select-closed");
-  }
-}
-
 // Set a flag when a volunteer has been changed to a value different from its initial value.
 function onVolunteerChanged(select) {
   window.volunteerChanged = true;
-  setClassListDayOff(select); // Style "day off"-option while iterating through the options
 }

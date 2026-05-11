@@ -31,7 +31,7 @@
     },
     "common": {
       "placeholderName": "Naam...",
-      "dayOff": "Gesloten",
+      "closed": "Gesloten",
       "select": "- Selecteer -",
       "labelNames": "Vrijwilligers",
       "labelExtraOptions": "Overig"
@@ -79,7 +79,7 @@
     "overview": "Overzicht",
     "add": "Toevoegen",
     "delete": "Verwijderen",
-    "copy": "Kopieer oude"
+    "copy": "Herhalen"
   },
   "errorPage": {
     "title": "Pagina niet gevonden",
