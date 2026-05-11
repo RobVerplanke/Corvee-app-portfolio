@@ -87,6 +87,10 @@
   font-weight: var(--font-weight-medium);
 }
 
+.closed {
+  color: var(--error-color);
+}
+
 .td-dag .datum {
   display: block;
   font-size: var(--font-default-size);
@@ -116,22 +120,6 @@
 .badge-middag {
   background: rgba(44, 95, 74, 0.1);
   color: var(--accent);
-}
-
-select.select-closed {
-  color: var(--message-error-color);
-}
-
-select.select-closed option {
-  color: var(--text);
-}
-
-select.select-closed option.select-closed {
-  color: var(--message-error-color);
-}
-
-select.select-closed optgroup {
-  color: var(--text);
 }
 
 .print-button-container {
