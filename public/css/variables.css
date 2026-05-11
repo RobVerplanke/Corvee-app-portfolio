@@ -2,6 +2,7 @@
   /* Colors */
   --bg: #d2ebf4;
   --card: #ffffff;
+  --button-text-color: #ffffff;
   --text: #1c3269;
   --text-muted: #888;
   --badge-bg: #d38e0d;
@@ -11,6 +12,7 @@
   --accent-highlight: rgba(100, 181, 210, 0.2);
   --input-bg: #faf9f7;
 
+  --icon-svg-color: white;
   --error-color: red;
   --confirm-color: green;
   --message-text-color: white;

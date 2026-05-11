@@ -12,7 +12,7 @@
   height: 36px;
   padding: 6px 14px;
   background-color: var(--accent);
-  color: white;
+  color: var(--button-text-color);
   border: none;
   border-radius: var(--radius);
   cursor: pointer;
@@ -20,13 +20,16 @@
 }
 
 .btn-print svg,
-.toolbar-single-btn svg {
-  width: 16px;
-  height: 16px;
-  fill: white;
+.toolbar-single-btn svg,
+.toolbar-btn svg {
+  width: 24px;
+  height: 24px;
+  fill: var(--icon-svg-color);
+  flex-shrink: 0;
 }
 
 .toolbar-btn:hover,
+.btn-print:hover,
 .toolbar-single-btn:hover {
   background-color: var(--accent-hover);
 }
