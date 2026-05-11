@@ -83,7 +83,7 @@
                       <optgroup label= <%= t.dashboard.common.labelExtraOptions %> >
                         <option value="">-</option>
                         <% if (closedVolunteer) { %>
-                        <option value="<%= closedVolunteer.id %>" <%= day.morning && day.morning.id === closedVolunteer.id ? 'selected' : '' %>>
+                        <option value="<%= closedVolunteer.id %>" <%= day.afternoon && day.afternoon.id === closedVolunteer.id ? 'selected' : '' %>>
                           <%= helper.capitalizeFirstLetter(closedVolunteer.name) %>
                         </option>
                         <% } %>
