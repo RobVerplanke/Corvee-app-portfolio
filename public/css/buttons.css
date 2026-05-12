@@ -66,6 +66,7 @@
 
 .toolbar-dropdown input {
   max-width: var(--toolbar-button-width);
+  min-width: var(--toolbar-button-width);
   padding: 8px 10px;
   background: var(--card);
   color: var(--text);

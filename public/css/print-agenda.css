@@ -23,6 +23,7 @@
 
 /* Styling for the printed version of the schedules */
 @media print {
+  .bg-effects,
   .navbar,
   footer,
   .toolbar-btn,
