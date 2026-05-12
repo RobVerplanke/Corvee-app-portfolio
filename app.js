@@ -305,7 +305,7 @@ app.post("/dashboard/copy", async (req, res) => {
 
   await databaseHandler.copyPreviousScheduleSet(new Date(parseInt(copyDate)));
   res.redirect("/dashboard");
-})
+});
 
 // Instructions manual page
 app.get("/manuals", (req, res) => {
