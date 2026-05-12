@@ -165,3 +165,7 @@
   background: rgba(44, 95, 74, 0.1);
   color: var(--accent);
 }
+
+.closed {
+  color: var(--error-color);
+}

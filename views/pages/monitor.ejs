@@ -75,13 +75,13 @@
                   <tr class="<%= isToday ? 'highlight-today' : '' %>">
                     <td class="td-dag" rowspan="2"><%= helper.getNameOfDay(day.date) %><span class="datum"><%= helper.formatDate(day.date) %></span></td>
                     <td><span class="badge badge-ochtend"><%= t.common.morning %></span><span class="dagdeel-print"><%= t.common.morning %></span></td>
-                    <td class="td-naam"><%= day.morning ? helper.capitalizeFirstLetter(day.morning.name) : '-' %></td>
+                    <td class="td-naam <%= day.morning && day.morning.name.toLowerCase() === 'gesloten' ? 'closed' : '' %>"><%= day.morning ? helper.capitalizeFirstLetter(day.morning.name) : '-' %></td>
                   </tr>
 
                   <!-- Afternoon -->
                   <tr class="<%= isToday ? 'highlight-today' : '' %>">
                     <td><span class="badge badge-middag"><%= t.common.afternoon %></span><span class="dagdeel-print"><%= t.common.afternoon %></span></td>
-                    <td class="td-naam td-naam-middag"><%= day.afternoon ? helper.capitalizeFirstLetter(day.afternoon.name) : '-' %></td>
+                    <td class="td-naam td-naam-middag  <%= day.afternoon && day.afternoon.name.toLowerCase() === 'gesloten' ? 'closed' : '' %>"><%= day.afternoon ? helper.capitalizeFirstLetter(day.afternoon.name) : '-' %></td>
                   </tr>
                 <% }) %>
               </tbody>
