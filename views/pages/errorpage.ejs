@@ -1,32 +1,35 @@
 <!DOCTYPE html>
 <html lang="nl">
-  
   <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <link rel="stylesheet" href="../css/variables.css">
-      <link rel="stylesheet" href="../css/reset.css">
-      <link rel="stylesheet" href="../css/pages/errorpage.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/variables.css" />
+    <link rel="stylesheet" href="../css/reset.css" />
+    <link rel="stylesheet" href="../css/pages/errorpage.css" />
+
+    <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon" />
+
     <title>Error pagina</title>
   </head>
 
   <body>
     <div class="error-container">
       <div class="error-card">
-
         <!-- Text content -->
         <h1 class="error-badge">404</h1>
         <h1><%= t.errorPage.title %></h1>
         <p class="error-subtitle"><%= t.errorPage.textContent %></p>
-       
+
         <!-- Login-button -->
         <div class="error-actions">
-          <button class="btn-primary" onclick="history.back()"><%= t.errorPage.backButton %></button>
-          <button class="btn-secondary" onclick="window.location.href='/'"><%= t.errorPage.homeButton %></button>
+          <button class="btn-primary" onclick="history.back()">
+            <%= t.errorPage.backButton %>
+          </button>
+          <button class="btn-secondary" onclick="window.location.href = '/'">
+            <%= t.errorPage.homeButton %>
+          </button>
         </div>
-
       </div>
     </div>
   </body>
-
 </html>
