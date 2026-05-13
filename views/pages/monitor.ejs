@@ -13,7 +13,13 @@
     <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon">
     
     <title>Corveerooster</title>
-    <script src="../js/serverHelpers.js"></script>
+
+    <!-- Update page automaticly to show updates in agenda -->
+    <script>
+      const REFRESH_RATE = 15; // Minutes
+      setTimeout(() => location.reload(), REFRESH_RATE * 60 * 1000);
+    </script>
+
   </head>
 
   <body>
