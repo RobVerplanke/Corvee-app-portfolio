@@ -18,6 +18,7 @@ import DatabaseHandler from "./databaseHandler.js";
 import { request } from "http";
 import { readFileSync } from "fs";
 import QRCode from "qrcode";
+import { DateTime } from "luxon";
 
 // Get month names from JSON locales file
 const t = JSON.parse(readFileSync("./locales/nl.json", "utf-8"));
@@ -301,11 +302,17 @@ app.post("/dashboard/delete", isLoggedIn, (req, res) => {
 });
 
 app.post("/dashboard/copy", async (req, res) => {
-  const copyDate = req.body.copyDate;
+  const copyDate = new Date(parseInt(req.body.copyDate));
 
-  await databaseHandler.copyPreviousScheduleSet(new Date(parseInt(copyDate)));
-  res.redirect("/dashboard");
-});
+  // Copy these four weeks forward to the next set.
+  await databaseHandler.copyScheduleSet(copyDate);
+
+  // Get the date four weeks forward for the redirect.
+  const newDate = DateTime.fromJSDate(copyDate).plus({ weeks: 4 });
+
+  // Redirect the page to show the copied four weeks.
+  res.redirect(`/dashboard/?date=${newDate.toISODate()}`);
+})
 
 // Instructions manual page
 app.get("/manuals", (req, res) => {

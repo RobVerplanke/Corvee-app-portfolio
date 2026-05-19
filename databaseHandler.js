@@ -6,6 +6,7 @@ import userModel from "./models/user.js";
 import volunteerModel from "./models/volunteer.js";
 import scheduleModel from "./models/schedule.js";
 import { readFileSync } from "fs";
+import { DateTime } from "luxon";
 
 // Get textual content from the JSON locales file
 const t = JSON.parse(readFileSync("./locales/nl.json", "utf-8"));
@@ -101,16 +102,17 @@ class DatabaseHandler {
    */
   async getScheduleForWeek(year, weekNr) {
     // Get the start date from the weekNr.
-    const startDate = getMondayFromWeekNumber(year, weekNr);
-    const msStartDate = startDate.getTime();
+    const weekStr = weekNr.toString().padStart(2, "0");
+    const startDate = DateTime.fromISO(`${year}-W${weekStr}-1`).toUTC(0, { keepLocalTime: true });
 
-    // Get the end date by adding 4 days in ms.
-    const endDate = new Date(msStartDate + 1000 * 60 * 60 * 24 * 4);
+    // Get the end date by adding 4 days.
+    const endDate = startDate.plus({ days: 4 });
+
     const retrievedSchedule = await this.models.Schedule.findAll({
       where: {
         date: {
-          [Op.gte]: startDate,
-          [Op.lte]: endDate,
+          [Op.gte]: startDate.toJSDate(),
+          [Op.lte]: endDate.toJSDate(),
         },
       },
       order: [["date", "ASC"]],
@@ -172,7 +174,7 @@ class DatabaseHandler {
       changedData.afternoon == undefined &&
       changedData.morning == undefined
     ) {
-      console.log(t.databaseHandler.updateScheduleEntry.logContent);
+      console.log(t.databaseHandler.updateScheduleEntry.logContent + `: ${date}`);
       return null;
     }
 
@@ -200,43 +202,34 @@ class DatabaseHandler {
   }
 
   /**
-   * Copies the four weeks before a given date to the date's week and forwards for easy repeating.
+   * Copies the four weeks from a given date to four weeks forward for easy repeating.
    *
-   * @param {Date} date - The date to copy the last four weeks to.
+   * @param {Date} date - The date to copy the four weeks forward of.
    * @param {boolean} overwrite - False by default, if set it'll overwrite existing entries.
-   *
-   * @returns {Promise<boolean>} - Whether or not the action was successful.
    */
-  async copyPreviousScheduleSet(date, overwrite = false) {
-    // Prepare calculations in ms for readability.
-    const ONE_DAY = 1000 * 60 * 60 * 24;
-    const FOUR_WEEKS = ONE_DAY * 28;
+  async copyScheduleSet(date, overwrite = false) {
+    // Get the date of four weeks forward, the Friday.
+    const fourWeeksForward = DateTime.fromJSDate(date).toUTC().plus({ week: 4 }).minus({ day: 3 });
 
-    // Get the date of four weeks back (so date - 28 days) in milliseconds to avoid Daylight savings.
-    const fourWeeksBack = new Date(date);
-    const msFourWeeksBack = fourWeeksBack.getTime() - FOUR_WEEKS;
-
-    // Get the day before the date to copy to.
-    const endDate = new Date(date);
-    const msEndDate = endDate.getTime() - ONE_DAY;
+    //const currentDate = DateTime.fromJSDate(date).toUTC();
 
     // Get the data to copy.
     const schedule = await this.getScheduleForDateRange(
-      new Date(msFourWeeksBack),
-      new Date(msEndDate),
+      date,
+      fourWeeksForward.toJSDate(),
     );
+
     for (const entry in schedule) {
       // Move each entry forwards by 28 days.
-      const newDate = new Date(schedule[entry].date);
-      const msNewDate = newDate.getTime() + FOUR_WEEKS;
+      const newDate = DateTime.fromJSDate(schedule[entry].date).toUTC().plus({ week: 4 });
 
       // If overwrite, try updating each entry and if non-existent, add it.
       if (overwrite) {
-        await this.updateScheduleEntry(new Date(msNewDate), {
+        await this.updateScheduleEntry(newDate.toJSDate(), {
           morning: schedule[entry].morningId,
           afternoon: schedule[entry].afternoonId,
         }).catch(async (err) => {
-          await this.addScheduleEntry(new Date(msNewDate), {
+          await this.addScheduleEntry(newDate.toJSDate(), {
             morning: schedule[entry].morningId,
             afternoon: schedule[entry].afternoonId,
           });
@@ -244,7 +237,7 @@ class DatabaseHandler {
       }
       // If not overwrite, get each entry, update empty fields and if non-existent, add it.
       else {
-        const newEntry = await this.getScheduleEntry(new Date(msNewDate));
+        const newEntry = await this.getScheduleEntry(newDate.toJSDate());
 
         // If the entry exists, update information if empty only.
         if (newEntry) {
@@ -261,18 +254,22 @@ class DatabaseHandler {
           if (!newEntry.afternoonId) {
             changedData.afternoon = schedule[entry].afternoonId;
           }
-          await this.updateScheduleEntry(new Date(msNewDate), changedData);
+
+          // Ignore the update if no data is changed.
+          if (!changedData.morning && !changedData.afternoon) {
+            continue;
+          }
+
+          await this.updateScheduleEntry(newDate.toJSDate(), changedData);
         } else {
           // If it doesn't exist, add the entry.
-          await this.addScheduleEntry(new Date(msNewDate), {
+          await this.addScheduleEntry(newDate.toJSDate(), {
             morning: schedule[entry].morningId,
             afternoon: schedule[entry].afternoonId,
           });
         }
       }
     }
-    // TODO: Check how useful returning success actually is and when is it unsuccessful.
-    return true;
   }
 
   /**

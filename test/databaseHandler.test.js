@@ -1,5 +1,6 @@
 import assert from 'node:assert';
 import crypto from 'crypto';
+import { DateTime } from 'luxon';
 import { Op, Sequelize } from 'sequelize';
 import DatabaseHandler from '../databaseHandler.js';
 import Sqlite3 from '@vscode/sqlite3';
@@ -18,7 +19,6 @@ const testIdMorning = 2;
 const testIdAfternoon = 3;
 const testName = 'Julia';
 const testDate = new Date('2026-03-03');
-const testCopyDate = new Date('2026-03-31');
 const testNewName = 'Koos';
 const testPassword = 'Password';
 const testSalt = 'salty';
@@ -44,7 +44,7 @@ let testSchedule = [
 let testCopyResult = [
   {
     // The first date should equal the date to copy forwards to
-    date: testCopyDate,
+    date: new Date('2026-03-31'),
     morningId: testIdMorning,
     afternoonId: testIdAfternoon
   },
@@ -160,34 +160,33 @@ describe('DatabaseHandler', () => {
       });
     });
     
-    describe(':copyPreviousScheduleSet', () => {
-      it('should copy the previous four weeks forwards to the given date and onwards.', async () => {
-        // Prepare the end date for later checking, 28 days forward = 4 weeks
-        const endDate = new Date(testCopyDate);
-        const msEndDate = endDate.getTime() + (1000 * 60 * 60 * 24 * 28);
-        
-        // Call the function for testing and check the db for results
-        const callResult = await databaseHandler.copyPreviousScheduleSet(testCopyDate);
+    describe(':copyScheduleSet', () => {
+      it('should copy the current four weeks forwards to the next four weeks.', async () => {
+        // Prepare the start date four weeks forward and end date for later checking.
+        const startDate = DateTime.fromJSDate(testDate).plus({ week: 4 });
+        const endDate = DateTime.fromJSDate(testDate).plus({ week: 8 });
+
+        // Call the function for testing and check the db for results.
+        await databaseHandler.copyScheduleSet(testDate);
         const dbResult = await databaseHandler.models.Schedule.findAll({ 
           where: { 
             date: {
-              [Op.gte]: testCopyDate,
-              [Op.lte]: new Date(msEndDate),
+              [Op.gte]: startDate.toJSDate(), 
+              [Op.lte]: endDate.toJSDate(),
             },
           },
           order: [
             ['date', 'ASC']
           ]
         });
-        // Check if every entry matches the expected results
+
+        // Check if every entry matches the expected results.
         assert.equal(dbResult.length, testCopyResult.length);
         for (const n in dbResult) {
           assert.equal(dbResult[n].date.valueOf(), testCopyResult[n].date.valueOf());
           assert.equal(dbResult[n].morningId, testCopyResult[n].morningId);
           assert.equal(dbResult[n].afternoonId, testCopyResult[n].afternoonId);
         }
-        // Check if the tested function also returns that it succeeded
-        assert.equal(callResult, true);
       })
     });
   });

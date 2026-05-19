@@ -1,39 +1,12 @@
+import { DateTime } from "luxon";
+
 /**
  * Returns the ISO 8601 week number associated with the given date.
  *
  * @param {Date} date - The date for which to find the week number.
  */
 function getWeekNumber(date) {
-  // Copy the date to adjust it for finding the nearest Thursday.
-  let nearestThursday = new Date(
-    date.getFullYear(),
-    date.getMonth(),
-    date.getDate(),
-  );
-  // Find the nearest thursday by adding the day for Thursday and subtracting the days elapsed this week.
-  nearestThursday.setDate(
-    nearestThursday.getDate() + 4 - (nearestThursday.getDay() || 7),
-  );
-
-  // Get the first Thursday of the year.
-  const firstThursday = new Date(date.getFullYear(), 0);
-  // First get the nearest thursday for the start of the year, then if needed add a week.
-  firstThursday.setDate(
-    firstThursday.getDate() + 4 - (firstThursday.getDay() || 7),
-  );
-  if (firstThursday.getFullYear() < date.getFullYear()) {
-    firstThursday.setDate(firstThursday.getDate() + 7);
-  }
-
-  // Calculate the week number from the difference in dates and dividing it by days per week to find total weeks.
-  const MILLISECONDS_PER_DAY = 86400000;
-  const DAYS_PER_WEEK = 7;
-  return Math.ceil(
-    ((nearestThursday.valueOf() - firstThursday.valueOf()) /
-      MILLISECONDS_PER_DAY +
-      1) /
-      DAYS_PER_WEEK,
-  );
+  return DateTime.fromJSDate(date).weekNumber;
 }
 
 /**
@@ -43,18 +16,9 @@ function getWeekNumber(date) {
  * @param {number} weekNr - The week number to find the associated Monday for.
  */
 function getMondayFromWeekNumber(year, weekNr) {
-  let firstDay = new Date(year, 0, 1);
-  if (firstDay.getDay() == 1) {
-    // If 1st of Jan is Monday, the monday of given weekNr is a multiple of 7.
-    firstDay.setDate(1 + (weekNr - 1) * 7);
-  } else if (firstDay.getDay() == 0) {
-    // It's Sunday so add 1 day and then calculate the requested Monday.
-    firstDay.setDate(2 + (weekNr - 1) * 7);
-  } else if (firstDay.getDay() > 1) {
-    // If it's any other day, add a week and subtract the extra days back to the next monday.
-    firstDay.setDate(1 + (8 - firstDay.getDay()) + (weekNr - 2) * 7);
-  }
-  return firstDay;
+  // Use Luxon to retrieve the correct date by building an ISO string in YYYY-Www-D format.
+  const weekStr = weekNr.toString().padStart(2, "0")
+  return DateTime.fromISO(`${year}-W${weekStr}-1`).toJSDate();
 }
 
 // Returns the name of the day based on the given date, or empty string if no date is available
@@ -82,14 +46,13 @@ function getTodayForDatepicker() {
 // Adjust the long date notation to a more readable format
 function formatDate(date) {
   // In case there is no date available, show placeholder content
-  // TODO: generate new dates to replace empty dates
-  if (!date) return "Geen datum gevonden";
-
-  const formattedDate = new Date(date).toLocaleDateString("nl-NL", {
-    day: "2-digit",
-    month: "long",
-  });
-
+  if (!date) return 'Geen datum gevonden';
+  
+  const formattedDate = new Date(date).toLocaleDateString('nl-NL', {
+    day: '2-digit',
+    month: 'long'
+  })
+  
   // In case there is a date available, return the first letters in capital
   return formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1);
 }
