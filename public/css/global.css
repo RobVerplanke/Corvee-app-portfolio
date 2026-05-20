@@ -128,12 +128,6 @@ h4 {
   list-style-type: disc;
 }
 
-.arrow {
-  margin: 10px;
-  display: inline-block;
-  transform: rotate(90deg);
-}
-
 /* ERRORPAGE BUTTONS */
 .btn-primary {
   background: var(--accent);
