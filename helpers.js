@@ -84,8 +84,8 @@ function getMostCommonMonth(schedules) {
   const allMonths = [];
 
   // If there is a date, add the month of that date to the list
-  schedules.map((schedule) => {
-    schedule.map((day) => {
+  schedules.forEach((schedule) => {
+    schedule.forEach((day) => {
       if (day.date) {
         allMonths.push(day.date.getMonth());
       }
