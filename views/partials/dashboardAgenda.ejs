@@ -46,7 +46,7 @@
                   <td class="td-naam">
 
                     <!-- Selection inputfield -->
-                    <select name="<%= helper.toLocalDateString(day.date) %>[morning]" id="volunteer-select-<%= index %>-morning" class="select-name" onchange="onVolunteerChanged(this)">
+                    <select name="<%= helper.toLocalDateString(day.date) %>[morning]" id="volunteer-select-<%= index %>-morning" class="select-name" onchange="onVolunteerChanged()">
 
                       <!-- Keep the empty ("-") and 'gesloten'-options seperate from volunteer names -->
                       <optgroup label= <%= t.dashboard.common.labelExtraOptions %> >
@@ -77,7 +77,7 @@
                   <td class="td-naam td-naam-middag">
 
                     <!-- Selection inputfield -->
-                    <select name="<%= helper.toLocalDateString(day.date) %>[afternoon]" id="volunteer-select-<%= index %>-afternoon" class="select-name" onchange="onVolunteerChanged(this)">
+                    <select name="<%= helper.toLocalDateString(day.date) %>[afternoon]" id="volunteer-select-<%= index %>-afternoon" class="select-name" onchange="onVolunteerChanged()">
                       
                       <!-- Keep the empty ("-") and 'gesloten'-options seperate from volunteer names -->
                       <optgroup label= <%= t.dashboard.common.labelExtraOptions %> >

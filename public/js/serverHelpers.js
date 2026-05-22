@@ -1,7 +1,11 @@
-// Used to identify url-parameters
+/**
+ * Used to identify url-parameters
+ *
+ * @type {string} Current location
+ */
 let url = new URL(window.location.href);
 
-// And add event listeners on toolbar dropdown buttons
+// Create event listeners - Close toolbar dropdowns when clicking outside the toolbar
 document.addEventListener("click", (e) => {
   if (!e.target.closest(".toolbar")) {
     document
@@ -27,7 +31,11 @@ window.onload = function () {
   });
 };
 
-// Print agenda page from dashboard page
+/**
+ * Prints the agenda page from within the dashboard by loading it in a hidden iframe
+ * and triggering the browser print dialog on its content.
+ *
+ */
 function printPage() {
   const frame = document.getElementById("print-frame");
   frame.src = "/";
@@ -36,7 +44,11 @@ function printPage() {
   };
 }
 
-// Return current day is specific notation
+/**
+ * Determine the current date
+ *
+ * @returns {string} The current day in specific notation
+ */
 function getToday() {
   const today = new Date();
   const year = today.getFullYear();
@@ -45,7 +57,12 @@ function getToday() {
   return `${year}-${month}-${day}`;
 }
 
-// Handle unsaved changes when the agenda is adjusted
+/**
+ * Handles date changes in the datepicker. Warns the user if there are unsaved
+ * changes in the agenda before navigating to the new date.
+ *
+ * @param {e} e - The change event fired by the date input element
+ */
 function onDateChanged(e) {
   // Ignore same date.
   if (
@@ -69,7 +86,10 @@ function onDateChanged(e) {
   window.location.href = url;
 }
 
-// Set a flag when a volunteer has been changed to a value different from its initial value.
-function onVolunteerChanged(select) {
+/**
+ * Set a flag when a volunteer has been changed to a value different from its initial value
+ *
+ */
+function onVolunteerChanged() {
   window.volunteerChanged = true;
 }

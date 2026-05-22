@@ -20,27 +20,72 @@ import { readFileSync } from "fs";
 import QRCode from "qrcode";
 import { DateTime } from "luxon";
 
-// Get month names from JSON locales file
+/**
+ * Localization strings loaded from Dutch locale file
+ * @type {Object}
+ */
 const t = JSON.parse(readFileSync("./locales/nl.json", "utf-8"));
 
-// Truly constant values
+/**
+ * Array of month names in Dutch
+ * @type {string[]}
+ */
 const MONTHS = t.common.months;
-const SCHEDULES_PER_MONTH = 4; // Amount of schedules displayed per month
-const DAYS_PER_WEEK = 5; // Working days
+
+/**
+ * Amount of schedules per month
+ * @type {number}
+ */
+const SCHEDULES_PER_MONTH = 4;
+
+/**
+ * Amount of days per week
+ * @type {number}
+ */
+const DAYS_PER_WEEK = 5;
+
+// Admin password
 const PASSWORD = "321";
 
+/**
+ * Express application instance
+ * @type {import('express').Application}
+ */
 const app = express();
+
+/**
+ * Port the server listens on
+ * @type {number}
+ */
 const port = 3000;
+
+/**
+ * Absolute path to the current file
+ * @type {string}
+ */
 const __filename = fileURLToPath(import.meta.url);
+
+/**
+ * Absolute path to the current directory
+ */
 const __dirname = path.dirname(__filename);
+
+/**
+ * Sequalize instance connected to the SQLite database
+ * @type {Sequelize}
+ */
 const sequelize = new Sequelize({
   dialect: "sqlite",
   dialectModule: Sqlite3,
   storage: "database.sqlite",
   logging: false,
 });
+
+/**
+ * Wraps around the sequelize instance to provide a layer between the app and the database.
+ * @type {object}
+ */
 const databaseHandler = new DatabaseHandler(sequelize);
-// const t = JSON.parse(readFileSync('./locales/nl.json', 'utf-8'));
 
 // Synchronize the database so the tables exist in the database
 await databaseHandler.sync();
@@ -76,6 +121,12 @@ app.use((req, res, next) => {
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
+/**
+ * Middleware that redirects to the login page if the user is not logged in
+ * @param {import('express').Request} req - The incoming request object
+ * @param {import('express').Response} res - The outgoing response object
+ * @param {import('express').NextFunction} next - Callback to pass control to the next middleware
+ */
 function isLoggedIn(req, res, next) {
   if (req.session.isLoggedIn) {
     next();
@@ -312,7 +363,7 @@ app.post("/dashboard/copy", async (req, res) => {
 
   // Redirect the page to show the copied four weeks.
   res.redirect(`/dashboard/?date=${newDate.toISODate()}`);
-})
+});
 
 // Instructions manual page
 app.get("/manuals", (req, res) => {
