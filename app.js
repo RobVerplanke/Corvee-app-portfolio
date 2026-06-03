@@ -13,12 +13,15 @@ import session from "express-session";
 import path from "path";
 import { fileURLToPath } from "url";
 import Sequelize from "sequelize";
-import Sqlite3 from "@vscode/sqlite3";
+import Sqlite3 from "sqlite3";
 import DatabaseHandler from "./databaseHandler.js";
 import { request } from "http";
 import { readFileSync } from "fs";
 import QRCode from "qrcode";
 import { DateTime } from "luxon";
+
+// Fill database at loading app
+import { seedDatabase } from "./seed.js";
 
 /**
  * Localization strings loaded from Dutch locale file
@@ -45,7 +48,7 @@ const SCHEDULES_PER_MONTH = 4;
 const DAYS_PER_WEEK = 5;
 
 // Admin password
-const PASSWORD = "321";
+const PASSWORD = process.env.ADMIN_PASSWORD || "654";
 
 /**
  * Express application instance
@@ -57,7 +60,7 @@ const app = express();
  * Port the server listens on
  * @type {number}
  */
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 /**
  * Absolute path to the current file
@@ -89,6 +92,7 @@ const databaseHandler = new DatabaseHandler(sequelize);
 
 // Synchronize the database so the tables exist in the database
 await databaseHandler.sync();
+await seedDatabase(databaseHandler);
 
 // Use static files for CSS-styling, scripts and assets (images)
 app.use(express.static(path.join(__dirname, "public")));
@@ -99,7 +103,7 @@ app.use(express.urlencoded({ extended: true }));
 // Setup session middleware
 app.use(
   session({
-    secret: "TEMP_SECRET_KEY",
+    secret: process.env.SESSION_SECRET || "TEMP_SECRET_KEY",
     resave: false,
     saveUninitialized: false,
   }),
@@ -390,12 +394,15 @@ app.get("/manuals/cleaning", (req, res) => {
 
 // A clean agenda view to display on an external monitor
 app.get("/monitor", async (req, res) => {
-  const qrCode = await QRCode.toDataURL("http://corvee.aletho.nl", {
-    color: {
-      dark: "#1C3269",
-      light: "#00000000",
+  const qrCode = await QRCode.toDataURL(
+    process.env.APP_URL || "http://localhost:3000",
+    {
+      color: {
+        dark: "#1C3269",
+        light: "#00000000",
+      },
     },
-  });
+  );
   let requestedDate = null;
 
   // Create a RegExp to test the date for validity. If invalid, use today.
