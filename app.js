@@ -80,7 +80,7 @@ const __dirname = path.dirname(__filename);
  */
 const sequelize = new Sequelize({
   dialect: "sqlite",
-  dialectModule: BetterSqlite3,
+  dialectModule: { Database: BetterSqlite3 },
   storage: "database.sqlite",
   logging: false,
 });
