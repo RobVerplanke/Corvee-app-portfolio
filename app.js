@@ -13,7 +13,8 @@ import session from "express-session";
 import path from "path";
 import { fileURLToPath } from "url";
 import Sequelize from "sequelize";
-import Sqlite3 from "sqlite3";
+// import Sqlite3 from "sqlite3";
+import BetterSqlite3 from "better-sqlite3";
 import DatabaseHandler from "./databaseHandler.js";
 import { request } from "http";
 import { readFileSync } from "fs";
@@ -79,7 +80,7 @@ const __dirname = path.dirname(__filename);
  */
 const sequelize = new Sequelize({
   dialect: "sqlite",
-  dialectModule: Sqlite3,
+  dialectModule: BetterSqlite3,
   storage: "database.sqlite",
   logging: false,
 });
