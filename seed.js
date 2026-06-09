@@ -22,6 +22,7 @@ export async function seedDatabase(databaseHandler) {
   if (schedules.length === 0) {
     const allVolunteers = await databaseHandler.getVolunteers();
 
+    const gesloten = allVolunteers.find((v) => v.name === "gesloten");
     const jan = allVolunteers.find((v) => v.name === "jan");
     const els = allVolunteers.find((v) => v.name === "els");
     const harry = allVolunteers.find((v) => v.name === "harry");
@@ -34,8 +35,8 @@ export async function seedDatabase(databaseHandler) {
         date.setDate(monday.getDate() + week * 7 + day);
 
         await databaseHandler.addScheduleEntry(date, {
-          morning: jan.id,
-          afternoon: els.id,
+          morning: [jan, harry, gesloten, jannie, piet, jan][day].id,
+          afternoon: [els, jannie, piet, harry, els][day].id,
         });
       }
     }
